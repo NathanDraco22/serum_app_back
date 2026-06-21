@@ -1,0 +1,22 @@
+[project]
+name = "fastapi-onion-template"
+version = "0.1.1"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115.11",
+    "orjson>=3.10.15",
+    "python-dotenv>=1.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "onion",
+    "pytest-asyncio>=0.25.3",
+    "pytest>=8.3.5",
+    "ruff>=0.9.10",
+]
+
+[tool.uv.sources]
+onion = { git = "https://github.com/NathanDraco22/onion-cli.git" }
