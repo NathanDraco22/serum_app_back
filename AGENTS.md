@@ -115,3 +115,130 @@ The `core/` folder (located inside the business package, e.g., `packages/kardex-
 *   **Handling**: Raise domain exceptions inheriting from `BusinessException`. In the API layer, register these exceptions in the centralized exception handler (e.g., `regis_exception_handlers.py` or middleware) to map them to the corresponding HTTP codes (400, 403, 404, etc.).
 
 ---
+
+## 🛠️ 4. Project-Specific Conventions (Serum App - LIS)
+
+### 4.1 ListResponse Wrapper
+All `GET ALL` endpoints **must** return `ListResponse[T]` instead of bare `list[T]`. This wraps the array in `{ count: int, data: list[T] }`.
+
+Import from `responses.v1`:
+```python
+from responses.v1 import ListResponse
+```
+
+Use in Controller:
+```python
+async def get_all_entities(self) -> ListResponse[EntityInDb]:
+    entities = await self.repo.get_all_entities()
+    return ListResponse(count=len(entities), data=entities)
+```
+
+Use in Router:
+```python
+from responses.v1 import ListResponse
+
+@router.get("")
+async def get_all() -> ListResponse[EntityInDb]:
+    return await controller.get_all()
+```
+
+### 4.2 Soft Delete Pattern
+All entities support soft delete via `isDeleted: bool = False` in the `InDb` model. The delete operation updates the document to set `isDeleted = True` rather than removing it.
+
+**DataSource/Collection (MongoDB):**
+```python
+async def delete_entity_by_id(self, entity_id: str) -> dict[str, Any] | None:
+    result = await collection.find_one_and_update(
+        {"id": entity_id},
+        {"$set": {"isDeleted": True}},
+        return_document=ReturnDocument.AFTER,
+    )
+    return result
+```
+
+**DataSource (in-memory fallback):**
+```python
+async def delete_entity_by_id(self, entity_id: str) -> dict[str, Any] | None:
+    if entity_id not in self._entities:
+        return None
+    self._entities[entity_id]["isDeleted"] = True
+    return self._entities[entity_id]
+```
+
+### 4.3 MongoDB Driver: pymongo only
+Use `pymongo`'s **asynchronous** API exclusively. Do NOT use `motor`.
+
+- `from pymongo import AsyncMongoClient`
+- `from pymongo.asynchronous.collection import AsyncCollection`
+- `from pymongo import ReturnDocument`
+
+### 4.4 Services Layer
+`MongoService` is a singleton (via `__new__`) that lazily connects to MongoDB. It must be initialized during app startup:
+
+```python
+# app/core/services_initializer.py
+from services.mongo_service import MongoService
+
+async def init_services() -> None:
+    await MongoService().init_service()
+```
+
+`init_services()` is called from the FastAPI lifespan (`app_lifespan.py`).
+
+### 4.5 BaseMongoCollection Import (Circular Import Fix)
+When importing `MongoService` inside `base_mongo_collection.py`, use the **direct module path** to avoid circular imports with `services/__init__.py`:
+
+```python
+# ✅ Correct - direct import avoids circular dependency
+from services.mongo_service import MongoService
+
+# ❌ Wrong - creates circular import
+from services import MongoService
+```
+
+### 4.6 Known CLI (`onion crud-mongo`) Issues & Fixes
+After running `onion crud-mongo`, the following manual fixes are required:
+
+1. **`mongo_service.py`** — CLI generates broken import `from pymongo.asynchronous import`. Fix:
+   ```python
+   from pymongo import AsyncMongoClient
+   from pymongo.asynchronous.collection import AsyncCollection
+   ```
+2. **Model fields** — CLI generates empty `BaseModel` subclasses. Add fields manually.
+3. **Repository `create`/`update`** — CLI leaves `NotImplementedError`. Implement following the pattern in Section 3.3.
+
+### 4.7 Repository Imports Restriction
+Repository layer **must only import from `tools`** for cross-cutting utilities (UUID, time). It must **not** import from `services`, `collections`, or any infrastructure layer directly.
+
+```python
+# ✅ Correct
+from tools.time_tools import TimeTools
+from tools.uuid_tool import UuidTool
+
+# ❌ Wrong
+from services.mongo_service import MongoService
+```
+
+The infrastructure dependency is injected via the `DataSource`, which is passed to the Repository constructor.
+
+---
+
+## 🔧 5. Tools Reference
+
+### UuidTool (`app/tools/uuid_tool.py`)
+```python
+class UuidTool:
+    @staticmethod
+    def generate_uuid() -> str:
+        return str(uuid.uuid4())
+```
+
+### TimeTools (`app/tools/time_tools.py`)
+```python
+class TimeTools:
+    @staticmethod
+    def get_now_in_milliseconds() -> int:
+        return int(datetime.now().timestamp() * 1000)
+```
+
+---
