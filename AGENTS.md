@@ -207,7 +207,29 @@ After running `onion crud-mongo`, the following manual fixes are required:
 2. **Model fields** — CLI generates empty `BaseModel` subclasses. Add fields manually.
 3. **Repository `create`/`update`** — CLI leaves `NotImplementedError`. Implement following the pattern in Section 3.3.
 
-### 4.7 Repository Imports Restriction
+### 4.7 Monetary Values (Integer Cents)
+
+All monetary fields (prices, totals, amounts) **must** be stored and transferred as `int` representing **cents** (centavos). Never use `float` for money to avoid floating-point precision errors.
+
+```python
+# ✅ Correct - stored in cents
+salePrice: int        # 25050 = $250.50 MXN
+totalAmount: int      # 20000 = $200.00 MXN
+quotedPrice: int      # 15000 = $150.00 MXN
+salePriceApplied: int # 19999 = $199.99 MXN
+
+# ❌ Wrong - floating-point errors
+salePrice: float      # DO NOT USE
+```
+
+**Affected models:**
+- `Exam`: `salePrice`
+- `Quotation` / `QuotedExam`: `totalAmount`, `quotedPrice`
+- `Order`: `salePriceApplied`
+
+> **Note**: Medical reference values (`minValue`, `maxValue` in `ReferenceValue`) are NOT monetary — they remain `float` as they represent clinical measurement ranges.
+
+### 4.8 Repository Imports Restriction
 Repository layer **must only import from `tools`** for cross-cutting utilities (UUID, time). It must **not** import from `services`, `collections`, or any infrastructure layer directly.
 
 ```python

@@ -4,14 +4,14 @@ from pydantic import BaseModel
 class QuotedExam(BaseModel):
     examId: str
     examName: str
-    quotedPrice: float
+    quotedPrice: int
 
 
 class BaseQuotation(BaseModel):
     clientName: str
     patientId: str | None = None
     exams: list[QuotedExam] = []
-    totalAmount: float
+    totalAmount: int
     status: str = "pending"
     convertedToOrderId: str | None = None
 
@@ -24,7 +24,7 @@ class UpdateQuotation(BaseModel):
     clientName: str | None = None
     patientId: str | None = None
     exams: list[QuotedExam] | None = None
-    totalAmount: float | None = None
+    totalAmount: int | None = None
     status: str | None = None
     convertedToOrderId: str | None = None
 

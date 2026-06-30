@@ -13,7 +13,7 @@ class BaseOrder(BaseModel):
     quotationId: str | None = None
     examId: str
     examName: str
-    salePriceApplied: float
+    salePriceApplied: int
     status: str = "pending"
     results: list[OrderTestResult] = []
 
@@ -27,7 +27,7 @@ class UpdateOrder(BaseModel):
     quotationId: str | None = None
     examId: str | None = None
     examName: str | None = None
-    salePriceApplied: float | None = None
+    salePriceApplied: int | None = None
     status: str | None = None
     results: list[OrderTestResult] | None = None
 

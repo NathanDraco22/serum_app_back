@@ -6,7 +6,7 @@ from repos.v1._shared_models import IncludedTest
 class BaseExam(BaseModel):
     name: str
     commercialCategory: str
-    salePrice: float
+    salePrice: int
     currency: str
     includedTests: list[IncludedTest] = []
 
@@ -18,7 +18,7 @@ class CreateExam(BaseExam):
 class UpdateExam(BaseModel):
     name: str | None = None
     commercialCategory: str | None = None
-    salePrice: float | None = None
+    salePrice: int | None = None
     currency: str | None = None
     includedTests: list[IncludedTest] | None = None
 
