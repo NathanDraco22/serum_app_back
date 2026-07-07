@@ -1,9 +1,9 @@
 from fastapi import HTTPException, status
 
 from repos.v1.users import (
-    CreateUser, 
-    UpdateUser, 
-    UserInDb, 
+    CreateUser,
+    UpdateUser,
+    UserInDb,
     UsersRepository,
 )
 from responses.v1 import ListResponse
@@ -46,6 +46,7 @@ class UsersController:
                 detail="User not found",
             )
         return deleted_user
+
 
 users_controller = UsersController(
     users_repo=UsersRepository.get_instance(),

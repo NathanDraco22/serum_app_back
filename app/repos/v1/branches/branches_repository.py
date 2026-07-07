@@ -2,13 +2,12 @@ from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
 
 from .data.branches_datasource import BranchesDataSource
-from .models.branch_model import CreateBranch, UpdateBranch, BranchInDb
+from .models.branch_model import BranchInDb, CreateBranch, UpdateBranch
 
 
 class BranchesRepository:
-    
     _instance: "BranchesRepository|None" = None
-    
+
     def __init__(self, branches_ds: BranchesDataSource):
         self.branches_ds = branches_ds
 
@@ -38,7 +37,9 @@ class BranchesRepository:
             return None
         return BranchInDb.model_validate(result)
 
-    async def update_branch_by_id(self, branch_id: str, branch: UpdateBranch) -> BranchInDb | None:
+    async def update_branch_by_id(
+        self, branch_id: str, branch: UpdateBranch
+    ) -> BranchInDb | None:
         updated_data = branch.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 

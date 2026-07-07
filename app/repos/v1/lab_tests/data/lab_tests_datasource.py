@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import LabTestsCollection
 
 
 class LabTestsDataSource:
-
     async def create_lab_test(self, lab_test: dict[str, Any]) -> dict[str, Any]:
         collection = LabTestsCollection.get_instance()
         await collection.create_lab_test(lab_test)

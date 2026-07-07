@@ -1,5 +1,5 @@
 import os
-from typing import Literal, Any
+from typing import Any, Literal
 
 from pymongo import AsyncMongoClient
 from pymongo.asynchronous.collection import AsyncCollection
@@ -32,4 +32,6 @@ class MongoService:
         return db.get_collection(collection_name)
 
     async def create_indexes(self):
-        pass
+        from services.mongo_collections.v1 import DoctorsCollection, PatientsCollection
+        await DoctorsCollection.get_instance().create_indexes()
+        await PatientsCollection.get_instance().create_indexes()

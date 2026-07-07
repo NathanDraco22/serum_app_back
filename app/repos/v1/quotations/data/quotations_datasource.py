@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import QuotationsCollection
 
 
 class QuotationsDataSource:
-
     async def create_quotation(self, quotation: dict[str, Any]) -> dict[str, Any]:
         collection = QuotationsCollection.get_instance()
         await collection.create_quotation(quotation)

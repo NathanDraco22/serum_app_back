@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import UsersCollection
 
 
 class UsersDataSource:
-
     async def create_user(self, user: dict[str, Any]) -> dict[str, Any]:
         collection = UsersCollection.get_instance()
         await collection.create_user(user)

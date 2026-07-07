@@ -2,9 +2,9 @@ from fastapi import HTTPException, status
 
 from repos.v1.exams import (
     CreateExam,
-    UpdateExam,
     ExamInDb,
     ExamsRepository,
+    UpdateExam,
 )
 from responses.v1 import ListResponse
 

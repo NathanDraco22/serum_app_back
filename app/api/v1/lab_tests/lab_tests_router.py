@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 
-from repos.v1.lab_tests import CreateLabTest, UpdateLabTest, LabTestInDb
+from repos.v1.lab_tests import CreateLabTest, LabTestInDb, UpdateLabTest
 from responses.v1 import ListResponse
 
 from .lab_tests_controller import lab_tests_controller
-
 
 lab_tests_router = APIRouter(tags=["lab_testsV1"])
 

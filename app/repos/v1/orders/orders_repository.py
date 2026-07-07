@@ -1,12 +1,11 @@
-from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
+from tools.uuid_tool import UuidTool
 
 from .data.orders_datasource import OrdersDataSource
-from .models.order_model import CreateOrder, UpdateOrder, OrderInDb
+from .models.order_model import CreateOrder, OrderInDb, UpdateOrder
 
 
 class OrdersRepository:
-
     _instance: "OrdersRepository|None" = None
 
     def __init__(self, orders_ds: OrdersDataSource):
@@ -37,7 +36,9 @@ class OrdersRepository:
             return None
         return OrderInDb.model_validate(result)
 
-    async def update_order_by_id(self, order_id: str, order: UpdateOrder) -> OrderInDb | None:
+    async def update_order_by_id(
+        self, order_id: str, order: UpdateOrder
+    ) -> OrderInDb | None:
         updated_data = order.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 

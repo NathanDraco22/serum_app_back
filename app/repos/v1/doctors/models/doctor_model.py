@@ -6,6 +6,7 @@ class BaseDoctor(BaseModel):
     specialty: str
     phone: str
     email: str | None = None
+    cardId: str | None = None
 
 
 class CreateDoctor(BaseDoctor):
@@ -17,6 +18,7 @@ class UpdateDoctor(BaseModel):
     specialty: str | None = None
     phone: str | None = None
     email: str | None = None
+    cardId: str | None = None
 
 
 class DoctorInDb(BaseDoctor):

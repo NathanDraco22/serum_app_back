@@ -1,12 +1,11 @@
-from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
+from tools.uuid_tool import UuidTool
 
 from .data.quotations_datasource import QuotationsDataSource
-from .models.quotation_model import CreateQuotation, UpdateQuotation, QuotationInDb
+from .models.quotation_model import CreateQuotation, QuotationInDb, UpdateQuotation
 
 
 class QuotationsRepository:
-
     _instance: "QuotationsRepository|None" = None
 
     def __init__(self, quotations_ds: QuotationsDataSource):
@@ -18,7 +17,9 @@ class QuotationsRepository:
             cls._instance = cls(QuotationsDataSource())
         return cls._instance
 
-    async def create_quotation(self, create_quotation: CreateQuotation) -> QuotationInDb:
+    async def create_quotation(
+        self, create_quotation: CreateQuotation
+    ) -> QuotationInDb:
         new_quotation = QuotationInDb(
             id=UuidTool.generate_uuid(),
             createdAt=TimeTools.get_now_in_milliseconds(),
@@ -37,11 +38,15 @@ class QuotationsRepository:
             return None
         return QuotationInDb.model_validate(result)
 
-    async def update_quotation_by_id(self, quotation_id: str, quotation: UpdateQuotation) -> QuotationInDb | None:
+    async def update_quotation_by_id(
+        self, quotation_id: str, quotation: UpdateQuotation
+    ) -> QuotationInDb | None:
         updated_data = quotation.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 
-        result = await self.quotations_ds.update_quotation_by_id(quotation_id, updated_data)
+        result = await self.quotations_ds.update_quotation_by_id(
+            quotation_id, updated_data
+        )
         if result is None:
             return None
         return QuotationInDb.model_validate(result)

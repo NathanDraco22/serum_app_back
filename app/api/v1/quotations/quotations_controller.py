@@ -2,9 +2,9 @@ from fastapi import HTTPException, status
 
 from repos.v1.quotations import (
     CreateQuotation,
-    UpdateQuotation,
     QuotationInDb,
     QuotationsRepository,
+    UpdateQuotation,
 )
 from responses.v1 import ListResponse
 
@@ -29,8 +29,12 @@ class QuotationsController:
             )
         return quotation
 
-    async def update_quotation_by_id(self, quotation_id: str, body: UpdateQuotation) -> QuotationInDb:
-        updated_quotation = await self.quotations_repo.update_quotation_by_id(quotation_id, body)
+    async def update_quotation_by_id(
+        self, quotation_id: str, body: UpdateQuotation
+    ) -> QuotationInDb:
+        updated_quotation = await self.quotations_repo.update_quotation_by_id(
+            quotation_id, body
+        )
         if updated_quotation is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -39,7 +43,9 @@ class QuotationsController:
         return updated_quotation
 
     async def delete_quotation_by_id(self, quotation_id: str) -> QuotationInDb:
-        deleted_quotation = await self.quotations_repo.delete_quotation_by_id(quotation_id)
+        deleted_quotation = await self.quotations_repo.delete_quotation_by_id(
+            quotation_id
+        )
         if deleted_quotation is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

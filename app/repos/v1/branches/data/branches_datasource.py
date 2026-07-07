@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import BranchesCollection
 
 
 class BranchesDataSource:
-
     async def create_branch(self, branch: dict[str, Any]) -> dict[str, Any]:
         collection = BranchesCollection.get_instance()
         await collection.create_branch(branch)

@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 
-from repos.v1.orders import CreateOrder, UpdateOrder, OrderInDb
+from repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
 
 from .orders_controller import orders_controller
-
 
 orders_router = APIRouter(tags=["ordersV1"])
 

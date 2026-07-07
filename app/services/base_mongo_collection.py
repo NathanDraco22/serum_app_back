@@ -1,7 +1,6 @@
-from typing import TypeVar, Type
+from typing import Type, TypeVar
 
 from services.mongo_service import MongoService
-
 
 T = TypeVar("T", bound="BaseMongoCollection")
 
@@ -18,4 +17,4 @@ class BaseMongoCollection:
     def get_instance(cls: Type[T]) -> T:
         if cls._instance is None:
             cls._instance = cls()
-        return cls._instance # type: ignore
+        return cls._instance  # type: ignore

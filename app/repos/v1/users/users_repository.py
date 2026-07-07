@@ -6,9 +6,8 @@ from .models.user_model import CreateUser, UpdateUser, UserInDb
 
 
 class UsersRepository:
-    
     _instance: "UsersRepository|None" = None
-    
+
     def __init__(self, users_ds: UsersDataSource):
         self.users_ds = users_ds
 
@@ -38,7 +37,9 @@ class UsersRepository:
             return None
         return UserInDb.model_validate(result)
 
-    async def update_user_by_id(self, user_id: str, user: UpdateUser) -> UserInDb | None:
+    async def update_user_by_id(
+        self, user_id: str, user: UpdateUser
+    ) -> UserInDb | None:
         updated_data = user.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 

@@ -2,9 +2,9 @@ from fastapi import HTTPException, status
 
 from repos.v1.orders import (
     CreateOrder,
-    UpdateOrder,
     OrderInDb,
     OrdersRepository,
+    UpdateOrder,
 )
 from responses.v1 import ListResponse
 

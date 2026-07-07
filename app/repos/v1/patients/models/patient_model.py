@@ -8,6 +8,7 @@ class BasePatient(BaseModel):
     phone: str
     address: str
     email: str | None = None
+    cardId: str | None = None
 
 
 class CreatePatient(BasePatient):
@@ -21,6 +22,7 @@ class UpdatePatient(BaseModel):
     phone: str | None = None
     address: str | None = None
     email: str | None = None
+    cardId: str | None = None
 
 
 class PatientInDb(BasePatient):

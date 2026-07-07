@@ -1,6 +1,8 @@
 import os
-from fastapi import FastAPI
+
 from dotenv import load_dotenv
+from fastapi import FastAPI
+
 from api.v1.router import router_v1
 from app_lifespan import lifespan
 

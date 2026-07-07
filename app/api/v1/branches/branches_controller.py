@@ -1,10 +1,10 @@
 from fastapi import HTTPException, status
 
 from repos.v1.branches import (
-    CreateBranch, 
-    UpdateBranch, 
-    BranchInDb, 
     BranchesRepository,
+    BranchInDb,
+    CreateBranch,
+    UpdateBranch,
 )
 from responses.v1 import ListResponse
 
@@ -29,7 +29,9 @@ class BranchesController:
             )
         return branch
 
-    async def update_branch_by_id(self, branch_id: str, body: UpdateBranch) -> BranchInDb:
+    async def update_branch_by_id(
+        self, branch_id: str, body: UpdateBranch
+    ) -> BranchInDb:
         updated_branch = await self.branches_repo.update_branch_by_id(branch_id, body)
         if updated_branch is None:
             raise HTTPException(
@@ -46,6 +48,7 @@ class BranchesController:
                 detail="Branch not found",
             )
         return deleted_branch
+
 
 branches_controller = BranchesController(
     branches_repo=BranchesRepository.get_instance(),

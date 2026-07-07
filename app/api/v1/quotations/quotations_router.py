@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 
-from repos.v1.quotations import CreateQuotation, UpdateQuotation, QuotationInDb
+from repos.v1.quotations import CreateQuotation, QuotationInDb, UpdateQuotation
 from responses.v1 import ListResponse
 
 from .quotations_controller import quotations_controller
-
 
 quotations_router = APIRouter(tags=["quotationsV1"])
 
@@ -25,7 +24,9 @@ async def get_quotation_by_id(quotation_id: str) -> QuotationInDb:
 
 
 @quotations_router.patch("/{quotation_id}")
-async def update_quotation_by_id(quotation_id: str, body: UpdateQuotation) -> QuotationInDb:
+async def update_quotation_by_id(
+    quotation_id: str, body: UpdateQuotation
+) -> QuotationInDb:
     return await quotations_controller.update_quotation_by_id(quotation_id, body)
 
 

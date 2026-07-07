@@ -1,5 +1,5 @@
 from .data.quotations_datasource import QuotationsDataSource
-from .models.quotation_model import CreateQuotation, UpdateQuotation, QuotationInDb
+from .models.quotation_model import CreateQuotation, QuotationInDb, UpdateQuotation
 from .quotations_repository import QuotationsRepository
 
 __all__ = [

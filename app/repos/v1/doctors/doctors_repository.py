@@ -1,14 +1,14 @@
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
+from tools.search_tools import generate_prefixes
 
 from .data.doctors_datasource import DoctorsDataSource
-from .models.doctor_model import CreateDoctor, UpdateDoctor, DoctorInDb
+from .models.doctor_model import CreateDoctor, DoctorInDb, UpdateDoctor
 
 
 class DoctorsRepository:
-    
     _instance: "DoctorsRepository|None" = None
-    
+
     def __init__(self, doctors_ds: DoctorsDataSource):
         self.doctors_ds = doctors_ds
 
@@ -25,7 +25,10 @@ class DoctorsRepository:
             updatedAt=None,
             **create_doctor.model_dump(),
         )
-        result = await self.doctors_ds.create_doctor(new_doctor.model_dump())
+        new_doctor_data = new_doctor.model_dump()
+        new_doctor_data["searchPrefixes"] = generate_prefixes(new_doctor.name)
+
+        result = await self.doctors_ds.create_doctor(new_doctor_data)
         return DoctorInDb.model_validate(result)
 
     async def get_all_doctors(self) -> list[DoctorInDb]:
@@ -38,9 +41,24 @@ class DoctorsRepository:
             return None
         return DoctorInDb.model_validate(result)
 
-    async def update_doctor_by_id(self, doctor_id: str, doctor: UpdateDoctor) -> DoctorInDb | None:
+    async def get_doctor_by_card_id(self, card_id: str) -> DoctorInDb | None:
+        result = await self.doctors_ds.get_doctor_by_card_id(card_id)
+        if result is None:
+            return None
+        return DoctorInDb.model_validate(result)
+
+    async def search_doctor_by_text(self, text_query: str) -> list[DoctorInDb]:
+        results = await self.doctors_ds.search_doctor_by_text(text_query)
+        return [DoctorInDb.model_validate(r) for r in results]
+
+    async def update_doctor_by_id(
+        self, doctor_id: str, doctor: UpdateDoctor
+    ) -> DoctorInDb | None:
         updated_data = doctor.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
+
+        if "name" in updated_data and updated_data["name"]:
+            updated_data["searchPrefixes"] = generate_prefixes(updated_data["name"])
 
         result = await self.doctors_ds.update_doctor_by_id(doctor_id, updated_data)
         if result is None:

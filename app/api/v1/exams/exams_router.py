@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 
-from repos.v1.exams import CreateExam, UpdateExam, ExamInDb
+from repos.v1.exams import CreateExam, ExamInDb, UpdateExam
 from responses.v1 import ListResponse
 
 from .exams_controller import exams_controller
-
 
 exams_router = APIRouter(tags=["examsV1"])
 

@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import PatientsCollection
 
 
 class PatientsDataSource:
-
     async def create_patient(self, patient: dict[str, Any]) -> dict[str, Any]:
         collection = PatientsCollection.get_instance()
         await collection.create_patient(patient)
@@ -16,6 +16,14 @@ class PatientsDataSource:
     async def get_patient_by_id(self, patient_id: str) -> dict[str, Any] | None:
         collection = PatientsCollection.get_instance()
         return await collection.fetch_patient_by_id(patient_id)
+
+    async def get_patient_by_card_id(self, card_id: str) -> dict[str, Any] | None:
+        collection = PatientsCollection.get_instance()
+        return await collection.get_patient_by_card_id(card_id)
+
+    async def search_patient_by_text(self, text_query: str) -> list[dict[str, Any]]:
+        collection = PatientsCollection.get_instance()
+        return await collection.search_patient_by_text(text_query)
 
     async def update_patient_by_id(
         self, patient_id: str, patient: dict[str, Any]

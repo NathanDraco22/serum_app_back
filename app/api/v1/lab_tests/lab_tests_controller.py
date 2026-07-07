@@ -2,9 +2,9 @@ from fastapi import HTTPException, status
 
 from repos.v1.lab_tests import (
     CreateLabTest,
-    UpdateLabTest,
     LabTestInDb,
     LabTestsRepository,
+    UpdateLabTest,
 )
 from responses.v1 import ListResponse
 
@@ -29,8 +29,12 @@ class LabTestsController:
             )
         return lab_test
 
-    async def update_lab_test_by_id(self, lab_test_id: str, body: UpdateLabTest) -> LabTestInDb:
-        updated_lab_test = await self.lab_tests_repo.update_lab_test_by_id(lab_test_id, body)
+    async def update_lab_test_by_id(
+        self, lab_test_id: str, body: UpdateLabTest
+    ) -> LabTestInDb:
+        updated_lab_test = await self.lab_tests_repo.update_lab_test_by_id(
+            lab_test_id, body
+        )
         if updated_lab_test is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

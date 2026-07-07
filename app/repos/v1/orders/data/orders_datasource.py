@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import OrdersCollection
 
 
 class OrdersDataSource:
-
     async def create_order(self, order: dict[str, Any]) -> dict[str, Any]:
         collection = OrdersCollection.get_instance()
         await collection.create_order(order)

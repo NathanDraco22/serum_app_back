@@ -1,9 +1,9 @@
 from typing import Any
+
 from services.mongo_collections.v1 import ExamsCollection
 
 
 class ExamsDataSource:
-
     async def create_exam(self, exam: dict[str, Any]) -> dict[str, Any]:
         collection = ExamsCollection.get_instance()
         await collection.create_exam(exam)

@@ -1,12 +1,11 @@
-from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
+from tools.uuid_tool import UuidTool
 
 from .data.lab_tests_datasource import LabTestsDataSource
-from .models.lab_test_model import CreateLabTest, UpdateLabTest, LabTestInDb
+from .models.lab_test_model import CreateLabTest, LabTestInDb, UpdateLabTest
 
 
 class LabTestsRepository:
-
     _instance: "LabTestsRepository|None" = None
 
     def __init__(self, lab_tests_ds: LabTestsDataSource):
@@ -37,11 +36,15 @@ class LabTestsRepository:
             return None
         return LabTestInDb.model_validate(result)
 
-    async def update_lab_test_by_id(self, lab_test_id: str, lab_test: UpdateLabTest) -> LabTestInDb | None:
+    async def update_lab_test_by_id(
+        self, lab_test_id: str, lab_test: UpdateLabTest
+    ) -> LabTestInDb | None:
         updated_data = lab_test.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 
-        result = await self.lab_tests_ds.update_lab_test_by_id(lab_test_id, updated_data)
+        result = await self.lab_tests_ds.update_lab_test_by_id(
+            lab_test_id, updated_data
+        )
         if result is None:
             return None
         return LabTestInDb.model_validate(result)

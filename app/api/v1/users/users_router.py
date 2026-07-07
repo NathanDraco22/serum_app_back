@@ -5,7 +5,6 @@ from responses.v1 import ListResponse
 
 from .users_controller import users_controller
 
-
 users_router = APIRouter(tags=["usersV1"])
 
 
@@ -25,7 +24,7 @@ async def get_user_by_id(user_id: str) -> UserInDb:
 
 
 @users_router.patch("/{user_id}")
-async def update_user_by_id(user_id: str, body: UpdateUser) -> UserInDb: 
+async def update_user_by_id(user_id: str, body: UpdateUser) -> UserInDb:
     return await users_controller.update_user_by_id(user_id, body)
 
 

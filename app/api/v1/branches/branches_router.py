@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 
-from repos.v1.branches import CreateBranch, UpdateBranch, BranchInDb
+from repos.v1.branches import BranchInDb, CreateBranch, UpdateBranch
 from responses.v1 import ListResponse
 
 from .branches_controller import branches_controller
-
 
 branches_router = APIRouter(tags=["branchesV1"])
 
@@ -25,7 +24,7 @@ async def get_branch_by_id(branch_id: str) -> BranchInDb:
 
 
 @branches_router.patch("/{branch_id}")
-async def update_branch_by_id(branch_id: str, body: UpdateBranch) -> BranchInDb: 
+async def update_branch_by_id(branch_id: str, body: UpdateBranch) -> BranchInDb:
     return await branches_controller.update_branch_by_id(branch_id, body)
 
 

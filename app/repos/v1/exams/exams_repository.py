@@ -1,12 +1,11 @@
-from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
+from tools.uuid_tool import UuidTool
 
 from .data.exams_datasource import ExamsDataSource
-from .models.exam_model import CreateExam, UpdateExam, ExamInDb
+from .models.exam_model import CreateExam, ExamInDb, UpdateExam
 
 
 class ExamsRepository:
-
     _instance: "ExamsRepository|None" = None
 
     def __init__(self, exams_ds: ExamsDataSource):
@@ -37,7 +36,9 @@ class ExamsRepository:
             return None
         return ExamInDb.model_validate(result)
 
-    async def update_exam_by_id(self, exam_id: str, exam: UpdateExam) -> ExamInDb | None:
+    async def update_exam_by_id(
+        self, exam_id: str, exam: UpdateExam
+    ) -> ExamInDb | None:
         updated_data = exam.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 
