@@ -20,6 +20,10 @@ class ExamsController:
         exams = await self.exams_repo.get_all_exams()
         return ListResponse(count=len(exams), data=exams)
 
+    async def search_exam_by_text(self, text_query: str) -> ListResponse[ExamInDb]:
+        exams = await self.exams_repo.search_exam_by_text(text_query)
+        return ListResponse(count=len(exams), data=exams)
+
     async def get_exam_by_id(self, exam_id: str) -> ExamInDb:
         exam = await self.exams_repo.get_exam_by_id(exam_id)
         if exam is None:

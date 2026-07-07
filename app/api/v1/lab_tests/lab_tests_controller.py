@@ -20,6 +20,10 @@ class LabTestsController:
         lab_tests = await self.lab_tests_repo.get_all_lab_tests()
         return ListResponse(count=len(lab_tests), data=lab_tests)
 
+    async def search_lab_test_by_text(self, text_query: str) -> ListResponse[LabTestInDb]:
+        lab_tests = await self.lab_tests_repo.search_lab_test_by_text(text_query)
+        return ListResponse(count=len(lab_tests), data=lab_tests)
+
     async def get_lab_test_by_id(self, lab_test_id: str) -> LabTestInDb:
         lab_test = await self.lab_tests_repo.get_lab_test_by_id(lab_test_id)
         if lab_test is None:

@@ -17,6 +17,10 @@ class ExamsDataSource:
         collection = ExamsCollection.get_instance()
         return await collection.fetch_exam_by_id(exam_id)
 
+    async def search_exam_by_text(self, text_query: str) -> list[dict[str, Any]]:
+        collection = ExamsCollection.get_instance()
+        return await collection.search_exam_by_text(text_query)
+
     async def update_exam_by_id(
         self, exam_id: str, exam: dict[str, Any]
     ) -> dict[str, Any] | None:

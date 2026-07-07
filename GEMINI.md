@@ -30,11 +30,18 @@ El usuario solicitó revisar el flujo de creación y búsqueda de clientes de la
 ### Cambios Realizados:
 - **Backend (Python)**:
   - Se agregó el campo `cardId: str | None = None` a los esquemas Pydantic `BaseDoctor`, `UpdateDoctor`, `BasePatient` y `UpdatePatient`.
-  - Se implementó la lógica de prefijos (`generate_prefixes`) en las capas de repositorio de doctores y pacientes al momento de crear y actualizar.
-  - Se crearon los métodos de agregación y búsqueda avanzada con boost de posición en `DoctorsCollection` y `PatientsCollection`.
-  - Se configuró la automatización de la creación de índices en `MongoService`.
-  - Se expuso la ruta de búsqueda `GET /search/{text_query}` en los endpoints correspondientes de la API.
+  - Se implementó la lógica de prefijos (`generate_prefixes`) en las capas de repositorio de doctores, pacientes, exámenes (`Exams`) y pruebas (`LabTests`) al momento de crear y actualizar.
+  - Se crearon los métodos de agregación y búsqueda avanzada con boost de posición en `DoctorsCollection`, `PatientsCollection`, `ExamsCollection` y `LabTestsCollection` (esta última utilizando `parameterName` para indexar y buscar).
+  - Se configuró la automatización de la creación de índices en `MongoService` para las cuatro colecciones.
+  - Se expuso la ruta de búsqueda `GET /search/{text_query}` en los routers correspondientes.
 - **Frontend (Dart - serum_business)**:
-  - Se agregó el campo `cardId` (tipo `String?`) a las clases `BaseDoctor`, `CreateDoctor`, `UpdateDoctor`, `DoctorInDb`, `BasePatient`, `CreatePatient`, `UpdatePatient` y `PatientInDb`.
-  - Se crearon los métodos de petición HTTP en `DoctorsDataSource` y `PatientsDataSource`.
-  - Se implementaron los métodos de llamada de negocio `searchDoctorsByText` y `searchPatientsByText` en sus respectivos repositorios.
+  - Se agregó el campo `cardId` (tipo `String?`) a los modelos de Doctores y Pacientes.
+  - Se crearon los métodos de petición HTTP en `DoctorsDataSource`, `PatientsDataSource`, `ExamsDataSource` y `LabTestsDataSource`.
+  - Se implementaron los métodos de llamada de negocio de búsqueda en los repositorios de Doctores, Pacientes, Exámenes y Pruebas.
+
+### Verificación Adicional del Backend:
+- **`uv run ruff check`**: Reportó advertencias únicamente de tipo `E402` (importaciones no al principio del archivo) en `test\test_core_entities.py`, necesarias por la inyección previa de la variable de entorno `os.environ["MONGO_URL"]`. El código de producción (`app/`) está 100% limpio.
+- **`uv run ty check`**: Reportó diagnósticos de tipo en `test\test_core_entities.py` debido a aserciones sobre variables opcionales (uniones de tipo con `None`). **Cero diagnósticos/errores en la carpeta de producción `app/`**, lo que garantiza que todo el código del backend está correctamente tipado y libre de issues estáticos.
+
+### Actualización de Normas (`AGENTS.md`):
+- Se añadió la sección **`6. Backend Verification Workflow (Post-Implementation)`** a [AGENTS.md](file:///c:/Users/sytru/Developer/Projects/lab_project/serum_app_back/AGENTS.md) para obligar a todo agente o desarrollador que trabaje en este backend a ejecutar la verificación de importaciones, el formateador/linter `ruff` y el typechecker `ty` después de cada cambio de código.

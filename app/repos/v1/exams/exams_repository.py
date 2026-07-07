@@ -1,5 +1,6 @@
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
+from tools.search_tools import generate_prefixes
 
 from .data.exams_datasource import ExamsDataSource
 from .models.exam_model import CreateExam, ExamInDb, UpdateExam
@@ -23,7 +24,10 @@ class ExamsRepository:
             createdAt=TimeTools.get_now_in_milliseconds(),
             **create_exam.model_dump(),
         )
-        result = await self.exams_ds.create_exam(new_exam.model_dump())
+        new_exam_data = new_exam.model_dump()
+        new_exam_data["searchPrefixes"] = generate_prefixes(new_exam.name)
+
+        result = await self.exams_ds.create_exam(new_exam_data)
         return ExamInDb.model_validate(result)
 
     async def get_all_exams(self) -> list[ExamInDb]:
@@ -36,11 +40,18 @@ class ExamsRepository:
             return None
         return ExamInDb.model_validate(result)
 
+    async def search_exam_by_text(self, text_query: str) -> list[ExamInDb]:
+        results = await self.exams_ds.search_exam_by_text(text_query)
+        return [ExamInDb.model_validate(r) for r in results]
+
     async def update_exam_by_id(
         self, exam_id: str, exam: UpdateExam
     ) -> ExamInDb | None:
         updated_data = exam.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
+
+        if "name" in updated_data and updated_data["name"]:
+            updated_data["searchPrefixes"] = generate_prefixes(updated_data["name"])
 
         result = await self.exams_ds.update_exam_by_id(exam_id, updated_data)
         if result is None:

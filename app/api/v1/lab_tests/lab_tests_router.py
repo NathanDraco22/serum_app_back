@@ -18,6 +18,11 @@ async def get_all_lab_tests() -> ListResponse[LabTestInDb]:
     return await lab_tests_controller.get_all_lab_tests()
 
 
+@lab_tests_router.get("/search/{text_query}")
+async def search_lab_test_by_text(text_query: str) -> ListResponse[LabTestInDb]:
+    return await lab_tests_controller.search_lab_test_by_text(text_query)
+
+
 @lab_tests_router.get("/{lab_test_id}")
 async def get_lab_test_by_id(lab_test_id: str) -> LabTestInDb:
     return await lab_tests_controller.get_lab_test_by_id(lab_test_id)

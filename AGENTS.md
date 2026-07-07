@@ -264,3 +264,25 @@ class TimeTools:
 ```
 
 ---
+
+## 🐍 6. Backend Verification Workflow (Post-Implementation)
+
+Always execute the following verification suite immediately after modifying any code files in the backend (`serum_app_back`) to ensure that imports resolve correctly, styling is compliant, and typing remains consistent:
+
+1.  **Imports and Syntax Validation**:
+    Verify that the application initializes without syntax or import path errors by setting the `PYTHONPATH` and loading the main app:
+    ```bash
+    $env:PYTHONPATH="app"; .venv\Scripts\python.exe -c "from app.main import app"
+    ```
+2.  **Linter (`ruff`)**:
+    Run the linter check to catch styling, unused imports, or formatting issues:
+    ```bash
+    uv run ruff check
+    ```
+    *(Note: Rule violations of type E402 in tests are acceptable if they require configuring env variables before imports).*
+3.  **Typechecking (`ty`)**:
+    Validate Python typing consistency to catch unresolved references and attributes:
+    ```bash
+    $env:PYTHONPATH="app"; uv run ty check
+    ```
+    *(Note: Diagnostics in tests regarding optional values must be addressed or ignored selectively, but the `app/` production directory must always return 0 diagnostics).*

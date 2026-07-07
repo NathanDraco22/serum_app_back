@@ -17,6 +17,10 @@ class LabTestsDataSource:
         collection = LabTestsCollection.get_instance()
         return await collection.fetch_lab_test_by_id(lab_test_id)
 
+    async def search_lab_test_by_text(self, text_query: str) -> list[dict[str, Any]]:
+        collection = LabTestsCollection.get_instance()
+        return await collection.search_lab_test_by_text(text_query)
+
     async def update_lab_test_by_id(
         self, lab_test_id: str, lab_test: dict[str, Any]
     ) -> dict[str, Any] | None:

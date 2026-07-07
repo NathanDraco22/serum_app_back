@@ -1,5 +1,6 @@
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
+from tools.search_tools import generate_prefixes
 
 from .data.lab_tests_datasource import LabTestsDataSource
 from .models.lab_test_model import CreateLabTest, LabTestInDb, UpdateLabTest
@@ -23,7 +24,10 @@ class LabTestsRepository:
             createdAt=TimeTools.get_now_in_milliseconds(),
             **create_lab_test.model_dump(),
         )
-        result = await self.lab_tests_ds.create_lab_test(new_lab_test.model_dump())
+        new_lab_test_data = new_lab_test.model_dump()
+        new_lab_test_data["searchPrefixes"] = generate_prefixes(new_lab_test.parameterName)
+
+        result = await self.lab_tests_ds.create_lab_test(new_lab_test_data)
         return LabTestInDb.model_validate(result)
 
     async def get_all_lab_tests(self) -> list[LabTestInDb]:
@@ -36,11 +40,18 @@ class LabTestsRepository:
             return None
         return LabTestInDb.model_validate(result)
 
+    async def search_lab_test_by_text(self, text_query: str) -> list[LabTestInDb]:
+        results = await self.lab_tests_ds.search_lab_test_by_text(text_query)
+        return [LabTestInDb.model_validate(r) for r in results]
+
     async def update_lab_test_by_id(
         self, lab_test_id: str, lab_test: UpdateLabTest
     ) -> LabTestInDb | None:
         updated_data = lab_test.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
+
+        if "parameterName" in updated_data and updated_data["parameterName"]:
+            updated_data["searchPrefixes"] = generate_prefixes(updated_data["parameterName"])
 
         result = await self.lab_tests_ds.update_lab_test_by_id(
             lab_test_id, updated_data

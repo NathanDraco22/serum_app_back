@@ -18,6 +18,11 @@ async def get_all_exams() -> ListResponse[ExamInDb]:
     return await exams_controller.get_all_exams()
 
 
+@exams_router.get("/search/{text_query}")
+async def search_exam_by_text(text_query: str) -> ListResponse[ExamInDb]:
+    return await exams_controller.search_exam_by_text(text_query)
+
+
 @exams_router.get("/{exam_id}")
 async def get_exam_by_id(exam_id: str) -> ExamInDb:
     return await exams_controller.get_exam_by_id(exam_id)
