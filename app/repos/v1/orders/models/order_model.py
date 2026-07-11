@@ -1,6 +1,11 @@
+from typing import Literal
 from pydantic import BaseModel
 
+
 from repos.v1._shared_models import IncludedTest
+
+
+OrderStatus = Literal["pending", "completed", "cancelled", "paid", "partiallyPaid"]
 
 
 class OrderTestResult(IncludedTest):
@@ -14,7 +19,8 @@ class BaseOrder(BaseModel):
     examId: str
     examName: str
     salePriceApplied: int
-    status: str = "pending"
+    paidAmount: int = 0
+    status: OrderStatus = "pending"
     results: list[OrderTestResult] = []
 
 
@@ -28,6 +34,7 @@ class UpdateOrder(BaseModel):
     examId: str | None = None
     examName: str | None = None
     salePriceApplied: int | None = None
+    paidAmount: int | None = None
     status: str | None = None
     results: list[OrderTestResult] | None = None
 

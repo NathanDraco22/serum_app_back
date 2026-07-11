@@ -13,7 +13,7 @@ class CashRegistersCollection(BaseMongoCollection):
 
     async def fetch_all_cash_registers(self) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find()
+        cursor = collection.find({"isDeleted": {"$ne": True}})
 
         result = await cursor.to_list(length=None)
         await cursor.close()
@@ -24,14 +24,14 @@ class CashRegistersCollection(BaseMongoCollection):
         self, cash_register_id: str
     ) -> dict[str, Any] | None:
         collection = self._collection
-        result = await collection.find_one({"id": cash_register_id})
+        result = await collection.find_one({"id": cash_register_id, "isDeleted": {"$ne": True}})
         return result
 
     async def fetch_open_register_by_branch(
         self, branch_id: str
     ) -> dict[str, Any] | None:
         collection = self._collection
-        result = await collection.find_one({"branchId": branch_id, "isOpen": True})
+        result = await collection.find_one({"branchId": branch_id, "isOpen": True, "isDeleted": {"$ne": True}})
         return result
 
     async def update_cash_register_by_id(
@@ -56,6 +56,31 @@ class CashRegistersCollection(BaseMongoCollection):
         result = await collection.find_one_and_update(
             {"id": cash_register_id},
             {"$set": {"isDeleted": True}},
+            return_document=ReturnDocument.AFTER,
+        )
+
+        return result
+
+    async def add_to_balance(
+        self, register_id: str, payment_method: str, amount: int
+    ) -> dict[str, Any] | None:
+        balance_field = f"{payment_method}Balance"
+        collection = self._collection
+        result = await collection.find_one_and_update(
+            {"id": register_id},
+            {"$inc": {balance_field: amount, "totalBalance": amount}},
+            return_document=ReturnDocument.AFTER,
+        )
+        return result
+
+    async def subtract_from_balance(
+        self, register_id: str, payment_method: str, amount: int
+    ) -> dict[str, Any] | None:
+        balance_field = f"{payment_method}Balance"
+        collection = self._collection
+        result = await collection.find_one_and_update(
+            {"id": register_id},
+            {"$inc": {balance_field: -amount, "totalBalance": -amount}},
             return_document=ReturnDocument.AFTER,
         )
         return result

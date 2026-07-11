@@ -1,24 +1,37 @@
+from pydantic import BaseModel
 from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
 from repos.v1.cash_transactions import CashTransactionInDb
-from repos.v1.cash_registers import CashRegisterInDb
+from repos.v1.cash_registers import CashRegisterInDb, UpdateCashRegister
 from repos.v1.common.models.user_info import UserInfo
 from services import MongoService
 from services.mongo_collections.v1 import (
     CashRegistersCollection,
     CashTransactionsCollection,
 )
+from core.exceptions import (
+    CashRegisterNotFound,
+    CashRegisterNotOpen,
+    ConceptRequired,
+    InvalidPaymentMethod,
+)
+
+
+class IncomeIntent(BaseModel):
+    amount: int
+    paymentMethod: str
+    concept: str
+    performedBy: UserInfo
 
 
 async def process_income(
-    register_id: str,
-    amount: int,
-    payment_method: str,
-    concept: str,
-    performed_by: UserInfo,
+    register_id: str, income_intent: IncomeIntent
 ) -> CashTransactionInDb:
-    if not concept.strip():
-        raise ValueError("CONCEPT_REQUIRED_FOR_INCOME")
+    if not income_intent.concept.strip():
+        raise ConceptRequired()
+
+    if income_intent.paymentMethod not in ("cash", "card", "transfer"):
+        raise InvalidPaymentMethod()
 
     mongo_client = MongoService().client
     register_col = CashRegistersCollection.get_instance()
@@ -31,12 +44,12 @@ async def process_income(
                     register_id
                 )
                 if register_data is None:
-                    raise ValueError("REGISTER_NOT_FOUND")
+                    raise CashRegisterNotFound()
 
                 register = CashRegisterInDb.model_validate(register_data)
 
                 if not register.isOpen:
-                    raise ValueError("REGISTER_NOT_OPEN")
+                    raise CashRegisterNotOpen()
 
                 now = TimeTools.get_now_in_milliseconds()
 
@@ -44,24 +57,27 @@ async def process_income(
                 new_card = register.cardBalance
                 new_transfer = register.transferBalance
 
-                if payment_method == "cash":
-                    new_cash += amount
-                elif payment_method == "card":
-                    new_card += amount
-                elif payment_method == "transfer":
-                    new_transfer += amount
+                if income_intent.paymentMethod == "cash":
+                    new_cash += income_intent.amount
+                elif income_intent.paymentMethod == "card":
+                    new_card += income_intent.amount
+                elif income_intent.paymentMethod == "transfer":
+                    new_transfer += income_intent.amount
 
                 new_total = new_cash + new_card + new_transfer
 
+                update_model = UpdateCashRegister(
+                    cashBalance=new_cash,
+                    cardBalance=new_card,
+                    transferBalance=new_transfer,
+                    totalBalance=new_total,
+                )
+
+                update_data = update_model.model_dump(exclude_unset=True)
+                update_data["updatedAt"] = now
+
                 await register_col.update_cash_register_by_id(
-                    register_id,
-                    {
-                        "updatedAt": now,
-                        "cashBalance": new_cash,
-                        "cardBalance": new_card,
-                        "transferBalance": new_transfer,
-                        "totalBalance": new_total,
-                    },
+                    register_id, update_data
                 )
 
                 transaction = CashTransactionInDb(
@@ -69,12 +85,12 @@ async def process_income(
                     registerId=register_id,
                     flowType="in",
                     subType="income",
-                    paymentMethod=payment_method,
-                    amount=amount,
+                    paymentMethod=income_intent.paymentMethod,
+                    amount=income_intent.amount,
                     resultingBalance=new_total,
-                    concept=concept,
+                    concept=income_intent.concept,
                     referenceId=None,
-                    performedBy=performed_by,
+                    performedBy=income_intent.performedBy,
                     createdAt=now,
                     updatedAt=None,
                     isDeleted=False,

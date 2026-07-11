@@ -4,6 +4,7 @@ from repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
 
 from .orders_controller import orders_controller
+from .orders_schemas import OrderPayRequest
 
 orders_router = APIRouter(tags=["ordersV1"])
 
@@ -31,3 +32,8 @@ async def update_order_by_id(order_id: str, body: UpdateOrder) -> OrderInDb:
 @orders_router.delete("/{order_id}")
 async def delete_order_by_id(order_id: str) -> OrderInDb:
     return await orders_controller.delete_order_by_id(order_id)
+
+
+@orders_router.post("/{order_id}/pay")
+async def pay_order(order_id: str, body: OrderPayRequest) -> OrderInDb:
+    return await orders_controller.pay_order(order_id, body)

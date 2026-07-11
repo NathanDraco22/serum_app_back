@@ -1,6 +1,7 @@
+from pydantic import BaseModel
 from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
-from repos.v1.cash_registers import CashRegisterInDb
+from repos.v1.cash_registers import CashRegisterInDb, UpdateCashRegister
 from repos.v1.cash_transactions import CashTransactionInDb
 from repos.v1.common.models.user_info import UserInfo
 from services import MongoService
@@ -8,11 +9,15 @@ from services.mongo_collections.v1 import (
     CashRegistersCollection,
     CashTransactionsCollection,
 )
+from core.exceptions import CashRegisterNotFound, CashRegisterAlreadyClosed
+
+
+class CloseCashIntent(BaseModel):
+    performedBy: UserInfo
 
 
 async def process_closing(
-    register_id: str,
-    performed_by: UserInfo,
+    register_id: str, close_intent: CloseCashIntent
 ) -> CashRegisterInDb:
     mongo_client = MongoService().client
     register_col = CashRegistersCollection.get_instance()
@@ -25,29 +30,30 @@ async def process_closing(
                     register_id
                 )
                 if register_data is None:
-                    raise ValueError("REGISTER_NOT_FOUND")
+                    raise CashRegisterNotFound()
 
                 register = CashRegisterInDb.model_validate(register_data)
 
                 if not register.isOpen:
-                    raise ValueError("REGISTER_ALREADY_CLOSED")
+                    raise CashRegisterAlreadyClosed()
 
                 now = TimeTools.get_now_in_milliseconds()
 
                 closing_amount = register.totalBalance
 
-                new_total = 0
+                update_model = UpdateCashRegister(
+                    isOpen=False,
+                    cashBalance=0,
+                    cardBalance=0,
+                    transferBalance=0,
+                    totalBalance=0,
+                )
+
+                update_data = update_model.model_dump(exclude_unset=True)
+                update_data["updatedAt"] = now
 
                 updated_data = await register_col.update_cash_register_by_id(
-                    register_id,
-                    {
-                        "updatedAt": now,
-                        "isOpen": False,
-                        "cashBalance": 0,
-                        "cardBalance": 0,
-                        "transferBalance": 0,
-                        "totalBalance": new_total,
-                    },
+                    register_id, update_data
                 )
 
                 updated_register = CashRegisterInDb.model_validate(updated_data)
@@ -59,10 +65,10 @@ async def process_closing(
                     subType="closing",
                     paymentMethod=None,
                     amount=closing_amount,
-                    resultingBalance=new_total,
+                    resultingBalance=0,
                     concept="Cierre de caja",
                     referenceId=None,
-                    performedBy=performed_by,
+                    performedBy=close_intent.performedBy,
                     createdAt=now,
                     updatedAt=None,
                     isDeleted=False,

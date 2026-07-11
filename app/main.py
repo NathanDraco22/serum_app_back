@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from api.v1.router import router_v1
 from app_lifespan import lifespan
+from regis_exception_handlers import register_exception_handlers
 
 load_dotenv()
 
@@ -19,6 +20,9 @@ app = FastAPI(
     openapi_url=open_api_url,
     lifespan=lifespan,
 )
+
+register_exception_handlers(app)
+
 
 app.add_middleware(
     CORSMiddleware,

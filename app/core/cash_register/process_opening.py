@@ -1,6 +1,7 @@
+from pydantic import BaseModel
 from tools.uuid_tool import UuidTool
 from tools.time_tools import TimeTools
-from repos.v1.cash_registers import CashRegisterInDb
+from repos.v1.cash_registers import CashRegisterInDb, UpdateCashRegister
 from repos.v1.cash_transactions import CashTransactionInDb
 from repos.v1.common.models.user_info import UserInfo
 from services import MongoService
@@ -8,15 +9,19 @@ from services.mongo_collections.v1 import (
     CashRegistersCollection,
     CashTransactionsCollection,
 )
+from core.exceptions import CashRegisterNotFound, CashRegisterAlreadyOpen
+
+
+class OpenCashIntent(BaseModel):
+    branchId: str
+    initialCash: int
+    initialCard: int
+    initialTransfer: int
+    openedBy: UserInfo
 
 
 async def process_opening(
-    branch_id: str,
-    name: str,
-    initial_cash: int,
-    initial_card: int,
-    initial_transfer: int,
-    opened_by: UserInfo,
+    register_id: str, open_intent: OpenCashIntent
 ) -> CashRegisterInDb:
     mongo_client = MongoService().client
     register_col = CashRegistersCollection.get_instance()
@@ -25,27 +30,48 @@ async def process_opening(
     async with mongo_client.start_session() as session:
         async with await session.start_transaction():
             async with session.bind():
-                total = initial_cash + initial_card + initial_transfer
+                register_data = await register_col.fetch_cash_register_by_id(
+                    register_id
+                )
+                if register_data is None:
+                    raise CashRegisterNotFound()
+
+                if register_data.get("isOpen", False):
+                    raise CashRegisterAlreadyOpen()
+
+                existing = await register_col.fetch_open_register_by_branch(
+                    open_intent.branchId
+                )
+                if existing is not None:
+                    raise CashRegisterAlreadyOpen()
 
                 now = TimeTools.get_now_in_milliseconds()
-                register_id = UuidTool.generate_uuid()
 
-                register = CashRegisterInDb(
-                    id=register_id,
-                    branchId=branch_id,
-                    name=name,
-                    isOpen=True,
-                    cashBalance=initial_cash,
-                    cardBalance=initial_card,
-                    transferBalance=initial_transfer,
-                    totalBalance=total,
-                    openedBy=opened_by,
-                    createdAt=now,
-                    updatedAt=None,
-                    isDeleted=False,
+                total = (
+                    open_intent.initialCash
+                    + open_intent.initialCard
+                    + open_intent.initialTransfer
                 )
 
-                await register_col.create_cash_register(register.model_dump())
+                update_model = UpdateCashRegister(
+                    isOpen=True,
+                    cashBalance=open_intent.initialCash,
+                    cardBalance=open_intent.initialCard,
+                    transferBalance=open_intent.initialTransfer,
+                    totalBalance=total,
+                    openedBy=open_intent.openedBy,
+                )
+
+                update_data = update_model.model_dump(
+                    exclude_unset=True, exclude_none=True
+                )
+                update_data["updatedAt"] = now
+
+                updated = await register_col.update_cash_register_by_id(
+                    register_id, update_data
+                )
+
+                register = CashRegisterInDb.model_validate(updated)
 
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
@@ -57,7 +83,7 @@ async def process_opening(
                     resultingBalance=total,
                     concept="Apertura de caja",
                     referenceId=None,
-                    performedBy=opened_by,
+                    performedBy=open_intent.openedBy,
                     createdAt=now,
                     updatedAt=None,
                     isDeleted=False,

@@ -14,7 +14,7 @@ class OrdersCollection(BaseMongoCollection):
 
     async def fetch_all_orders(self) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find()
+        cursor = collection.find({"isDeleted": {"$ne": True}})
 
         result = await cursor.to_list(length=None)
         await cursor.close()
@@ -23,7 +23,7 @@ class OrdersCollection(BaseMongoCollection):
 
     async def fetch_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         collection = self._collection
-        result = await collection.find_one({"id": order_id})
+        result = await collection.find_one({"id": order_id, "isDeleted": {"$ne": True}})
         return result
 
     async def update_order_by_id(

@@ -6,18 +6,21 @@ from repos.v1.cash_registers import (
     CashRegistersDataSource,
     CashRegistersRepository,
 )
-from repos.v1.cash_transactions import (
-    CashTransactionInDb,
-    CashTransactionsDataSource,
-    CashTransactionsRepository,
+from repos.v1.cash_transactions import CashTransactionInDb
+from core.exceptions import (
+    CashRegisterAlreadyOpen,
+    CashRegisterNotFound,
+    CashRegisterNotOpen,
+    CashRegisterAlreadyClosed,
+    ConceptRequired,
+    InsufficientMethodBalance,
 )
-from repos.v1.common.models.user_info import UserInfo
 
-from .process_closing import process_closing
-from .process_income import process_income
-from .process_opening import process_opening
-from .process_payment import process_payment
-from .process_withdrawal import process_withdrawal
+from .process_closing import process_closing, CloseCashIntent
+from .process_income import process_income, IncomeIntent
+from .process_opening import process_opening, OpenCashIntent
+from .process_payment import process_payment, PaymentIntent
+from .process_withdrawal import process_withdrawal, WithdrawalIntent
 
 
 class CashRegisterManager:
@@ -25,144 +28,134 @@ class CashRegisterManager:
         self.cash_registers_repo = CashRegistersRepository(
             cash_registers_ds=CashRegistersDataSource()
         )
-        self.cash_transactions_repo = CashTransactionsRepository(
-            cash_transactions_ds=CashTransactionsDataSource()
-        )
 
     async def open_register(
-        self,
-        branch_id: str,
-        name: str,
-        initial_cash: int,
-        initial_card: int,
-        initial_transfer: int,
-        opened_by: UserInfo,
+        self, register_id: str, open_intent: OpenCashIntent
     ) -> CashRegisterInDb:
-        existing = await self.cash_registers_repo.get_open_register_by_branch(branch_id)
+        register = await self.cash_registers_repo.get_cash_register_by_id(register_id)
+        if register is None:
+            raise CashRegisterNotFound()
+        if register.isOpen:
+            raise CashRegisterAlreadyOpen()
+
+        existing = await self.cash_registers_repo.get_open_register_by_branch(
+            open_intent.branchId
+        )
         if existing is not None:
-            raise ValueError("BRANCH_ALREADY_HAS_OPEN_REGISTER")
+            raise CashRegisterAlreadyOpen()
 
         max_retries = 3
         for _ in range(max_retries):
             try:
                 return await process_opening(
-                    branch_id=branch_id,
-                    name=name,
-                    initial_cash=initial_cash,
-                    initial_card=initial_card,
-                    initial_transfer=initial_transfer,
-                    opened_by=opened_by,
+                    register_id=register_id, open_intent=open_intent
                 )
             except OperationFailure as e:
                 if e.code == 112:
                     await asyncio.sleep(0.3)
                 else:
                     raise
-            except Exception:
-                raise
 
         raise RuntimeError("Server is too busy, try again later")
 
     async def close_register(
-        self, register_id: str, performed_by: UserInfo
+        self, register_id: str, close_intent: CloseCashIntent
     ) -> CashRegisterInDb:
+        register = await self.cash_registers_repo.get_cash_register_by_id(register_id)
+        if register is None:
+            raise CashRegisterNotFound()
+        if not register.isOpen:
+            raise CashRegisterAlreadyClosed()
+
         max_retries = 3
         for _ in range(max_retries):
             try:
                 return await process_closing(
-                    register_id=register_id,
-                    performed_by=performed_by,
+                    register_id=register_id, close_intent=close_intent
                 )
             except OperationFailure as e:
                 if e.code == 112:
                     await asyncio.sleep(0.3)
                 else:
                     raise
-            except Exception:
-                raise
 
         raise RuntimeError("Server is too busy, try again later")
 
     async def register_income(
-        self,
-        register_id: str,
-        amount: int,
-        payment_method: str,
-        concept: str,
-        performed_by: UserInfo,
+        self, register_id: str, income_intent: IncomeIntent
     ) -> CashTransactionInDb:
+        register = await self.cash_registers_repo.get_cash_register_by_id(register_id)
+        if register is None:
+            raise CashRegisterNotFound()
+        if not register.isOpen:
+            raise CashRegisterNotOpen()
+        if not income_intent.concept.strip():
+            raise ConceptRequired()
+
         max_retries = 3
         for _ in range(max_retries):
             try:
                 return await process_income(
-                    register_id=register_id,
-                    amount=amount,
-                    payment_method=payment_method,
-                    concept=concept,
-                    performed_by=performed_by,
+                    register_id=register_id, income_intent=income_intent
                 )
             except OperationFailure as e:
                 if e.code == 112:
                     await asyncio.sleep(0.3)
                 else:
                     raise
-            except Exception:
-                raise
 
         raise RuntimeError("Server is too busy, try again later")
 
     async def register_withdrawal(
-        self,
-        register_id: str,
-        amount: int,
-        payment_method: str,
-        concept: str,
-        performed_by: UserInfo,
+        self, register_id: str, withdrawal_intent: WithdrawalIntent
     ) -> CashTransactionInDb:
+        register = await self.cash_registers_repo.get_cash_register_by_id(register_id)
+        if register is None:
+            raise CashRegisterNotFound()
+        if not register.isOpen:
+            raise CashRegisterNotOpen()
+        if not withdrawal_intent.concept.strip():
+            raise ConceptRequired()
+
+        balance_to_check = getattr(
+            register, f"{withdrawal_intent.paymentMethod}Balance", 0
+        )
+        if withdrawal_intent.amount > balance_to_check:
+            raise InsufficientMethodBalance()
+
         max_retries = 3
         for _ in range(max_retries):
             try:
                 return await process_withdrawal(
-                    register_id=register_id,
-                    amount=amount,
-                    payment_method=payment_method,
-                    concept=concept,
-                    performed_by=performed_by,
+                    register_id=register_id, withdrawal_intent=withdrawal_intent
                 )
             except OperationFailure as e:
                 if e.code == 112:
                     await asyncio.sleep(0.3)
                 else:
                     raise
-            except Exception:
-                raise
 
         raise RuntimeError("Server is too busy, try again later")
 
     async def register_payment(
-        self,
-        register_id: str,
-        amount: int,
-        payment_method: str,
-        order_id: str,
-        performed_by: UserInfo,
+        self, register_id: str, payment_intent: PaymentIntent
     ) -> CashTransactionInDb:
+        register = await self.cash_registers_repo.get_cash_register_by_id(register_id)
+        if register is None:
+            raise CashRegisterNotFound()
+        if not register.isOpen:
+            raise CashRegisterNotOpen()
+
         max_retries = 3
         for _ in range(max_retries):
             try:
                 return await process_payment(
-                    register_id=register_id,
-                    amount=amount,
-                    payment_method=payment_method,
-                    order_id=order_id,
-                    performed_by=performed_by,
+                    register_id=register_id, payment_intent=payment_intent
                 )
             except OperationFailure as e:
                 if e.code == 112:
                     await asyncio.sleep(0.3)
                 else:
                     raise
-            except Exception:
-                raise
 
         raise RuntimeError("Server is too busy, try again later")
