@@ -1,15 +1,14 @@
 import logging
 import os
+import time
 from typing import Any
 
 import jwt
 
-from tools import TimeTools
-
 logger = logging.getLogger(__name__)
 
-SESSION_TOKEN_TTL_MS = 8 * 60 * 60 * 1000
-REFRESH_TOKEN_TTL_MS = 30 * 24 * 60 * 60 * 1000
+SESSION_TOKEN_TTL_SEC = 8 * 60 * 60  # 8 horas en segundos
+REFRESH_TOKEN_TTL_SEC = 30 * 24 * 60 * 60  # 30 días en segundos
 
 
 class TokenManager:
@@ -30,7 +29,6 @@ class TokenManager:
                 token,
                 secret,
                 algorithms=["HS256"],
-                options={"verify_exp": False},
             )
             return res
         except jwt.PyJWTError as e:
@@ -47,17 +45,17 @@ class TokenManager:
         if expiration is None:
             return False
 
-        now = TimeTools.get_now_in_milliseconds()
-        return int(expiration) >= int(now)
+        now = int(time.time())
+        return int(expiration) >= now
 
     @staticmethod
     def create_session_token(
         user_id: str, username: str, role: str
     ) -> str:
-        now = TimeTools.get_now_in_milliseconds()
+        now = int(time.time())
         return TokenManager.encode_token(
             {
-                "exp": now + SESSION_TOKEN_TTL_MS,
+                "exp": now + SESSION_TOKEN_TTL_SEC,
                 "iat": now,
                 "type": "session",
                 "userId": user_id,
@@ -70,10 +68,10 @@ class TokenManager:
     def create_refresh_token(
         user_id: str, username: str, role: str
     ) -> str:
-        now = TimeTools.get_now_in_milliseconds()
+        now = int(time.time())
         return TokenManager.encode_token(
             {
-                "exp": now + REFRESH_TOKEN_TTL_MS,
+                "exp": now + REFRESH_TOKEN_TTL_SEC,
                 "iat": now,
                 "type": "refresh",
                 "userId": user_id,
