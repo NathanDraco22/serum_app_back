@@ -2,6 +2,7 @@ from fastapi import HTTPException, status
 
 from repos.v1.users import (
     CreateUser,
+    DuplicateUserError,
     UpdateUser,
     UserInDb,
     UsersRepository,
@@ -14,7 +15,13 @@ class UsersController:
         self.users_repo = users_repo
 
     async def create_user(self, body: CreateUser) -> UserInDb:
-        return await self.users_repo.create_user(body)
+        try:
+            return await self.users_repo.create_user(body)
+        except DuplicateUserError as e:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail=str(e),
+            )
 
     async def get_all_users(self) -> ListResponse[UserInDb]:
         users = await self.users_repo.get_all_users()

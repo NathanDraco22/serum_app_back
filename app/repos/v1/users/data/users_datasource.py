@@ -23,6 +23,20 @@ class UsersDataSource:
         collection = UsersCollection.get_instance()
         return await collection.update_user_by_id(user_id, user)
 
+    async def get_user_by_username(
+        self, username: str
+    ) -> dict[str, Any] | None:
+        collection = UsersCollection.get_instance()
+        return await collection.fetch_user_by_username(username)
+
+    async def get_user_by_email(self, email: str) -> dict[str, Any] | None:
+        collection = UsersCollection.get_instance()
+        return await collection.fetch_user_by_email(email)
+
+    async def get_user_by_phone(self, phone: str) -> dict[str, Any] | None:
+        collection = UsersCollection.get_instance()
+        return await collection.fetch_user_by_phone(phone)
+
     async def delete_user_by_id(self, user_id: str) -> dict[str, Any] | None:
         collection = UsersCollection.get_instance()
         return await collection.delete_user_by_id(user_id)

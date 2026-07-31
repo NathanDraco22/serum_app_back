@@ -6,8 +6,10 @@ class BaseUser(BaseModel):
     password: str
     name: str
     email: str | None = None
+    phone: str | None = None
     role: str
     branches: list[str] = []
+    isActive: bool = True
 
 
 class CreateUser(BaseUser):
@@ -19,8 +21,10 @@ class UpdateUser(BaseModel):
     password: str | None = None
     name: str | None = None
     email: str | None = None
+    phone: str | None = None
     role: str | None = None
     branches: list[str] | None = None
+    isActive: bool | None = None
 
 
 class UserInDb(BaseUser):
