@@ -1,17 +1,18 @@
 from pydantic import BaseModel
 
 
-class QuotedExam(BaseModel):
-    examId: str
-    examName: str
+class QuotedItem(BaseModel):
+    labTestId: str
+    name: str
     quotedPrice: int
+    isPack: bool = False
 
 
 class BaseQuotation(BaseModel):
     clientName: str
     patientId: str | None = None
-    exams: list[QuotedExam] = []
-    totalAmount: int
+    items: list[QuotedItem] = []
+    totalAmount: int = 0
     status: str = "pending"
     convertedToOrderId: str | None = None
 
@@ -23,7 +24,7 @@ class CreateQuotation(BaseQuotation):
 class UpdateQuotation(BaseModel):
     clientName: str | None = None
     patientId: str | None = None
-    exams: list[QuotedExam] | None = None
+    items: list[QuotedItem] | None = None
     totalAmount: int | None = None
     status: str | None = None
     convertedToOrderId: str | None = None

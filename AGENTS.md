@@ -5,6 +5,9 @@ This document establishes the architecture guidelines, coding standards, convent
 
 Any developer or AI agent working on this codebase **must** strictly adhere to these guidelines to ensure consistency, scalability, and readability across systems.
 
+> [!IMPORTANT]
+> **Map & Business Rules Reference**: Before modifying or analyzing any code in this backend, you **MUST** consult [`wiki/project_index.md`](wiki/project_index.md) as the primary map of the project, along with the business rules documented in [`wiki/reglas_negocio/`](wiki/reglas_negocio/INDEX.md).
+
 ---
 
 ## 🏗️ 1. Architecture Philosophy & Data Flow

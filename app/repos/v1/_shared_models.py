@@ -13,7 +13,9 @@ class ReferenceValue(BaseModel):
 class IncludedTest(BaseModel):
     labTestId: str
     parameterName: str
-    medicalClassification: str
+    medicalClassification: str = ""
     dataType: str
-    unitOfMeasure: str
+    unitOfMeasure: str = ""
     referenceValues: list[ReferenceValue] = []
+    qualitativeOptions: list[str] = []
+    expectedQualitativeValue: str | None = None

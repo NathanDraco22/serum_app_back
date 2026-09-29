@@ -55,7 +55,7 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                 new_paid_amount = order.paidAmount + pay_intent.amount
                 new_status = (
                     "paid"
-                    if new_paid_amount >= order.salePriceApplied
+                    if new_paid_amount >= order.totalPrice
                     else "partiallyPaid"
                 )
 

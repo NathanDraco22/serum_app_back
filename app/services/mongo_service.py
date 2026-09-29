@@ -35,10 +35,9 @@ class MongoService:
         from services.mongo_collections.v1 import (
             DoctorsCollection,
             PatientsCollection,
-            ExamsCollection,
             LabTestsCollection,
         )
+
         await DoctorsCollection.get_instance().create_indexes()
         await PatientsCollection.get_instance().create_indexes()
-        await ExamsCollection.get_instance().create_indexes()
         await LabTestsCollection.get_instance().create_indexes()

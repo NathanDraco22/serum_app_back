@@ -25,7 +25,7 @@ class LabTestsRepository:
             **create_lab_test.model_dump(),
         )
         new_lab_test_data = new_lab_test.model_dump()
-        new_lab_test_data["searchPrefixes"] = generate_prefixes(new_lab_test.parameterName)
+        new_lab_test_data["searchPrefixes"] = generate_prefixes(new_lab_test.name)
 
         result = await self.lab_tests_ds.create_lab_test(new_lab_test_data)
         return LabTestInDb.model_validate(result)
@@ -50,8 +50,8 @@ class LabTestsRepository:
         updated_data = lab_test.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 
-        if "parameterName" in updated_data and updated_data["parameterName"]:
-            updated_data["searchPrefixes"] = generate_prefixes(updated_data["parameterName"])
+        if "name" in updated_data and updated_data["name"]:
+            updated_data["searchPrefixes"] = generate_prefixes(updated_data["name"])
 
         result = await self.lab_tests_ds.update_lab_test_by_id(
             lab_test_id, updated_data
