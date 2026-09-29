@@ -17,7 +17,9 @@ class OrderPaymentManager:
         order = await self.orders_repo.get_order_by_id(pay_intent.orderId)
         if order is None:
             raise OrderNotFound()
-        if order.status not in ("pending", "partiallyPaid"):
+        if order.status not in ("pending", "partiallyPaid", "completed") or (
+            order.totalPrice > 0 and order.paidAmount >= order.totalPrice
+        ):
             raise OrderAlreadyPaid()
 
         max_retries = 3
