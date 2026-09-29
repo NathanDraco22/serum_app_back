@@ -6,7 +6,9 @@ This document establishes the architecture guidelines, coding standards, convent
 Any developer or AI agent working on this codebase **must** strictly adhere to these guidelines to ensure consistency, scalability, and readability across systems.
 
 > [!IMPORTANT]
-> **Map & Business Rules Reference**: Before modifying or analyzing any code in this backend, you **MUST** consult [`wiki/project_index.md`](wiki/project_index.md) as the primary map of the project, along with the business rules documented in [`wiki/reglas_negocio/`](wiki/reglas_negocio/INDEX.md).
+> **Consulta Obligatoria de la Wiki y Reglas de Negocio**:
+> Siempre que necesites información sobre la estructura, endpoints, orquestaciones o modelos del servidor, **DEBES consultar [`wiki/project_index.md`](wiki/project_index.md)** como mapa rector.
+> Asimismo, ante cualquier duda o modificación que involucre lógica transaccional, financiera o médica, **DEBES consultar los documentos en [`wiki/reglas_negocio/`](wiki/reglas_negocio/INDEX.md)** antes de realizar cualquier cambio o responder al usuario.
 
 ---
 

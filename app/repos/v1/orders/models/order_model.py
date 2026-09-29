@@ -19,6 +19,7 @@ class OrderTestResult(IncludedTest):
 
 
 class BaseOrder(BaseModel):
+    branchId: str
     patientId: str
     doctorId: str | None = None
     quotationId: str | None = None
@@ -34,6 +35,7 @@ class CreateOrder(BaseOrder):
 
 
 class UpdateOrder(BaseModel):
+    branchId: str | None = None
     patientId: str | None = None
     doctorId: str | None = None
     quotationId: str | None = None

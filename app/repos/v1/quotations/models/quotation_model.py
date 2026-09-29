@@ -9,6 +9,7 @@ class QuotedItem(BaseModel):
 
 
 class BaseQuotation(BaseModel):
+    branchId: str
     clientName: str
     patientId: str | None = None
     items: list[QuotedItem] = []
@@ -22,6 +23,7 @@ class CreateQuotation(BaseQuotation):
 
 
 class UpdateQuotation(BaseModel):
+    branchId: str | None = None
     clientName: str | None = None
     patientId: str | None = None
     items: list[QuotedItem] | None = None

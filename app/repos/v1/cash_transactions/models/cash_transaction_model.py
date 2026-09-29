@@ -4,6 +4,7 @@ from repos.v1.common.models.user_info import UserInfo
 
 class BaseCashTransaction(BaseModel):
     registerId: str
+    branchId: str
     flowType: str
     subType: str
     paymentMethod: str | None = None

@@ -76,6 +76,7 @@ async def process_opening(
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
                     registerId=register_id,
+                    branchId=register.branchId,
                     flowType="in",
                     subType="opening",
                     paymentMethod=None,

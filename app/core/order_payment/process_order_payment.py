@@ -85,6 +85,7 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
                     registerId=pay_intent.registerId,
+                    branchId=register_data.get("branchId", ""),
                     flowType="in",
                     subType="payment",
                     paymentMethod=pay_intent.paymentMethod,

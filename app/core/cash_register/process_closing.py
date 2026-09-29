@@ -61,6 +61,7 @@ async def process_closing(
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
                     registerId=register_id,
+                    branchId=register.branchId,
                     flowType="out",
                     subType="closing",
                     paymentMethod=None,

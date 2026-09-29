@@ -72,13 +72,13 @@ serum_app_back/
 | **Auths** | `auths/` | Autenticación, JWT, hashing | `users_collection.py` | JWT HS256, session (8h), refresh (30d), `/check-user`. Ver [Autenticación y Roles](reglas_negocio/autenticacion_y_roles.md). |
 | **Branches** | `branches/` | `branches/` | `branches_collection.py` | Sedes físicas del laboratorio que segmentan cajas, usuarios y flujo de dinero. |
 | **Users** | `users/` | `users/` | `users_collection.py` | Control de personal con roles (`admin`, `cashier`, `bioanalyst`, etc.) asignados a sucursales. |
-| **Patients** | `patients/` | `patients/` | `patients_collection.py` | Expediente demográfico maestro. Requisito obligatorio para generar una orden médica. |
-| **Doctors** | `doctors/` | `doctors/` | `doctors_collection.py` | Catálogo de médicos referentes (opcional al crear orden). |
-| **LabTests** | `lab_tests/` | `lab_tests/` | `lab_tests_collection.py` | Catálogo unificado: Pruebas individuales y Packs (`isPack: true/false`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
-| **Quotations** | `quotations/` | `quotations/` | `quotations_collection.py` | Preventa para clientes casuales (texto libre). Ver [Cotizaciones](reglas_negocio/cotizaciones.md). |
-| **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Datos congelados de paciente, precios y parámetros. Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
-| **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal, saldos por método (`cash`, `card`, `transfer`). |
-| **CashTransactions** | `cash_transactions/` | `cash_transactions/` | `cash_transactions_collection.py` | **Kardex Inmutable**: Libro contable de auditoría; solo lectura (GET ALL). Ver [Caja y Kardex](reglas_negocio/caja_y_kardex.md). |
+| **Patients** | `patients/` | `patients/` | `patients_collection.py` | Expediente demográfico maestro. Requiere `originBranch: str` para trazabilidad de creación. Requisito obligatorio para generar orden médica. |
+| **Doctors** | `doctors/` | `doctors/` | `doctors_collection.py` | Catálogo de médicos referentes. Requiere `originBranch: str` para saber sucursal de alta. |
+| **LabTests** | `lab_tests/` | `lab_tests/` | `lab_tests_collection.py` | Catálogo unificado global: Pruebas individuales y Packs (`isPack: true/false`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
+| **Quotations** | `quotations/` | `quotations/` | `quotations_collection.py` | Preventa para clientes casuales (texto libre). Requiere `branchId: str`. Ver [Cotizaciones](reglas_negocio/cotizaciones.md). |
+| **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Requiere `branchId: str`. Datos congelados de paciente, precios y parámetros. Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
+| **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal (`branchId: str`), saldos por método (`cash`, `card`, `transfer`). |
+| **CashTransactions** | `cash_transactions/` | `cash_transactions/` | `cash_transactions_collection.py` | **Kardex Inmutable**: Libro contable de auditoría (`branchId: str`, `registerId: str`); solo lectura (GET ALL). Ver [Caja y Kardex](reglas_negocio/caja_y_kardex.md). |
 
 ---
 

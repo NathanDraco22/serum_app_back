@@ -9,6 +9,7 @@ class BasePatient(BaseModel):
     address: str
     email: str | None = None
     cardId: str | None = None
+    originBranch: str
 
 
 class CreatePatient(BasePatient):
@@ -23,6 +24,7 @@ class UpdatePatient(BaseModel):
     address: str | None = None
     email: str | None = None
     cardId: str | None = None
+    originBranch: str | None = None
 
 
 class PatientInDb(BasePatient):

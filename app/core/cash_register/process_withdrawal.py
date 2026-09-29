@@ -90,6 +90,7 @@ async def process_withdrawal(
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
                     registerId=register_id,
+                    branchId=register.branchId,
                     flowType="out",
                     subType="withdrawal",
                     paymentMethod=withdrawal_intent.paymentMethod,

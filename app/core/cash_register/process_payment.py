@@ -79,6 +79,7 @@ async def process_payment(
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
                     registerId=register_id,
+                    branchId=register.branchId,
                     flowType="in",
                     subType="payment",
                     paymentMethod=payment_intent.paymentMethod,
