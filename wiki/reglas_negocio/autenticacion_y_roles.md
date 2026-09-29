@@ -43,3 +43,23 @@ La autenticación utiliza una arquitectura de doble token para asegurar sesiones
 - Cada usuario cuenta con un rol asignado (`admin`, `cashier`, `bioanalyst`, `doctor`, etc.).
 - El campo `branches: list[str]` vincula al usuario a una o varias sedes físicas.
 - Las operaciones financieras (apertura y cierre de caja) validan la vinculación activa del usuario con la sucursal de la caja correspondiente.
+
+---
+
+## 4. Inicialización en Startup (Lifespan)
+
+Durante el arranque de la aplicación (`app_lifespan.py` ➔ `services_initializer.py`), el servidor garantiza de forma idempotente (`$setOnInsert`):
+
+1. **Sucursal Origen (`ORIGIN_BRANCH`)**:
+   - `id`: `"ORIGIN_BRANCH"`
+   - `name`: `"Origen"`
+   - `address`: `"Sede Principal"`
+   - `phone`: `"00000000"`
+2. **Usuario Administrador Root (`Serum`)**:
+   - `id`: `"root"`
+   - `username`: `"Serum"`
+   - `password`: `"SerumRoot"` (almacenada con hash Argon2)
+   - `name`: `"Administrador Serum"`
+   - `role`: `"Admin"`
+   - `branches`: `["ORIGIN_BRANCH"]`
+   - `isActive`: `True`

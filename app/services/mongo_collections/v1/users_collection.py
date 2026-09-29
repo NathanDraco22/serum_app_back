@@ -12,6 +12,14 @@ class UsersCollection(BaseMongoCollection):
         collection = self._collection
         await collection.insert_one(user)
 
+    async def create_user_if_absent(self, user_id: str, user: dict) -> None:
+        collection = self._collection
+        await collection.update_one(
+            {"id": user_id},
+            {"$setOnInsert": user},
+            upsert=True,
+        )
+
     async def fetch_all_users(self) -> list[dict[str, Any]]:
         collection = self._collection
         cursor = collection.find({"isDeleted": {"$ne": True}})

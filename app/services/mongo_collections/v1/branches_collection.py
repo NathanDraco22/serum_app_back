@@ -12,6 +12,14 @@ class BranchesCollection(BaseMongoCollection):
         collection = self._collection
         await collection.insert_one(branch)
 
+    async def create_branch_if_absent(self, branch_id: str, branch: dict) -> None:
+        collection = self._collection
+        await collection.update_one(
+            {"id": branch_id},
+            {"$setOnInsert": branch},
+            upsert=True,
+        )
+
     async def fetch_all_branches(self) -> list[dict[str, Any]]:
         collection = self._collection
         cursor = collection.find()

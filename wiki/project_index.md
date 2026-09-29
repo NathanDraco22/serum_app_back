@@ -106,6 +106,11 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
    - Excepciones de dominio desacopladas de FastAPI (ej. `CashRegisterAlreadyOpen`, `OrderNotFound`, `InsufficientMethodBalance`).
    - Se registran en `app/regis_exception_handlers.py` para retornar el código HTTP apropiado.
 
+5. **`app/core/default_values/`**:
+   - Inicialización idempotente en startup (`lifespan` ➔ `services_initializer.py`):
+     - `create_default_branch.py`: Creación de sucursal inicial `ORIGIN_BRANCH` ("Origen").
+     - `create_root_user.py`: Creación de usuario administrador `Serum` (clave `SerumRoot`).
+
 ---
 
 ## 💎 5. Convenciones Críticas de Persistencia y Datos
