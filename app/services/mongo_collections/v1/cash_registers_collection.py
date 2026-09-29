@@ -11,6 +11,16 @@ class CashRegistersCollection(BaseMongoCollection):
         collection = self._collection
         await collection.insert_one(cash_register)
 
+    async def create_cash_register_if_absent(
+        self, cash_register_id: str, cash_register: dict
+    ) -> None:
+        collection = self._collection
+        await collection.update_one(
+            {"id": cash_register_id},
+            {"$setOnInsert": cash_register},
+            upsert=True,
+        )
+
     async def fetch_all_cash_registers(self) -> list[dict[str, Any]]:
         collection = self._collection
         cursor = collection.find({"isDeleted": {"$ne": True}})

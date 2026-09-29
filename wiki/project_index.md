@@ -109,6 +109,7 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
 5. **`app/core/default_values/`**:
    - Inicialización idempotente en startup (`lifespan` ➔ `services_initializer.py`):
      - `create_default_branch.py`: Creación de sucursal inicial `ORIGIN_BRANCH` ("Origen").
+     - `create_default_cash_register.py`: Creación de caja registradora inicial `ORIGIN_CASH` ("Caja Principal") asociada a `ORIGIN_BRANCH`.
      - `create_root_user.py`: Creación de usuario administrador `Serum` (clave `SerumRoot`).
 
 ---
