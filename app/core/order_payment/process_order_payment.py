@@ -97,14 +97,15 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                 now = TimeTools.get_now_in_milliseconds()
 
                 new_paid_amount = order.paidAmount + pay_intent.amount
-                if order.status == "completed":
-                    new_status = "completed"
+                has_all_results = len(order.results) > 0 and all(
+                    r.resultValue is not None and str(r.resultValue).strip() != ""
+                    for r in order.results
+                )
+
+                if new_paid_amount >= order.totalPrice:
+                    new_status = "completed" if has_all_results else "paid"
                 else:
-                    new_status = (
-                        "paid"
-                        if new_paid_amount >= order.totalPrice
-                        else "partiallyPaid"
-                    )
+                    new_status = "partiallyPaid"
 
                 update_model = UpdateOrder(
                     status=new_status,

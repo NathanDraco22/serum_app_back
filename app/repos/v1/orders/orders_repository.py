@@ -1,6 +1,8 @@
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
 
+from repos.v1.common.filter_params import OrderFilterParams
+
 from .data.orders_datasource import OrdersDataSource
 from .models.order_model import CreateOrder, OrderInDb, UpdateOrder
 
@@ -26,8 +28,13 @@ class OrdersRepository:
         result = await self.orders_ds.create_order(new_order.model_dump())
         return OrderInDb.model_validate(result)
 
-    async def get_all_orders(self) -> list[OrderInDb]:
-        results = await self.orders_ds.get_all_orders()
+    async def get_all_orders(
+        self, filters: OrderFilterParams | None = None
+    ) -> list[OrderInDb]:
+        filters_dict = None
+        if filters is not None:
+            filters_dict = filters.model_dump(exclude_none=True)
+        results = await self.orders_ds.get_all_orders(filters_dict)
         return [OrderInDb.model_validate(r) for r in results]
 
     async def get_order_by_id(self, order_id: str) -> OrderInDb | None:

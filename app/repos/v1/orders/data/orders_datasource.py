@@ -9,9 +9,11 @@ class OrdersDataSource:
         await collection.create_order(order)
         return order
 
-    async def get_all_orders(self) -> list[dict[str, Any]]:
+    async def get_all_orders(
+        self, filters: dict[str, Any] | None = None
+    ) -> list[dict[str, Any]]:
         collection = OrdersCollection.get_instance()
-        return await collection.fetch_all_orders()
+        return await collection.fetch_all_orders(filters)
 
     async def get_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         collection = OrdersCollection.get_instance()

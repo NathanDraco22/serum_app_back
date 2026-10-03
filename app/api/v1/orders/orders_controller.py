@@ -1,5 +1,6 @@
 from fastapi import HTTPException, status
 
+from repos.v1.common.filter_params import OrderFilterParams
 from repos.v1.orders import (
     CreateOrder,
     OrderInDb,
@@ -21,8 +22,10 @@ class OrdersController:
     async def create_order(self, body: CreateOrder) -> OrderInDb:
         return await self.orders_repo.create_order(body)
 
-    async def get_all_orders(self) -> ListResponse[OrderInDb]:
-        orders = await self.orders_repo.get_all_orders()
+    async def get_all_orders(
+        self, query_params: OrderFilterParams | None = None
+    ) -> ListResponse[OrderInDb]:
+        orders = await self.orders_repo.get_all_orders(query_params)
         return ListResponse(count=len(orders), data=orders)
 
     async def get_order_by_id(self, order_id: str) -> OrderInDb:

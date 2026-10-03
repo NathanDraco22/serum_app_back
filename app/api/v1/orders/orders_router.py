@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from repos.v1.common.filter_params import OrderFilterParams
 from repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
 
@@ -15,8 +16,10 @@ async def create_order(body: CreateOrder) -> OrderInDb:
 
 
 @orders_router.get("")
-async def get_all_orders() -> ListResponse[OrderInDb]:
-    return await orders_controller.get_all_orders()
+async def get_all_orders(
+    query_params: OrderFilterParams = Depends(),
+) -> ListResponse[OrderInDb]:
+    return await orders_controller.get_all_orders(query_params)
 
 
 @orders_router.get("/{order_id}")
