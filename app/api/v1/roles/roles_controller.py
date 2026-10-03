@@ -24,7 +24,10 @@ class RolesController:
 
     async def get_all_roles(self) -> ListResponse[RoleInDb]:
         roles = await self.roles_repo.get_all_roles()
-        return ListResponse[RoleInDb](results=roles)
+        return ListResponse(
+            data=roles,
+            count=len(roles),
+        )
 
     async def get_role_by_id(self, role_id: str) -> RoleInDb:
         role = await self.roles_repo.get_role_by_id(role_id)
