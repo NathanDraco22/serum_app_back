@@ -7,6 +7,7 @@ from .lab_tests_collection import LabTestsCollection
 from .orders_collection import OrdersCollection
 from .patients_collection import PatientsCollection
 from .quotations_collection import QuotationsCollection
+from .roles_collection import RolesCollection
 from .users_collection import UsersCollection
 
 __all__ = [
@@ -19,5 +20,6 @@ __all__ = [
     "OrdersCollection",
     "PatientsCollection",
     "QuotationsCollection",
+    "RolesCollection",
     "UsersCollection",
 ]

@@ -8,6 +8,7 @@ class BaseUser(BaseModel):
     email: str | None = None
     phone: str | None = None
     role: str
+    accessLevel: int = 3
     branches: list[str] = []
     isActive: bool = True
     isInternal: bool = False
@@ -24,6 +25,7 @@ class UpdateUser(BaseModel):
     email: str | None = None
     phone: str | None = None
     role: str | None = None
+    accessLevel: int | None = None
     branches: list[str] | None = None
     isActive: bool | None = None
     isInternal: bool | None = None

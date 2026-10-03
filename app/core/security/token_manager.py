@@ -50,7 +50,7 @@ class TokenManager:
 
     @staticmethod
     def create_session_token(
-        user_id: str, username: str, role: str
+        user_id: str, username: str, role: str, access_level: int = 3
     ) -> str:
         now = int(time.time())
         return TokenManager.encode_token(
@@ -61,12 +61,13 @@ class TokenManager:
                 "userId": user_id,
                 "username": username,
                 "role": role,
+                "accessLevel": access_level,
             }
         )
 
     @staticmethod
     def create_refresh_token(
-        user_id: str, username: str, role: str
+        user_id: str, username: str, role: str, access_level: int = 3
     ) -> str:
         now = int(time.time())
         return TokenManager.encode_token(
@@ -77,5 +78,6 @@ class TokenManager:
                 "userId": user_id,
                 "username": username,
                 "role": role,
+                "accessLevel": access_level,
             }
         )

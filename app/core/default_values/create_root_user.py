@@ -17,6 +17,7 @@ async def create_root_user() -> UserInDb:
         password=hashed_password,
         name="Administrador Serum",
         role="Admin",
+        accessLevel=5,
         branches=[ORIGIN_BRANCH_ID],
         isActive=True,
         isInternal=True,
@@ -29,7 +30,7 @@ async def create_root_user() -> UserInDb:
     )
     await UsersCollection.get_instance().update_user_by_id(
         root_user.id,
-        {"isInternal": True},
+        {"isInternal": True, "accessLevel": 5},
     )
 
     return root_user

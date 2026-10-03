@@ -42,12 +42,14 @@ class AuthController:
             user_id=user.id,
             username=user.username,
             role=user.role,
+            access_level=user.accessLevel,
         )
 
         refresh_token = TokenManager.create_refresh_token(
             user_id=user.id,
             username=user.username,
             role=user.role,
+            access_level=user.accessLevel,
         )
 
         user_data = user.model_dump(exclude={"password"})
@@ -95,12 +97,14 @@ class AuthController:
             user_id=user_id,
             username=username,
             role=role,
+            access_level=existing_user.accessLevel,
         )
 
         new_refresh_token = TokenManager.create_refresh_token(
             user_id=user_id,
             username=username,
             role=role,
+            access_level=existing_user.accessLevel,
         )
 
         return RefreshTokenResponse(

@@ -71,7 +71,8 @@ serum_app_back/
 | :--- | :--- | :--- | :--- | :--- |
 | **Auths** | `auths/` | Autenticación, JWT, hashing | `users_collection.py` | JWT HS256, session (8h), refresh (30d), `/check-user`. Ver [Autenticación y Roles](reglas_negocio/autenticacion_y_roles.md). |
 | **Branches** | `branches/` | `branches/` | `branches_collection.py` | Sedes físicas del laboratorio que segmentan cajas, usuarios y flujo de dinero. |
-| **Users** | `users/` | `users/` | `users_collection.py` | Control de personal con roles (`admin`, `cashier`, `bioanalyst`, etc.) asignados a sucursales. |
+| **Roles** | `roles/` | `roles/` | `roles_collection.py` | Catálogo de roles con niveles jerárquicos (1 al 5). Admin=5, Operador=3. |
+| **Users** | `users/` | `users/` | `users_collection.py` | Control de personal con `role` y `accessLevel: int` vinculados a sucursales. |
 | **Patients** | `patients/` | `patients/` | `patients_collection.py` | Expediente demográfico maestro. Requiere `originBranch: str` para trazabilidad de creación. Requisito obligatorio para generar orden médica. |
 | **Doctors** | `doctors/` | `doctors/` | `doctors_collection.py` | Catálogo de médicos referentes. Requiere `originBranch: str` para saber sucursal de alta. |
 | **LabTests** | `lab_tests/` | `lab_tests/` | `lab_tests_collection.py` | Catálogo unificado global: Pruebas individuales y Packs (`isPack: true/false`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |

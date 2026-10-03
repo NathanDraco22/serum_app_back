@@ -38,11 +38,17 @@ La autenticación utiliza una arquitectura de doble token para asegurar sesiones
 
 ---
 
-## 3. Control de Acceso por Roles y Sucursales
+## 3. Control de Acceso por Niveles Jerárquicos (`accessLevel`) y Roles
 
-- Cada usuario cuenta con un rol asignado (`admin`, `cashier`, `bioanalyst`, `doctor`, etc.).
+- Cada rol pertenece a una jerarquía de niveles del **1 al 5**:
+  - **Nivel 5 (Admin)**: Acceso total al sistema, configuraciones globales, finanzas, infraestructura y administración de usuarios/roles.
+  - **Nivel 4 (Supervisor)**: Autorizaciones especiales, auditoría y cierres de turno.
+  - **Nivel 3 (Operador)**: Módulo POS de cobro, caja activa, registro de pacientes, cotizaciones y órdenes clínicas.
+  - **Nivel 2 (Asistente)**: Recepción de pacientes y consultas operativas básicas.
+  - **Nivel 1 (Consulta)**: Modo solo lectura para visualización clínica básica.
+- El modelo de usuario incluye `accessLevel: int` desnormalizado, transmitido en el payload del JWT de sesión para verificaciones $O(1)$ sin queries a base de datos.
 - El campo `branches: list[str]` vincula al usuario a una o varias sedes físicas.
-- Las operaciones financieras (apertura y cierre de caja) validan la vinculación activa del usuario con la sucursal de la caja correspondiente.
+- Las operaciones financieras (apertura y cierre de turnos de caja) validan la vinculación activa del usuario con la sucursal correspondiente.
 
 ---
 
@@ -55,11 +61,18 @@ Durante el arranque de la aplicación (`app_lifespan.py` ➔ `services_initializ
    - `name`: `"Origen"`
    - `address`: `"Sede Principal"`
    - `phone`: `"00000000"`
-2. **Usuario Administrador Root (`Serum`)**:
+2. **Caja Registradora Inicial (`ORIGIN_CASH`)**:
+   - `id`: `"ORIGIN_CASH"`
+   - `name`: `"Caja Principal"`
+3. **Roles por Defecto (`Roles`)**:
+   - `role_admin`: `"Admin"` con `accessLevel: 5`.
+   - `role_operator`: `"Operador"` con `accessLevel: 3`.
+4. **Usuario Administrador Root (`Serum`)**:
    - `id`: `"root"`
    - `username`: `"Serum"`
    - `password`: `"SerumRoot"` (almacenada con hash Argon2)
    - `name`: `"Administrador Serum"`
    - `role`: `"Admin"`
+   - `accessLevel`: `5`
    - `branches`: `["ORIGIN_BRANCH"]`
    - `isActive`: `True`
