@@ -10,6 +10,7 @@ class BaseUser(BaseModel):
     role: str
     branches: list[str] = []
     isActive: bool = True
+    isInternal: bool = False
 
 
 class CreateUser(BaseUser):
@@ -25,6 +26,7 @@ class UpdateUser(BaseModel):
     role: str | None = None
     branches: list[str] | None = None
     isActive: bool | None = None
+    isInternal: bool | None = None
 
 
 class UserInDb(BaseUser):

@@ -19,12 +19,17 @@ async def create_root_user() -> UserInDb:
         role="Admin",
         branches=[ORIGIN_BRANCH_ID],
         isActive=True,
+        isInternal=True,
         createdAt=TimeTools.get_now_in_milliseconds(),
     )
 
     await UsersCollection.get_instance().create_user_if_absent(
         root_user.id,
         root_user.model_dump(),
+    )
+    await UsersCollection.get_instance().update_user_by_id(
+        root_user.id,
+        {"isInternal": True},
     )
 
     return root_user

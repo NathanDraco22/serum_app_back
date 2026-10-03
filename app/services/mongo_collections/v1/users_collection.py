@@ -22,7 +22,10 @@ class UsersCollection(BaseMongoCollection):
 
     async def fetch_all_users(self) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find({"isDeleted": {"$ne": True}})
+        cursor = collection.find({
+            "isDeleted": {"$ne": True},
+            "isInternal": {"$ne": True},
+        })
 
         result = await cursor.to_list(length=None)
         await cursor.close()
