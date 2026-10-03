@@ -7,6 +7,7 @@ from repos.v1.common.models.user_info import UserInfo
 
 class OrderPayRequest(BaseModel):
     amount: int = Field(gt=0)
-    registerId: str
+    shiftId: str | None = None
+    registerId: str | None = None
     paymentMethod: Literal["cash", "card", "transfer"]
     performedBy: UserInfo

@@ -6,11 +6,14 @@ from services import MongoService
 from services.mongo_collections.v1 import (
     OrdersCollection,
     CashRegistersCollection,
+    CashShiftsCollection,
     CashTransactionsCollection,
 )
 from core.exceptions import (
     CashRegisterNotFound,
     CashRegisterNotOpen,
+    CashShiftNotFound,
+    CashShiftNotOpen,
     InvalidPaymentMethod,
     OrderNotFound,
     OrderAlreadyPaid,
@@ -26,18 +29,57 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
     mongo_client = MongoService().client
     orders_col = OrdersCollection.get_instance()
     registers_col = CashRegistersCollection.get_instance()
+    shifts_col = CashShiftsCollection.get_instance()
     transactions_col = CashTransactionsCollection.get_instance()
 
     async with mongo_client.start_session() as session:
         async with await session.start_transaction():
             async with session.bind():
-                register_data = await registers_col.fetch_cash_register_by_id(
-                    pay_intent.registerId
-                )
-                if register_data is None:
-                    raise CashRegisterNotFound()
-                if not register_data.get("isOpen", False):
-                    raise CashRegisterNotOpen()
+                branch_id = ""
+                resulting_balance = 0
+
+                if pay_intent.shiftId:
+                    shift_data = await shifts_col.fetch_cash_shift_by_id(
+                        pay_intent.shiftId
+                    )
+                    if shift_data is None:
+                        raise CashShiftNotFound()
+                    if shift_data.get("status") != "OPEN":
+                        raise CashShiftNotOpen()
+                    branch_id = shift_data.get("branchId", "")
+
+                    updated_shift = await shifts_col.add_to_balance(
+                        pay_intent.shiftId,
+                        pay_intent.paymentMethod,
+                        pay_intent.amount,
+                    )
+                    resulting_balance = (
+                        updated_shift.get("totalBalance", 0)
+                        if updated_shift
+                        else 0
+                    )
+                elif pay_intent.registerId:
+                    register_data = await registers_col.fetch_cash_register_by_id(
+                        pay_intent.registerId
+                    )
+                    if register_data is None:
+                        raise CashRegisterNotFound()
+                    if not register_data.get("isOpen", False):
+                        raise CashRegisterNotOpen()
+                    branch_id = register_data.get("branchId", "")
+
+                    updated_register = await registers_col.add_to_balance(
+                        pay_intent.registerId,
+                        pay_intent.paymentMethod,
+                        pay_intent.amount,
+                    )
+                    resulting_balance = (
+                        updated_register.get("totalBalance", 0)
+                        if updated_register
+                        else 0
+                    )
+                else:
+                    raise CashShiftNotFound()
 
                 order_data = await orders_col.fetch_order_by_id(
                     pay_intent.orderId
@@ -75,22 +117,11 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                     pay_intent.orderId, update_data
                 )
 
-                updated_register = await registers_col.add_to_balance(
-                    pay_intent.registerId,
-                    pay_intent.paymentMethod,
-                    pay_intent.amount,
-                )
-
-                resulting_balance = (
-                    updated_register.get("totalBalance", 0)
-                    if updated_register
-                    else 0
-                )
-
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
+                    shiftId=pay_intent.shiftId,
                     registerId=pay_intent.registerId,
-                    branchId=register_data.get("branchId", ""),
+                    branchId=branch_id,
                     flowType="in",
                     subType="payment",
                     paymentMethod=pay_intent.paymentMethod,

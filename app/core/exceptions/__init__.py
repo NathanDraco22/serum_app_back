@@ -8,6 +8,10 @@ from .exceptions import (
     InvalidPaymentMethod,
     OrderNotFound,
     OrderAlreadyPaid,
+    CashShiftAlreadyOpen,
+    CashShiftNotFound,
+    CashShiftNotOpen,
+    CashShiftAlreadyClosed,
 )
 
 __all__ = [
@@ -20,4 +24,8 @@ __all__ = [
     "InvalidPaymentMethod",
     "OrderNotFound",
     "OrderAlreadyPaid",
+    "CashShiftAlreadyOpen",
+    "CashShiftNotFound",
+    "CashShiftNotOpen",
+    "CashShiftAlreadyClosed",
 ]

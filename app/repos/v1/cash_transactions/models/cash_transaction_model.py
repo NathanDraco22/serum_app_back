@@ -3,7 +3,8 @@ from repos.v1.common.models.user_info import UserInfo
 
 
 class BaseCashTransaction(BaseModel):
-    registerId: str
+    shiftId: str | None = None
+    registerId: str | None = None
     branchId: str
     flowType: str
     subType: str

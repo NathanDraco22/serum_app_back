@@ -10,6 +10,10 @@ from core.exceptions import (
     InvalidPaymentMethod,
     OrderNotFound,
     OrderAlreadyPaid,
+    CashShiftAlreadyOpen,
+    CashShiftNotFound,
+    CashShiftNotOpen,
+    CashShiftAlreadyClosed,
 )
 
 
@@ -130,6 +134,58 @@ async def handle_order_already_paid_exception(request: Request, exc: Exception):
     )
 
 
+async def handle_cash_shift_already_open_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, CashShiftAlreadyOpen) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "CASH_SHIFT_ALREADY_OPEN"},
+    )
+
+
+async def handle_cash_shift_not_found_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, CashShiftNotFound) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={"detail": "CASH_SHIFT_NOT_FOUND"},
+    )
+
+
+async def handle_cash_shift_not_open_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, CashShiftNotOpen) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "CASH_SHIFT_NOT_OPEN"},
+    )
+
+
+async def handle_cash_shift_already_closed_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, CashShiftAlreadyClosed) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "CASH_SHIFT_ALREADY_CLOSED"},
+    )
+
+
 _exceptions_handlers = {
     CashRegisterAlreadyOpen: handle_cash_register_already_open_exception,
     CashRegisterNotFound: handle_cash_register_not_found_exception,
@@ -140,6 +196,10 @@ _exceptions_handlers = {
     InvalidPaymentMethod: handle_invalid_payment_method_exception,
     OrderNotFound: handle_order_not_found_exception,
     OrderAlreadyPaid: handle_order_already_paid_exception,
+    CashShiftAlreadyOpen: handle_cash_shift_already_open_exception,
+    CashShiftNotFound: handle_cash_shift_not_found_exception,
+    CashShiftNotOpen: handle_cash_shift_not_open_exception,
+    CashShiftAlreadyClosed: handle_cash_shift_already_closed_exception,
 }
 
 

@@ -45,6 +45,7 @@ class OrdersController:
         pay_intent = OrderPayIntent(
             orderId=order_id,
             amount=body.amount,
+            shiftId=body.shiftId,
             registerId=body.registerId,
             paymentMethod=body.paymentMethod,
             performedBy=body.performedBy,
