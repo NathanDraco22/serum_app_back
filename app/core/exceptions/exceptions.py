@@ -36,3 +36,7 @@ class CashShiftNotOpen(Exception):
 
 class CashShiftAlreadyClosed(Exception):
     ...
+
+class OrderCannotBeDeleted(Exception):
+    ...
+

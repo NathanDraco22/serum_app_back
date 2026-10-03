@@ -6,6 +6,24 @@ from repos.v1._shared_models import IncludedTest
 OrderStatus = Literal["pending", "completed", "cancelled", "paid", "partiallyPaid"]
 
 
+class PatientInfo(BaseModel):
+    name: str
+    dateOfBirth: int = 0
+    gender: str = "M"
+    phone: str = ""
+    address: str = ""
+    cardId: str | None = None
+    email: str | None = None
+
+
+class DoctorInfo(BaseModel):
+    name: str
+    specialty: str = "Medicina General"
+    phone: str = ""
+    cardId: str | None = None
+    email: str | None = None
+
+
 class OrderItem(BaseModel):
     labTestId: str
     name: str
@@ -22,6 +40,8 @@ class BaseOrder(BaseModel):
     branchId: str
     patientId: str
     doctorId: str | None = None
+    patientInfo: PatientInfo | None = None
+    doctorInfo: DoctorInfo | None = None
     quotationId: str | None = None
     items: list[OrderItem] = []
     totalPrice: int = 0
@@ -38,6 +58,8 @@ class UpdateOrder(BaseModel):
     branchId: str | None = None
     patientId: str | None = None
     doctorId: str | None = None
+    patientInfo: PatientInfo | None = None
+    doctorInfo: DoctorInfo | None = None
     quotationId: str | None = None
     items: list[OrderItem] | None = None
     totalPrice: int | None = None

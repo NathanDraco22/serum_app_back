@@ -12,6 +12,7 @@ from .exceptions import (
     CashShiftNotFound,
     CashShiftNotOpen,
     CashShiftAlreadyClosed,
+    OrderCannotBeDeleted,
 )
 
 __all__ = [
@@ -28,4 +29,5 @@ __all__ = [
     "CashShiftNotFound",
     "CashShiftNotOpen",
     "CashShiftAlreadyClosed",
+    "OrderCannotBeDeleted",
 ]

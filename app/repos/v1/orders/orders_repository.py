@@ -1,10 +1,17 @@
+from services.mongo_collections.v1 import DoctorsCollection, PatientsCollection
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
 
 from repos.v1.common.filter_params import OrderFilterParams
 
 from .data.orders_datasource import OrdersDataSource
-from .models.order_model import CreateOrder, OrderInDb, UpdateOrder
+from .models.order_model import (
+    CreateOrder,
+    DoctorInfo,
+    OrderInDb,
+    PatientInfo,
+    UpdateOrder,
+)
 
 
 class OrdersRepository:
@@ -20,10 +27,39 @@ class OrdersRepository:
         return cls._instance
 
     async def create_order(self, create_order: CreateOrder) -> OrderInDb:
+        order_dict = create_order.model_dump()
+        if create_order.patientInfo is None:
+            patient_doc = await PatientsCollection.get_instance().fetch_patient_by_id(
+                create_order.patientId
+            )
+            if patient_doc:
+                order_dict["patientInfo"] = PatientInfo(
+                    name=patient_doc.get("name", ""),
+                    dateOfBirth=patient_doc.get("dateOfBirth", 0),
+                    gender=patient_doc.get("gender", "M"),
+                    phone=patient_doc.get("phone", ""),
+                    address=patient_doc.get("address", ""),
+                    cardId=patient_doc.get("cardId"),
+                    email=patient_doc.get("email"),
+                ).model_dump()
+
+        if create_order.doctorId and create_order.doctorInfo is None:
+            doctor_doc = await DoctorsCollection.get_instance().fetch_doctor_by_id(
+                create_order.doctorId
+            )
+            if doctor_doc:
+                order_dict["doctorInfo"] = DoctorInfo(
+                    name=doctor_doc.get("name", ""),
+                    specialty=doctor_doc.get("specialty", "Medicina General"),
+                    phone=doctor_doc.get("phone", ""),
+                    cardId=doctor_doc.get("cardId"),
+                    email=doctor_doc.get("email"),
+                ).model_dump()
+
         new_order = OrderInDb(
             id=UuidTool.generate_uuid(),
             createdAt=TimeTools.get_now_in_milliseconds(),
-            **create_order.model_dump(),
+            **order_dict,
         )
         result = await self.orders_ds.create_order(new_order.model_dump())
         return OrderInDb.model_validate(result)

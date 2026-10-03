@@ -14,6 +14,7 @@ from core.exceptions import (
     CashShiftNotFound,
     CashShiftNotOpen,
     CashShiftAlreadyClosed,
+    OrderCannotBeDeleted,
 )
 
 
@@ -186,6 +187,19 @@ async def handle_cash_shift_already_closed_exception(request: Request, exc: Exce
     )
 
 
+async def handle_order_cannot_be_deleted_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, OrderCannotBeDeleted) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "ORDER_CANNOT_BE_DELETED"},
+    )
+
+
 _exceptions_handlers = {
     CashRegisterAlreadyOpen: handle_cash_register_already_open_exception,
     CashRegisterNotFound: handle_cash_register_not_found_exception,
@@ -200,6 +214,7 @@ _exceptions_handlers = {
     CashShiftNotFound: handle_cash_shift_not_found_exception,
     CashShiftNotOpen: handle_cash_shift_not_open_exception,
     CashShiftAlreadyClosed: handle_cash_shift_already_closed_exception,
+    OrderCannotBeDeleted: handle_order_cannot_be_deleted_exception,
 }
 
 
