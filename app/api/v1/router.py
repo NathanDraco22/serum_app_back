@@ -10,6 +10,7 @@ from .lab_tests.lab_tests_router import lab_tests_router
 from .orders.orders_router import orders_router
 from .patients.patients_router import patients_router
 from .quotations.quotations_router import quotations_router
+from .reports.reports_router import reports_router
 from .roles.roles_router import roles_router
 from .users.users_router import users_router
 
@@ -25,6 +26,7 @@ router_v1.include_router(lab_tests_router, prefix="/lab-tests")
 router_v1.include_router(orders_router, prefix="/orders")
 router_v1.include_router(patients_router, prefix="/patients")
 router_v1.include_router(quotations_router, prefix="/quotations")
+router_v1.include_router(reports_router, prefix="/reports")
 router_v1.include_router(roles_router, prefix='/roles')
 router_v1.include_router(users_router, prefix="/users")
 
