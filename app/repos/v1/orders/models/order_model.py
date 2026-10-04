@@ -29,6 +29,7 @@ class OrderItem(BaseModel):
     name: str
     salePriceApplied: int
     isPack: bool = False
+    priceLevel: int = 1
 
 
 class OrderTestResult(IncludedTest):

@@ -6,6 +6,7 @@ class QuotedItem(BaseModel):
     name: str
     quotedPrice: int
     isPack: bool = False
+    priceLevel: int = 1
 
 
 class BaseQuotation(BaseModel):

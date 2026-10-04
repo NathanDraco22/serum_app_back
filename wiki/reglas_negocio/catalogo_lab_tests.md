@@ -16,7 +16,8 @@ El catálogo de estudios médicos se administra a través de una entidad unifica
 
 ### A. Prueba Individual (`isPack: false`)
 Representa un análisis clínico específico (ej. *Glucosa*, *Colesterol Total*, *Hemoglobina*, *Prueba de Embarazo*).
-- **Precio individual (`salePrice`)**: Entero en centavos.
+- **Precio individual (`salePrice`)**: Entero en centavos (Nivel 1 / Regular).
+- **Precio preferencial (`salePrice2`)**: Entero en centavos (Nivel 2 / Convenio o especial).
 - **Categoría comercial (`commercialCategory`)**: Clasificación analítica (ej. *Química Clínica*, *Hematología*).
 - **Tipo de dato (`dataType`)**:
   - `numeric`: Medición cuantitativa con unidad de medida (`mg/dL`, `g/dL`, etc.) y rangos demográficos (`referenceValues`).
@@ -26,7 +27,8 @@ Representa un análisis clínico específico (ej. *Glucosa*, *Colesterol Total*,
 
 ### B. Pack o Perfil Comercial (`isPack: true`)
 Representa una oferta o combo comercial que agrupa múltiples pruebas individuales (ej. *Perfil Lipídico*, *Perfil Hepático*, *Checkup General*).
-- **Precio de paquete (`salePrice`)**: Precio especial del combo en centavos.
+- **Precio de paquete (`salePrice`)**: Precio especial del combo en centavos (Nivel 1).
+- **Precio de paquete preferencial (`salePrice2`)**: Precio de combo preferencial en centavos (Nivel 2).
 - **Pruebas contenidas (`childTestIds`)**: Lista de IDs de las pruebas individuales que componen el paquete.
 - **Venta flexible**: Al crear cotizaciones u órdenes, se puede vender el pack completo por su precio de combo o seleccionar únicamente pruebas individuales facturando solo las pruebas elegidas.
 

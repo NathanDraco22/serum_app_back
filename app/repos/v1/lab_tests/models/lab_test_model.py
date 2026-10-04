@@ -8,6 +8,7 @@ class BaseLabTest(BaseModel):
     code: str | None = None
     commercialCategory: str = ""
     salePrice: int = 0
+    salePrice2: int = 0
     currency: str = "USD"
     isPack: bool = False
     childTestIds: list[str] = []
@@ -27,6 +28,7 @@ class UpdateLabTest(BaseModel):
     code: str | None = None
     commercialCategory: str | None = None
     salePrice: int | None = None
+    salePrice2: int | None = None
     currency: str | None = None
     isPack: bool | None = None
     childTestIds: list[str] | None = None

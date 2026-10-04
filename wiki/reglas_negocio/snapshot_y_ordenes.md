@@ -16,7 +16,7 @@ En un laboratorio clínico, la persistencia de datos **no puede depender de rela
 
 1. **Historial Clínico Inmutable**: La edad y el sexo del paciente al momento de la toma de muestra deben quedar congelados, pues de ellos dependen las interpretaciones médicas y rangos normales. Si un paciente actualiza sus datos años después en el catálogo, su historial médico pasado no debe modificarse.
 2. **Rangos de Referencia Calibrados**: Si el laboratorio adquiere nueva maquinaria o reactivos y actualiza los rangos de normalidad (ej. glucosa de 70-100 a 74-106 mg/dL), las órdenes emitidas previamente deben seguir mostrando los rangos que estaban vigentes en la fecha del examen.
-3. **Integridad Financiera**: Los precios del catálogo cambian con el tiempo. El precio efectivamente cobrado (`salePriceApplied`) debe congelarse en la orden para que un arqueo de caja de meses pasados jamás descuadre.
+3. **Integridad Financiera**: Los precios del catálogo cambian con el tiempo. El precio efectivamente cobrado (`salePriceApplied`) debe congelarse en la orden para que un arqueo de caja de meses pasados jamás descuadre. Además, se congela el nivel de precio seleccionado (`priceLevel`: 1 para `salePrice` o 2 para `salePrice2`) como metadato de auditoría comercial.
 4. **Alto Desempeño en Horas Pico**: Al almacenar todo en un solo documento MongoDB, se evitan `lookup`/joins complejos, garantizando consultas ultrarrápidas al emitir resultados o reportes.
 
 ---
