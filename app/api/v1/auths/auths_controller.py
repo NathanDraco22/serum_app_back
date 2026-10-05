@@ -9,12 +9,22 @@ from repos.v1.auths import (
     RefreshTokenRequest,
     RefreshTokenResponse,
 )
+from repos.v1.core_settings import (
+    CoreSettingsRepository,
+    DecodedCoreSetting,
+    ServinStatusResponse,
+)
 from repos.v1.users import UsersRepository
 
 
 class AuthController:
-    def __init__(self, users_repo: UsersRepository) -> None:
+    def __init__(
+        self,
+        users_repo: UsersRepository,
+        core_settings_repo: CoreSettingsRepository,
+    ) -> None:
         self.users_repo = users_repo
+        self.core_settings_repo = core_settings_repo
 
     async def login(self, body: LoginAttempt) -> LoginResponse:
         user = None
@@ -137,7 +147,37 @@ class AuthController:
 
         return CheckUserResponse(status="active")
 
+    async def get_servin_status(self) -> ServinStatusResponse:
+        core_settings = await self.core_settings_repo.get_all_core_settings()
+
+        if len(core_settings) < 1:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Servin not configured",
+            )
+
+        current_core_setting = core_settings[0]
+        decoded_settings = TokenManager.super_token_verify(
+            current_core_setting.token
+        )
+
+        if decoded_settings is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Invalid Servin token",
+            )
+
+        settings = DecodedCoreSetting.model_validate(decoded_settings)
+
+        return ServinStatusResponse(
+            nickname=settings.nickname,
+            isActive=settings.isActive,
+            isMultiBranch=settings.isMultiBranch,
+            isUsingExpirationDate=settings.isUsingExpirationDate,
+        )
+
 
 auths_controller = AuthController(
     users_repo=UsersRepository.get_instance(),
+    core_settings_repo=CoreSettingsRepository.get_instance(),
 )

@@ -1,5 +1,6 @@
 import logging
 import os
+from pathlib import Path
 import time
 from typing import Any
 
@@ -81,3 +82,27 @@ class TokenManager:
                 "accessLevel": access_level,
             }
         )
+
+    @staticmethod
+    def super_token_verify(token: str) -> dict[str, Any] | None:
+        key_path = (
+            Path(__file__).resolve().parent.parent.parent
+            / "config"
+            / "service_public_key.pem"
+        )
+        if not key_path.exists():
+            key_path = Path("app/config/service_public_key.pem")
+        if not key_path.exists():
+            key_path = Path("config/service_public_key.pem")
+
+        try:
+            with open(key_path, "rb") as f:
+                public_key_bytes = f.read()
+            res = jwt.decode(token, public_key_bytes, algorithms=["EdDSA"])
+            return res
+        except jwt.PyJWTError as e:
+            logger.warning("Super token verify failed: %s", e)
+            return None
+        except Exception as e:
+            logger.error("Error verifying super token: %s", e)
+            return None

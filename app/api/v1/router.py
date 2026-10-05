@@ -5,6 +5,7 @@ from .branches.branches_router import branches_router
 from .cash_registers.cash_registers_router import cash_registers_router
 from .cash_shifts.cash_shifts_router import cash_shifts_router
 from .cash_transactions.cash_transactions_router import cash_transactions_router
+from .core_settings.core_settings_router import core_settings_router
 from .doctors.doctors_router import doctors_router
 from .lab_tests.lab_tests_router import lab_tests_router
 from .orders.orders_router import orders_router
@@ -21,6 +22,7 @@ router_v1.include_router(branches_router, prefix="/branches")
 router_v1.include_router(cash_registers_router, prefix="/cash-registers")
 router_v1.include_router(cash_shifts_router, prefix='/cash-shifts')
 router_v1.include_router(cash_transactions_router, prefix="/cash-transactions")
+router_v1.include_router(core_settings_router, prefix='/core-settings')
 router_v1.include_router(doctors_router, prefix="/doctors")
 router_v1.include_router(lab_tests_router, prefix="/lab-tests")
 router_v1.include_router(orders_router, prefix="/orders")

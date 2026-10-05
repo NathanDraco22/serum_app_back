@@ -80,6 +80,8 @@ serum_app_back/
 | **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Requiere `branchId: str`. Datos congelados de paciente, precios y parámetros. Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
 | **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal (`branchId: str`), saldos por método (`cash`, `card`, `transfer`). |
 | **CashTransactions** | `cash_transactions/` | `cash_transactions/` | `cash_transactions_collection.py` | **Kardex Inmutable**: Libro contable de auditoría (`branchId: str`, `registerId: str`); solo lectura (GET ALL). Ver [Caja y Kardex](reglas_negocio/caja_y_kardex.md). |
+| **CoreSettings** | `core_settings/` | `core_settings/` | `core_settings_collection.py` | **Activación y Licencia de Servin**: Push con Ed25519 (EdDSA), auto-aprovisionamiento de branch/Admin y `/auths/servin-status`. |
+| **Reports** | `reports/` | N/A (Agregaciones) | Varias colecciones | **Business Intelligence**: 5 pipelines de agregación nativos en MongoDB (Financiero, Top Médicos, Demanda de Exámenes, Cuentas por Cobrar y Auditoría de Arqueos). Ver [Reportes Analíticos](reglas_negocio/reportes_analiticos.md). |
 
 ---
 
@@ -99,7 +101,12 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
    - `OrderPaymentManager`: Orquesta el cobro de una orden médica y su reflejo inmediato en el balance de la caja activa y en el Kardex.
    - Actualiza el estado de la orden (`pending` ➔ `partiallyPaid` ➔ `paid`).
 
-3. **`app/core/security/`**:
+3. **`app/core/reports/`**:
+   - `ReportsManager`: Fachada orquestadora analítica.
+   - `reports_pipelines.py`: Pipelines de agregación de MongoDB ($match, $group, $sort).
+   - `generators/`: Módulos delegados (`generate_financial_report.py`, `generate_top_doctors_report.py`, `generate_lab_tests_volume_report.py`, `generate_pending_balances_report.py`, `generate_shifts_audit_report.py`, `reports_helpers.py`).
+
+4. **`app/core/security/`**:
    - `token_manager.py`: Creación y validación de tokens JWT (HS256) con expiraciones en segundos Unix.
    - `password_hasher.py`: Hashing y verificación de contraseñas mediante `passlib` / `bcrypt`.
 

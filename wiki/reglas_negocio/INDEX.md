@@ -17,3 +17,4 @@ Documentación detallada sobre el comportamiento, validaciones y lógica de nego
 | **[Caja y Kardex Financiero](caja_y_kardex.md)** | Libro contable inmutable, control de arqueo, desglose por métodos de pago y regla de montos en centavos. |
 | **[Cotizaciones y Preventa](cotizaciones.md)** | Manejo de clientes casuales, aislamiento de datos y transición validada hacia orden formal. |
 | **[Autenticación y Roles](autenticacion_y_roles.md)** | Sesiones JWT (HS256), refresh tokens, endpoint `/check-user` y segmentación por sucursales. |
+| **[Reportes Analíticos](reportes_analiticos.md)** | Pipelines de agregación en MongoDB, contratos de los 5 endpoints, reglas de "Sin Médico" y control de arqueos. |

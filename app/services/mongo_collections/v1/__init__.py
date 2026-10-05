@@ -2,6 +2,7 @@ from .branches_collection import BranchesCollection
 from .cash_registers_collection import CashRegistersCollection
 from .cash_shifts_collection import CashShiftsCollection
 from .cash_transactions_collection import CashTransactionsCollection
+from .core_settings_collection import CoreSettingsCollection
 from .doctors_collection import DoctorsCollection
 from .lab_tests_collection import LabTestsCollection
 from .orders_collection import OrdersCollection
@@ -15,6 +16,7 @@ __all__ = [
     "CashRegistersCollection",
     "CashShiftsCollection",
     "CashTransactionsCollection",
+    "CoreSettingsCollection",
     "DoctorsCollection",
     "LabTestsCollection",
     "OrdersCollection",

@@ -8,6 +8,7 @@ from repos.v1.auths import (
     RefreshTokenRequest,
     RefreshTokenResponse,
 )
+from repos.v1.core_settings import ServinStatusResponse
 
 from .auths_controller import auths_controller
 
@@ -27,3 +28,8 @@ async def refresh_token(body: RefreshTokenRequest) -> RefreshTokenResponse:
 @auths_router.post("/check-user")
 async def check_user(body: CheckUserRequest) -> CheckUserResponse:
     return await auths_controller.check_user(body)
+
+
+@auths_router.get("/servin-status")
+async def get_servin_status() -> ServinStatusResponse:
+    return await auths_controller.get_servin_status()
