@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from repos.v1.orders.models.order_model import DoctorInfo, PatientInfo
+
 
 class QuotedItem(BaseModel):
     labTestId: str
@@ -11,8 +13,11 @@ class QuotedItem(BaseModel):
 
 class BaseQuotation(BaseModel):
     branchId: str
-    clientName: str
+    clientName: str = "Cliente General"
     patientId: str | None = None
+    clientInfo: PatientInfo | None = None
+    doctorId: str | None = None
+    doctorInfo: DoctorInfo | None = None
     items: list[QuotedItem] = []
     totalAmount: int = 0
     status: str = "pending"
@@ -27,6 +32,9 @@ class UpdateQuotation(BaseModel):
     branchId: str | None = None
     clientName: str | None = None
     patientId: str | None = None
+    clientInfo: PatientInfo | None = None
+    doctorId: str | None = None
+    doctorInfo: DoctorInfo | None = None
     items: list[QuotedItem] | None = None
     totalAmount: int | None = None
     status: str | None = None
