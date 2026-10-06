@@ -6,7 +6,7 @@ class BasePatient(BaseModel):
     dateOfBirth: int
     gender: str
     phone: str
-    address: str
+    address: str | None = None
     email: str | None = None
     cardId: str | None = None
     originBranch: str
