@@ -37,3 +37,8 @@ La entidad `Quotation` actúa como una **zona de preventa temporal** que preserv
    - Una cotización es exclusivamente un presupuesto informativo de venta y preventa con tarifas congeladas.
    - No transiciona ni se marca como convertida en el flujo operativo del sistema: *una cotización es solamente una cotización*.
    - Si el cliente decide contratar los servicios y realizarse los análisis, recepción genera una orden clínica formal desde el módulo de órdenes, asegurando el alta o selección formal del paciente, la recepción de muestras y el flujo clínico de resultados.
+6. **Ventana de Consulta y Filtro Fijo de 30 Días (`QuotationFilterParams` y `QuotationQueryParams`)**:
+   - Dado que las cotizaciones son presupuestos de vigencia temporal, las consultas por defecto están restringidas a un rango fijo de los **últimos 30 días** (`createdAt >= now - 30 días`).
+   - Sigue la convención estándar del sistema mediante `QuotationFilterParams` en backend y `QuotationQueryParams` en Flutter (`branchId`, `patientId`, `doctorId`, `status`, `startDate`, `endDate`, `offset`, `limit`) con ordenamiento descendente por `createdAt`.
+   - Tanto la API (`QuotationsCollection`) como la lógica del cliente (`QuotationQueryParams.last30Days()`) garantizan que el listado de cotizaciones se mantenga ágil y acotado al ciclo operativo vigente.
+

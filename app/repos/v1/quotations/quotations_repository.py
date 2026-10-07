@@ -1,6 +1,8 @@
 from core.counter_manager import CounterManager
 from tools.time_tools import TimeTools
 
+from repos.v1.common.filter_params import QuotationFilterParams
+
 from .data.quotations_datasource import QuotationsDataSource
 from .models.quotation_model import CreateQuotation, QuotationInDb, UpdateQuotation
 
@@ -30,8 +32,13 @@ class QuotationsRepository:
 
         return QuotationInDb.model_validate(result)
 
-    async def get_all_quotations(self) -> list[QuotationInDb]:
-        results = await self.quotations_ds.get_all_quotations()
+    async def get_all_quotations(
+        self, filters: QuotationFilterParams | None = None
+    ) -> list[QuotationInDb]:
+        filters_dict = None
+        if filters is not None:
+            filters_dict = filters.model_dump(exclude_none=True)
+        results = await self.quotations_ds.get_all_quotations(filters_dict)
         return [QuotationInDb.model_validate(r) for r in results]
 
     async def get_quotation_by_id(self, quotation_id: str) -> QuotationInDb | None:

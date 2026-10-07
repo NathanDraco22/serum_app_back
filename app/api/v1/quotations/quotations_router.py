@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from repos.v1.common.filter_params import QuotationFilterParams
 from repos.v1.quotations import CreateQuotation, QuotationInDb, UpdateQuotation
 from responses.v1 import ListResponse
 
@@ -14,8 +15,10 @@ async def create_quotation(body: CreateQuotation) -> QuotationInDb:
 
 
 @quotations_router.get("")
-async def get_all_quotations() -> ListResponse[QuotationInDb]:
-    return await quotations_controller.get_all_quotations()
+async def get_all_quotations(
+    query_params: QuotationFilterParams = Depends(),
+) -> ListResponse[QuotationInDb]:
+    return await quotations_controller.get_all_quotations(query_params)
 
 
 @quotations_router.get("/{quotation_id}")

@@ -1,5 +1,6 @@
 from fastapi import HTTPException, status
 
+from repos.v1.common.filter_params import QuotationFilterParams
 from repos.v1.quotations import (
     CreateQuotation,
     QuotationInDb,
@@ -16,8 +17,10 @@ class QuotationsController:
     async def create_quotation(self, body: CreateQuotation) -> QuotationInDb:
         return await self.quotations_repo.create_quotation(body)
 
-    async def get_all_quotations(self) -> ListResponse[QuotationInDb]:
-        quotations = await self.quotations_repo.get_all_quotations()
+    async def get_all_quotations(
+        self, query_params: QuotationFilterParams | None = None
+    ) -> ListResponse[QuotationInDb]:
+        quotations = await self.quotations_repo.get_all_quotations(query_params)
         return ListResponse(count=len(quotations), data=quotations)
 
     async def get_quotation_by_id(self, quotation_id: str) -> QuotationInDb:

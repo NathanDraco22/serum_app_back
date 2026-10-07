@@ -9,9 +9,11 @@ class QuotationsDataSource:
         await collection.create_quotation(quotation)
         return quotation
 
-    async def get_all_quotations(self) -> list[dict[str, Any]]:
+    async def get_all_quotations(
+        self, filters: dict[str, Any] | None = None
+    ) -> list[dict[str, Any]]:
         collection = QuotationsCollection.get_instance()
-        return await collection.fetch_all_quotations()
+        return await collection.fetch_all_quotations(filters)
 
     async def get_quotation_by_id(self, quotation_id: str) -> dict[str, Any] | None:
         collection = QuotationsCollection.get_instance()
