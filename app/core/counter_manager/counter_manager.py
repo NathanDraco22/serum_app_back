@@ -54,3 +54,16 @@ class CounterManager:
             "quotationNumber", number, session
         )
         return str(res.value)
+
+    async def next_shift_number(self, session: Any = None) -> str:
+        res = await self.counters_repository.increment_counter(
+            "shiftNumber", session
+        )
+        return str(res.value)
+
+    async def set_shift_number(self, number: int, session: Any = None) -> str:
+        res = await self.counters_repository.set_counter(
+            "shiftNumber", number, session
+        )
+        return str(res.value)
+

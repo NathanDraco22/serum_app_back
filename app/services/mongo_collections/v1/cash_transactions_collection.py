@@ -15,11 +15,18 @@ class CashTransactionsCollection(BaseMongoCollection):
         self, filters: dict | None = None
     ) -> list[dict[str, Any]]:
         collection = self._collection
-        query = {}
+        query: dict[str, Any] = {"isDeleted": {"$ne": True}}
+
+        offset = 0
+        limit = 0
+
         if filters:
-            query = filters.copy()
-            start_date = query.pop("startDate", None)
-            end_date = query.pop("endDate", None)
+            query_filters = filters.copy()
+            offset = query_filters.pop("offset", 0)
+            limit = query_filters.pop("limit", 0)
+
+            start_date = query_filters.pop("startDate", None)
+            end_date = query_filters.pop("endDate", None)
 
             if start_date is not None or end_date is not None:
                 query["createdAt"] = {}
@@ -28,8 +35,18 @@ class CashTransactionsCollection(BaseMongoCollection):
                 if end_date is not None:
                     query["createdAt"]["$lte"] = end_date
 
-        cursor = collection.find(query)
-        result = await cursor.to_list(length=None)
+            for key, value in query_filters.items():
+                if value is not None:
+                    query[key] = value
+
+        cursor = collection.find(query).sort("createdAt", -1)
+
+        if offset > 0:
+            cursor = cursor.skip(offset)
+        if limit > 0:
+            cursor = cursor.limit(limit)
+
+        result = await cursor.to_list(length=limit if limit > 0 else None)
         await cursor.close()
 
         return result

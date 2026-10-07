@@ -34,7 +34,7 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
 
     async with mongo_client.start_session() as session:
         async with await session.start_transaction():
-            async with session.bind():
+            async with session.bind(end_session=False):
                 branch_id = ""
                 resulting_balance = 0
 

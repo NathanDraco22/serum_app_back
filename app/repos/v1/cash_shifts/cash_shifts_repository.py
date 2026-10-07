@@ -1,12 +1,17 @@
 from typing import Any
 
+from core.counter_manager import CounterManager
 from tools.time_tools import TimeTools
-from tools.uuid_tool import UuidTool
+
 from core.exceptions import (
     CashShiftAlreadyOpen,
     CashShiftAlreadyClosed,
     CashShiftNotFound,
 )
+from repos.v1.cash_transactions import CashTransactionInDb
+from repos.v1.common.models.user_info import UserInfo
+from services.mongo_collections.v1 import CashTransactionsCollection
+from tools.uuid_tool import UuidTool
 
 from .data.cash_shifts_datasource import CashShiftsDataSource
 from .models.cash_shift_model import (
@@ -143,8 +148,10 @@ class CashShiftsRepository:
             branch_name = branch_name or res_b
 
         now = TimeTools.get_now_in_milliseconds()
+        shift_id = await CounterManager().next_shift_number()
         new_shift = CashShiftInDb(
-            id=UuidTool.generate_uuid(),
+            id=shift_id,
+
             userId=create_cash_shift.userId,
             branchId=create_cash_shift.branchId,
             notes=create_cash_shift.notes,
@@ -166,6 +173,33 @@ class CashShiftsRepository:
         )
 
         result = await self.cash_shifts_ds.create_cash_shift(new_shift.model_dump())
+
+        # Registrar transacción de apertura en el Kardex
+        if create_cash_shift.initialBalance >= 0:
+            open_tx = CashTransactionInDb(
+                id=UuidTool.generate_uuid(),
+                shiftId=shift_id,
+                registerId=None,
+                branchId=create_cash_shift.branchId,
+                flowType="in",
+                subType="opening",
+                paymentMethod="cash",
+                amount=create_cash_shift.initialBalance,
+                resultingBalance=create_cash_shift.initialBalance,
+                concept="Apertura de turno y fondo inicial",
+                referenceId=shift_id,
+                performedBy=UserInfo(
+                    id=create_cash_shift.userId,
+                    name=user_name or "Usuario",
+                ),
+                createdAt=now,
+                updatedAt=None,
+                isDeleted=False,
+            )
+            await CashTransactionsCollection.get_instance().create_cash_transaction(
+                open_tx.model_dump()
+            )
+
         return CashShiftInDb.model_validate(result)
 
     async def get_current_shift(self, user_id: str) -> CashShiftInDb | None:
@@ -194,6 +228,7 @@ class CashShiftsRepository:
 
         diff = close_data.declaredCash - (shift.initialBalance + shift.cashBalance)
         now = TimeTools.get_now_in_milliseconds()
+        total_cash_in_drawer = shift.initialBalance + shift.cashBalance
 
         update_dict: dict[str, Any] = {
             "status": "CLOSED",
@@ -210,6 +245,31 @@ class CashShiftsRepository:
         )
         if updated is None:
             raise CashShiftNotFound()
+
+        # Registrar transacción de cierre y arqueo en el Kardex
+        closing_tx = CashTransactionInDb(
+            id=UuidTool.generate_uuid(),
+            shiftId=shift_id,
+            registerId=None,
+            branchId=shift.branchId,
+            flowType="out",
+            subType="closing",
+            paymentMethod="cash",
+            amount=total_cash_in_drawer,
+            resultingBalance=0,
+            concept="Cierre y arqueo de turno",
+            referenceId=shift_id,
+            performedBy=UserInfo(
+                id=shift.userId,
+                name=shift.userName or "Usuario",
+            ),
+            createdAt=now,
+            updatedAt=None,
+            isDeleted=False,
+        )
+        await CashTransactionsCollection.get_instance().create_cash_transaction(
+            closing_tx.model_dump()
+        )
 
         await self._enrich_shifts([updated])
         return CashShiftInDb.model_validate(updated)

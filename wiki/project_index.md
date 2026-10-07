@@ -81,7 +81,7 @@ serum_app_back/
 | **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal (`branchId: str`), saldos por método (`cash`, `card`, `transfer`). |
 | **CashTransactions** | `cash_transactions/` | `cash_transactions/` | `cash_transactions_collection.py` | **Kardex Inmutable**: Libro contable de auditoría (`branchId: str`, `registerId: str`); solo lectura (GET ALL). Ver [Caja y Kardex](reglas_negocio/caja_y_kardex.md). |
 | **CoreSettings** | `core_settings/` | `core_settings/` | `core_settings_collection.py` | **Activación y Licencia de Servin**: Push con Ed25519 (EdDSA), auto-aprovisionamiento de branch/Admin y `/auths/servin-status`. |
-| **Counters** | N/A (Interno) | `counters/` | `counters_collection.py` | **Correlativos e IDs Secuenciales**: Colección atómica con `$inc` y `upsert` para IDs de pacientes, doctores, órdenes y cotizaciones. |
+| **Counters** | N/A (Interno) | `counters/` | `counters_collection.py` | **Correlativos e IDs Secuenciales**: Colección atómica con `$inc` y `upsert` para IDs de pacientes, doctores, órdenes, cotizaciones y turnos de caja. |
 | **Reports** | `reports/` | N/A (Agregaciones) | Varias colecciones | **Business Intelligence**: 5 pipelines de agregación nativos en MongoDB (Financiero, Top Médicos, Demanda de Exámenes, Cuentas por Cobrar y Auditoría de Arqueos). Ver [Reportes Analíticos](reglas_negocio/reportes_analiticos.md). |
 
 
@@ -110,8 +110,9 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
 
 4. **`app/core/counter_manager/`**:
    - `CounterManager`: Orquestador transversal Singleton de correlativos e identificadores secuenciales.
-   - Genera IDs formateados: `patientNumber` y `doctorNumber` (4 dígitos `zfill(4)`), `orderNumber` y `quotationNumber` (numérico simple `str`).
+   - Genera IDs formateados: `patientNumber` y `doctorNumber` (4 dígitos `zfill(4)`), `orderNumber`, `quotationNumber` y `shiftNumber` (numérico simple `str`).
    - Utiliza `$inc` atómico y `find_one_and_update(..., upsert=True)` en MongoDB.
+
 
 5. **`app/core/security/`**:
    - `token_manager.py`: Creación y validación de tokens JWT (HS256) con expiraciones en segundos Unix.

@@ -3,17 +3,20 @@ from dotenv import load_dotenv
 
 from core.counter_manager import CounterManager
 from core.services_initializer import init_services
+from repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
 from repos.v1.doctors import CreateDoctor, DoctorsRepository
 from repos.v1.orders import CreateOrder, OrdersRepository
 from repos.v1.patients import CreatePatient, PatientsRepository
 from repos.v1.quotations import CreateQuotation, QuotationsRepository
 from services.mongo_collections.v1 import (
+    CashShiftsCollection,
     CountersCollection,
     DoctorsCollection,
     OrdersCollection,
     PatientsCollection,
     QuotationsCollection,
 )
+
 
 
 @pytest.mark.asyncio
@@ -52,7 +55,13 @@ async def test_counter_manager_and_entity_ids():
     assert q1 == "1"
     assert q2 == "2"
 
-    # 5. Setters
+    # 5. Shifts: numeric string without leading zeros
+    s1 = await counter_mgr.next_shift_number()
+    s2 = await counter_mgr.next_shift_number()
+    assert s1 == "1"
+    assert s2 == "2"
+
+    # 6. Setters
     await counter_mgr.set_patient_number(99)
     p100 = await counter_mgr.next_patient_number()
     assert p100 == "0100"
@@ -61,6 +70,10 @@ async def test_counter_manager_and_entity_ids():
     o500 = await counter_mgr.next_order_number()
     assert o500 == "500"
 
+    await counter_mgr.set_shift_number(9)
+    s10 = await counter_mgr.next_shift_number()
+    assert s10 == "10"
+
     # --- Creación de Entidades usando Repositorios ---
 
     # Reset collections
@@ -68,7 +81,9 @@ async def test_counter_manager_and_entity_ids():
     await DoctorsCollection.get_instance()._collection.delete_many({})
     await OrdersCollection.get_instance()._collection.delete_many({})
     await QuotationsCollection.get_instance()._collection.delete_many({})
+    await CashShiftsCollection.get_instance()._collection.delete_many({})
     await counters_col.delete_many({})
+
 
     # 1. Crear Paciente
     patients_repo = PatientsRepository.get_instance()
@@ -143,3 +158,24 @@ async def test_counter_manager_and_entity_ids():
         )
     )
     assert quotation2.id == "2"
+
+    # 5. Abrir Turnos de Caja
+    shifts_repo = CashShiftsRepository.get_instance()
+    shift1 = await shifts_repo.open_shift(
+        CreateCashShift(
+            userId="user_1",
+            branchId="ORIGIN_BRANCH",
+            initialBalance=1000,
+        )
+    )
+    assert shift1.id == "1"
+
+    shift2 = await shifts_repo.open_shift(
+        CreateCashShift(
+            userId="user_2",
+            branchId="ORIGIN_BRANCH",
+            initialBalance=2000,
+        )
+    )
+    assert shift2.id == "2"
+

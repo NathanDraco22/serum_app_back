@@ -39,7 +39,7 @@ async def process_income(
 
     async with mongo_client.start_session() as session:
         async with await session.start_transaction():
-            async with session.bind():
+            async with session.bind(end_session=False):
                 register_data = await register_col.fetch_cash_register_by_id(
                     register_id
                 )
