@@ -5,6 +5,8 @@ class BaseCashShift(BaseModel):
     userId: str
     branchId: str
     notes: str = ""
+    userName: str | None = None
+    branchName: str | None = None
 
 
 class CreateCashShift(BaseCashShift):
