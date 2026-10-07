@@ -76,12 +76,14 @@ serum_app_back/
 | **Patients** | `patients/` | `patients/` | `patients_collection.py` | Expediente demográfico maestro. Requiere `originBranch: str` para trazabilidad de creación. Requisito obligatorio para generar orden médica. |
 | **Doctors** | `doctors/` | `doctors/` | `doctors_collection.py` | Catálogo de médicos referentes. Requiere `originBranch: str` para saber sucursal de alta. |
 | **LabTests** | `lab_tests/` | `lab_tests/` | `lab_tests_collection.py` | Catálogo unificado global: Pruebas individuales y Packs (`isPack: true/false`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
-| **Quotations** | `quotations/` | `quotations/` | `quotations_collection.py` | Preventa para clientes casuales (texto libre). Requiere `branchId: str`. Ver [Cotizaciones](reglas_negocio/cotizaciones.md). |
+| **Quotations** | `quotations/` | `quotations/` | `quotations_collection.py` | Preventa y presupuestos con snapshots opcionales de cliente y médico (`clientInfo`, `doctorInfo`). Requiere `branchId: str`. Ver [Cotizaciones](reglas_negocio/cotizaciones.md). |
 | **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Requiere `branchId: str`. Datos congelados de paciente, precios y parámetros. Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
 | **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal (`branchId: str`), saldos por método (`cash`, `card`, `transfer`). |
 | **CashTransactions** | `cash_transactions/` | `cash_transactions/` | `cash_transactions_collection.py` | **Kardex Inmutable**: Libro contable de auditoría (`branchId: str`, `registerId: str`); solo lectura (GET ALL). Ver [Caja y Kardex](reglas_negocio/caja_y_kardex.md). |
 | **CoreSettings** | `core_settings/` | `core_settings/` | `core_settings_collection.py` | **Activación y Licencia de Servin**: Push con Ed25519 (EdDSA), auto-aprovisionamiento de branch/Admin y `/auths/servin-status`. |
+| **Counters** | N/A (Interno) | `counters/` | `counters_collection.py` | **Correlativos e IDs Secuenciales**: Colección atómica con `$inc` y `upsert` para IDs de pacientes, doctores, órdenes y cotizaciones. |
 | **Reports** | `reports/` | N/A (Agregaciones) | Varias colecciones | **Business Intelligence**: 5 pipelines de agregación nativos en MongoDB (Financiero, Top Médicos, Demanda de Exámenes, Cuentas por Cobrar y Auditoría de Arqueos). Ver [Reportes Analíticos](reglas_negocio/reportes_analiticos.md). |
+
 
 ---
 
@@ -106,19 +108,25 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
    - `reports_pipelines.py`: Pipelines de agregación de MongoDB ($match, $group, $sort).
    - `generators/`: Módulos delegados (`generate_financial_report.py`, `generate_top_doctors_report.py`, `generate_lab_tests_volume_report.py`, `generate_pending_balances_report.py`, `generate_shifts_audit_report.py`, `reports_helpers.py`).
 
-4. **`app/core/security/`**:
+4. **`app/core/counter_manager/`**:
+   - `CounterManager`: Orquestador transversal Singleton de correlativos e identificadores secuenciales.
+   - Genera IDs formateados: `patientNumber` y `doctorNumber` (4 dígitos `zfill(4)`), `orderNumber` y `quotationNumber` (numérico simple `str`).
+   - Utiliza `$inc` atómico y `find_one_and_update(..., upsert=True)` en MongoDB.
+
+5. **`app/core/security/`**:
    - `token_manager.py`: Creación y validación de tokens JWT (HS256) con expiraciones en segundos Unix.
    - `password_hasher.py`: Hashing y verificación de contraseñas mediante `passlib` / `bcrypt`.
 
-4. **`app/core/exceptions/`**:
+6. **`app/core/exceptions/`**:
    - Excepciones de dominio desacopladas de FastAPI (ej. `CashRegisterAlreadyOpen`, `OrderNotFound`, `InsufficientMethodBalance`).
    - Se registran en `app/regis_exception_handlers.py` para retornar el código HTTP apropiado.
 
-5. **`app/core/default_values/`**:
+7. **`app/core/default_values/`**:
    - Inicialización idempotente en startup (`lifespan` ➔ `services_initializer.py`):
      - `create_default_branch.py`: Creación de sucursal inicial `ORIGIN_BRANCH` ("Origen").
      - `create_default_cash_register.py`: Creación de caja registradora inicial `ORIGIN_CASH` ("Caja Principal") asociada a `ORIGIN_BRANCH`.
      - `create_root_user.py`: Creación de usuario administrador `Serum` (clave `SerumRoot`).
+
 
 ---
 

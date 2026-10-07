@@ -1,5 +1,5 @@
+from core.counter_manager import CounterManager
 from tools.time_tools import TimeTools
-from tools.uuid_tool import UuidTool
 from tools.search_tools import generate_prefixes
 
 from .data.patients_datasource import PatientsDataSource
@@ -19,8 +19,9 @@ class PatientsRepository:
         return cls._instance
 
     async def create_patient(self, create_patient: CreatePatient) -> PatientInDb:
+        patient_id = await CounterManager().next_patient_number()
         new_patient = PatientInDb(
-            id=UuidTool.generate_uuid(),
+            id=patient_id,
             createdAt=TimeTools.get_now_in_milliseconds(),
             updatedAt=None,
             **create_patient.model_dump(),
@@ -29,6 +30,7 @@ class PatientsRepository:
         new_patient_data["searchPrefixes"] = generate_prefixes(new_patient.name)
 
         result = await self.patients_ds.create_patient(new_patient_data)
+
         return PatientInDb.model_validate(result)
 
     async def get_all_patients(self) -> list[PatientInDb]:

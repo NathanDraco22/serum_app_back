@@ -62,7 +62,7 @@ Todos los endpoints requieren los siguientes parámetros estándar de consulta:
 ### 3. `GET /api/v1/reports/lab-tests-volume`
 * **Parámetros Adicionales**: `source: str = "orders"` (admite `"orders"` o `"quotations"`), `limit: int = 10`.
 * **Propósito**: Medir la demanda y rotación de pruebas clínicas individuales y paquetes (`isPack: true/false`).
-* **Regla de Negocio**: Al consultar `source="quotations"`, evalúa los presupuestos emitidos para medir interés comercial o conversiones preventivas.
+* **Regla de Negocio**: Al consultar `source="quotations"`, evalúa los presupuestos emitidos para medir interés comercial y demanda proyectada.
 
 ### 4. `GET /api/v1/reports/pending-balances`
 * **Propósito**: Control de cuentas por cobrar y morosidad de pacientes.

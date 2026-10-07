@@ -33,11 +33,14 @@ class MongoService:
 
     async def create_indexes(self):
         from services.mongo_collections.v1 import (
+            CountersCollection,
             DoctorsCollection,
             PatientsCollection,
             LabTestsCollection,
         )
 
+        await CountersCollection.get_instance().create_indexes()
         await DoctorsCollection.get_instance().create_indexes()
         await PatientsCollection.get_instance().create_indexes()
         await LabTestsCollection.get_instance().create_indexes()
+

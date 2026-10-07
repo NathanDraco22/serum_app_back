@@ -2,8 +2,10 @@ import re
 from typing import Any
 
 from pymongo import ReturnDocument, IndexModel
+from pymongo.errors import OperationFailure
 
 from services import BaseMongoCollection
+
 
 
 class PatientsCollection(BaseMongoCollection):
@@ -101,34 +103,43 @@ class PatientsCollection(BaseMongoCollection):
 
     async def create_indexes(self):
         collection = self._collection
-        await collection.create_indexes(
-            [
-                IndexModel(
-                    [
-                        ("id", 1),
-                        ("isDeleted", 1),
-                    ],
-                    unique=True,
-                ),
-                IndexModel(
-                    [
-                        ("name", "text"),
-                        ("searchPrefixes", "text"),
-                        ("cardId", "text"),
-                        ("phone", "text"),
-                    ],
-                    weights={
-                        "name": 10,
-                        "searchPrefixes": 5,
-                        "cardId": 1,
-                        "phone": 1,
-                    },
-                    name="TextSearchIndex",
-                ),
-                IndexModel(
-                    [
-                        ("cardId", 1),
-                    ],
-                ),
-            ]
-        )
+        indexes = [
+            IndexModel(
+                [
+                    ("id", 1),
+                    ("isDeleted", 1),
+                ],
+                unique=True,
+            ),
+            IndexModel(
+                [
+                    ("name", "text"),
+                    ("searchPrefixes", "text"),
+                    ("cardId", "text"),
+                    ("phone", "text"),
+                    ("id", "text"),
+                ],
+                weights={
+                    "name": 10,
+                    "searchPrefixes": 5,
+                    "cardId": 1,
+                    "phone": 1,
+                    "id": 1,
+                },
+                name="TextSearchIndex",
+            ),
+            IndexModel(
+                [
+                    ("cardId", 1),
+                ],
+            ),
+        ]
+        try:
+            await collection.create_indexes(indexes)
+        except OperationFailure as e:
+            if e.code == 85:
+                await collection.drop_index("TextSearchIndex")
+                await collection.create_indexes(indexes)
+            else:
+                raise
+

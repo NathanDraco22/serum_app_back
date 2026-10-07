@@ -1,6 +1,7 @@
+from core.counter_manager import CounterManager
 from services.mongo_collections.v1 import DoctorsCollection, PatientsCollection
 from tools.time_tools import TimeTools
-from tools.uuid_tool import UuidTool
+
 
 from repos.v1.common.filter_params import OrderFilterParams
 
@@ -34,11 +35,11 @@ class OrdersRepository:
             )
             if patient_doc:
                 order_dict["patientInfo"] = PatientInfo(
-                    name=patient_doc.get("name", ""),
-                    dateOfBirth=patient_doc.get("dateOfBirth", 0),
-                    gender=patient_doc.get("gender", "M"),
-                    phone=patient_doc.get("phone", ""),
-                    address=patient_doc.get("address", ""),
+                    name=patient_doc.get("name") or "",
+                    dateOfBirth=patient_doc.get("dateOfBirth") or 0,
+                    gender=patient_doc.get("gender") or "M",
+                    phone=patient_doc.get("phone") or "",
+                    address=patient_doc.get("address") or "",
                     cardId=patient_doc.get("cardId"),
                     email=patient_doc.get("email"),
                 ).model_dump()
@@ -49,18 +50,21 @@ class OrdersRepository:
             )
             if doctor_doc:
                 order_dict["doctorInfo"] = DoctorInfo(
-                    name=doctor_doc.get("name", ""),
-                    specialty=doctor_doc.get("specialty", "Medicina General"),
-                    phone=doctor_doc.get("phone", ""),
+                    name=doctor_doc.get("name") or "",
+                    specialty=doctor_doc.get("specialty") or "Medicina General",
+                    phone=doctor_doc.get("phone") or "",
                     cardId=doctor_doc.get("cardId"),
                     email=doctor_doc.get("email"),
                 ).model_dump()
 
+
+        order_id = await CounterManager().next_order_number()
         new_order = OrderInDb(
-            id=UuidTool.generate_uuid(),
+            id=order_id,
             createdAt=TimeTools.get_now_in_milliseconds(),
             **order_dict,
         )
+
         result = await self.orders_ds.create_order(new_order.model_dump())
         return OrderInDb.model_validate(result)
 

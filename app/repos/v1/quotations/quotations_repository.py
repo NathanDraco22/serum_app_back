@@ -1,5 +1,5 @@
+from core.counter_manager import CounterManager
 from tools.time_tools import TimeTools
-from tools.uuid_tool import UuidTool
 
 from .data.quotations_datasource import QuotationsDataSource
 from .models.quotation_model import CreateQuotation, QuotationInDb, UpdateQuotation
@@ -20,12 +20,14 @@ class QuotationsRepository:
     async def create_quotation(
         self, create_quotation: CreateQuotation
     ) -> QuotationInDb:
+        quotation_id = await CounterManager().next_quotation_number()
         new_quotation = QuotationInDb(
-            id=UuidTool.generate_uuid(),
+            id=quotation_id,
             createdAt=TimeTools.get_now_in_milliseconds(),
             **create_quotation.model_dump(),
         )
         result = await self.quotations_ds.create_quotation(new_quotation.model_dump())
+
         return QuotationInDb.model_validate(result)
 
     async def get_all_quotations(self) -> list[QuotationInDb]:
