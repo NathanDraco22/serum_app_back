@@ -5,6 +5,7 @@ class BaseBranch(BaseModel):
     name: str
     address: str
     phone: str
+    imageUrl: str | None = None
 
 
 class CreateBranch(BaseBranch):
@@ -15,6 +16,7 @@ class UpdateBranch(BaseModel):
     name: str | None = None
     address: str | None = None
     phone: str | None = None
+    imageUrl: str | None = None
 
 
 class BranchInDb(BaseBranch):
