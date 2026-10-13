@@ -47,6 +47,7 @@ serum_app_back/
 │   ├── app_lifespan.py                 # Ciclo de vida (startup/shutdown) e inicio de servicios
 │   ├── regis_exception_handlers.py     # Manejador centralizado: DomainException → HTTP Status
 │   ├── api/v1/                         # Routers y Controllers por entidad
+│   ├── app_middleware/                 # Middlewares unificados (auth_middleware para Bearer JWT o API Key)
 │   ├── core/                           # Lógica transversal, operaciones transaccionales y seguridad
 │   ├── repos/v1/                       # Modelos Pydantic, Repositorios y DataSources
 │   ├── services/                       # Infraestructura y conexión a MongoDB
@@ -83,6 +84,7 @@ serum_app_back/
 | **CoreSettings** | `core_settings/` | `core_settings/` | `core_settings_collection.py` | **Activación y Licencia de Servin**: Push con Ed25519 (EdDSA), auto-aprovisionamiento de branch/Admin y `/auths/servin-status`. |
 | **Counters** | N/A (Interno) | `counters/` | `counters_collection.py` | **Correlativos e IDs Secuenciales**: Colección atómica con `$inc` y `upsert` para IDs de pacientes, doctores, órdenes, cotizaciones y turnos de caja. |
 | **Reports** | `reports/` | N/A (Agregaciones) | Varias colecciones | **Business Intelligence**: 5 pipelines de agregación nativos en MongoDB (Financiero, Top Médicos, Demanda de Exámenes, Cuentas por Cobrar y Auditoría de Arqueos). Ver [Reportes Analíticos](reglas_negocio/reportes_analiticos.md). |
+| **ApiKeys** | `api_keys/` | `api_keys/` | `api_keys_collection.py` | **Integraciones y Acceso Externo**: Llaves prefijadas `srm_live_...`, enmascaramiento, scopes (`bi:read`), soft delete y validación unificada en `app_middleware`. |
 
 
 ---

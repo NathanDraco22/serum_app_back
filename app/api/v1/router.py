@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from .api_keys.api_keys_router import api_keys_router
 from .auths.auths_router import auths_router
 from .branches.branches_router import branches_router
 from .cash_registers.cash_registers_router import cash_registers_router
@@ -17,6 +18,7 @@ from .users.users_router import users_router
 
 router_v1 = APIRouter(tags=["apiV1"])
 
+router_v1.include_router(api_keys_router, prefix="/api-keys")
 router_v1.include_router(auths_router, prefix='/auths')
 router_v1.include_router(branches_router, prefix="/branches")
 router_v1.include_router(cash_registers_router, prefix="/cash-registers")

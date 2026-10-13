@@ -5,6 +5,7 @@ from core.default_values import (
     create_root_user,
 )
 from core.reports.database_indexes import ensure_reports_indexes
+from services.mongo_collections.v1.api_keys_collection import ApiKeysCollection
 from services.mongo_service import MongoService
 
 
@@ -15,3 +16,4 @@ async def init_services() -> None:
     await create_default_cash_register()
     await create_default_roles()
     await create_root_user()
+    await ApiKeysCollection.get_instance().create_indexes()

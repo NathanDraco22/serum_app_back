@@ -1,3 +1,4 @@
+from .api_keys_collection import ApiKeysCollection
 from .branches_collection import BranchesCollection
 from .cash_registers_collection import CashRegistersCollection
 from .cash_shifts_collection import CashShiftsCollection
@@ -13,6 +14,7 @@ from .roles_collection import RolesCollection
 from .users_collection import UsersCollection
 
 __all__ = [
+    "ApiKeysCollection",
     "BranchesCollection",
     "CashRegistersCollection",
     "CashShiftsCollection",
