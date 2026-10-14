@@ -1,0 +1,363 @@
+[
+  {
+    "name": "Glucosa",
+    "code": "GLU",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 70.0,
+        "maxValue": 105.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Creatinina",
+    "code": "CREA",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.6,
+        "maxValue": 1.1
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Aspartato Aminotransferasa (ASAT/TGO)",
+    "code": "TGO",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 50.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Alanina Aminotransferasa (ALT/TGP)",
+    "code": "TGP",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 50.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Gamma Glutamil Transferasa (GGT)",
+    "code": "GGT",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 9.0,
+        "maxValue": 39.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Bilirrubina Total",
+    "code": "BIL-T",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 1.20
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Bilirrubina Directa",
+    "code": "BIL-D",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 0.25
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Bilirrubina Indirecta",
+    "code": "BIL-I",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 1.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Fosfatasa Alcalina",
+    "code": "ALP",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 44.0,
+        "maxValue": 150.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Proteínas Totales",
+    "code": "PROT-T",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "g/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 6.0,
+        "maxValue": 8.3
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "TSH (Hormona Estimulante de la Tiroides)",
+    "code": "TSH",
+    "commercialCategory": "Pruebas Especiales",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µUI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.3,
+        "maxValue": 4.2
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "T4 Libre",
+    "code": "T4L",
+    "commercialCategory": "Pruebas Especiales",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.9,
+        "maxValue": 1.7
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "T3 Total",
+    "code": "T3",
+    "commercialCategory": "Pruebas Especiales",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.8,
+        "maxValue": 2.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Insulina en Ayunas (AM)",
+    "code": "INS",
+    "commercialCategory": "Pruebas Especiales",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µUI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "F",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 2.6,
+        "maxValue": 24.9
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Perfil Hepático Completo",
+    "code": "PERF-HEP",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "TGO",
+      "TGP",
+      "GGT",
+      "BIL-T",
+      "BIL-D",
+      "BIL-I",
+      "ALP",
+      "PROT-T"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  }
+]

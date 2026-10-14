@@ -1,6 +1,7 @@
 from core.default_values import (
     create_default_branch,
     create_default_cash_register,
+    create_default_lab_tests,
     create_default_roles,
     create_root_user,
 )
@@ -16,4 +17,5 @@ async def init_services() -> None:
     await create_default_cash_register()
     await create_default_roles()
     await create_root_user()
+    await create_default_lab_tests()
     await ApiKeysCollection.get_instance().create_indexes()
