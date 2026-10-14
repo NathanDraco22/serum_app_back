@@ -4,6 +4,7 @@ from pathlib import Path
 
 from core.default_values.create_default_branch import ORIGIN_BRANCH_ID
 from core.lab_tests import LabTestsManager
+from repos.v1._shared_models import ReferenceValue
 from repos.v1.lab_tests import (
     CreateLabTest,
     LabTestInDb,
@@ -12,6 +13,25 @@ from repos.v1.lab_tests import (
 )
 
 logger = logging.getLogger("serum.default_values")
+
+
+def _normalize_gender(g: str) -> str:
+    lower = g.strip().lower()
+    if lower in ("f", "female", "femenino"):
+        return "female"
+    if lower in ("m", "male", "masculino"):
+        return "male"
+    return "both"
+
+
+def _normalize_reference_values(ref_values: list[dict]) -> list[dict]:
+    normalized = []
+    for rv in ref_values:
+        item = dict(rv)
+        if "gender" in item and isinstance(item["gender"], str):
+            item["gender"] = _normalize_gender(item["gender"])
+        normalized.append(item)
+    return normalized
 
 
 def _resolve_static_file_path() -> Path | None:
@@ -46,7 +66,7 @@ async def create_default_lab_tests() -> None:
         return
 
     try:
-        with open(json_path, "r", encoding="utf-8") as f:
+        with open(json_path, "r", encoding="utf-8-sig") as f:
             catalog_items: list[dict] = json.load(f)
     except Exception as e:
         logger.error(f"Error al leer {json_path}: {e}")
@@ -77,11 +97,39 @@ async def create_default_lab_tests() -> None:
             normalized_name in existing_by_name
         )
         if already_exists:
+            # Si ya existe, verificar si requiere normalizar géneros heredados en la base de datos (ej. "F" -> "female")
+            target_test = (
+                existing_by_code.get(code)
+                if code
+                else existing_by_name.get(normalized_name)
+            )
+            if target_test and any(
+                rv.gender in ("F", "M") for rv in target_test.referenceValues
+            ):
+                updated_rvs = [
+                    ReferenceValue(
+                        patientType=rv.patientType,
+                        gender=_normalize_gender(rv.gender),
+                        minAgeDays=rv.minAgeDays,
+                        maxAgeDays=rv.maxAgeDays,
+                        minValue=rv.minValue,
+                        maxValue=rv.maxValue,
+                    )
+                    for rv in target_test.referenceValues
+                ]
+                await lab_tests_repo.update_lab_test_by_id(
+                    target_test.id,
+                    UpdateLabTest(referenceValues=updated_rvs),
+                )
             continue
 
         payload = dict(item)
         payload.pop("childTestCodes", None)
         payload["branchId"] = ORIGIN_BRANCH_ID
+        if "referenceValues" in payload and isinstance(payload["referenceValues"], list):
+            payload["referenceValues"] = _normalize_reference_values(
+                payload["referenceValues"]
+            )
 
         try:
             create_dto = CreateLabTest(**payload)

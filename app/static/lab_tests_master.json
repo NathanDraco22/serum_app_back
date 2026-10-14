@@ -2,7 +2,7 @@
   {
     "name": "Glucosa",
     "code": "GLU",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -26,7 +26,7 @@
   {
     "name": "Creatinina",
     "code": "CREA",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -37,7 +37,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.6,
@@ -50,7 +50,7 @@
   {
     "name": "Aspartato Aminotransferasa (ASAT/TGO)",
     "code": "TGO",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -61,7 +61,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.0,
@@ -74,7 +74,7 @@
   {
     "name": "Alanina Aminotransferasa (ALT/TGP)",
     "code": "TGP",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -85,7 +85,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.0,
@@ -98,7 +98,7 @@
   {
     "name": "Gamma Glutamil Transferasa (GGT)",
     "code": "GGT",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -109,7 +109,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 9.0,
@@ -122,7 +122,7 @@
   {
     "name": "Bilirrubina Total",
     "code": "BIL-T",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -133,11 +133,11 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 1.20
+        "maxValue": 1.2
       }
     ],
     "qualitativeOptions": [],
@@ -146,7 +146,7 @@
   {
     "name": "Bilirrubina Directa",
     "code": "BIL-D",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -157,7 +157,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.0,
@@ -170,7 +170,7 @@
   {
     "name": "Bilirrubina Indirecta",
     "code": "BIL-I",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -181,7 +181,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.0,
@@ -194,7 +194,7 @@
   {
     "name": "Fosfatasa Alcalina",
     "code": "ALP",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -205,7 +205,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 44.0,
@@ -216,9 +216,9 @@
     "expectedQualitativeValue": null
   },
   {
-    "name": "Proteínas Totales",
+    "name": "ProteÃ­nas Totales",
     "code": "PROT-T",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -229,7 +229,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 6.0,
@@ -249,11 +249,11 @@
     "isPack": false,
     "childTestIds": [],
     "dataType": "numeric",
-    "unitOfMeasure": "µUI/mL",
+    "unitOfMeasure": "ÂµUI/mL",
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.3,
@@ -277,7 +277,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.9,
@@ -301,7 +301,7 @@
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 0.8,
@@ -321,11 +321,11 @@
     "isPack": false,
     "childTestIds": [],
     "dataType": "numeric",
-    "unitOfMeasure": "µUI/mL",
+    "unitOfMeasure": "ÂµUI/mL",
     "referenceValues": [
       {
         "patientType": "general",
-        "gender": "F",
+        "gender": "female",
         "minAgeDays": 6570,
         "maxAgeDays": 43800,
         "minValue": 2.6,
@@ -336,9 +336,9 @@
     "expectedQualitativeValue": null
   },
   {
-    "name": "Perfil Hepático Completo",
+    "name": "Perfil HepÃ¡tico Completo",
     "code": "PERF-HEP",
-    "commercialCategory": "Química Sanguínea",
+    "commercialCategory": "QuÃ­mica SanguÃ­nea",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
