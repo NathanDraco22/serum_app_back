@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 from repos.v1._shared_models import ReferenceValue
+from repos.v1.lab_test_accounts.models.lab_test_account_model import LabTestCommercial
 
 
 class BaseLabTest(BaseModel):
@@ -20,7 +21,8 @@ class BaseLabTest(BaseModel):
 
 
 class CreateLabTest(BaseLabTest):
-    pass
+    branchId: str
+    costPrice: int = 0
 
 
 class UpdateLabTest(BaseModel):
@@ -29,6 +31,7 @@ class UpdateLabTest(BaseModel):
     commercialCategory: str | None = None
     salePrice: int | None = None
     salePrice2: int | None = None
+    costPrice: int | None = None
     currency: str | None = None
     isPack: bool | None = None
     childTestIds: list[str] | None = None
@@ -44,3 +47,6 @@ class LabTestInDb(BaseLabTest):
     createdAt: int
     updatedAt: int | None = None
     isDeleted: bool = False
+    costPrice: int = 0
+    commercial: LabTestCommercial | None = None
+

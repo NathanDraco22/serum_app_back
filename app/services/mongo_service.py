@@ -37,10 +37,12 @@ class MongoService:
             DoctorsCollection,
             PatientsCollection,
             LabTestsCollection,
+            LabTestAccountsCollection,
         )
 
         await CountersCollection.get_instance().create_indexes()
         await DoctorsCollection.get_instance().create_indexes()
         await PatientsCollection.get_instance().create_indexes()
         await LabTestsCollection.get_instance().create_indexes()
+        await LabTestAccountsCollection.get_instance().create_indexes()
 

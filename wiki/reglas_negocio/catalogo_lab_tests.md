@@ -37,3 +37,23 @@ Representa una oferta o combo comercial que agrupa múltiples pruebas individual
 ## 2. Expansión Automática en Órdenes Médicas
 
 Cuando una orden incluye un Pack (`isPack: true`), el backend expande automáticamente sus `childTestIds` en la lista plana de `results` (`OrderTestResult`) de la orden, garantizando que el personal técnico tenga una fila de captura individual para cada análisis constituyente del perfil.
+
+---
+
+## 3. Cuentas Comerciales y Precios por Sucursal (`LabTestAccount`)
+
+Las pruebas y packs médicos pertenecen a un catálogo clínico maestro (`lab_tests`). La información comercial y de precios se gestiona de forma desacoplada por cada sede mediante la colección `lab_test_accounts`:
+
+- **Subdocumento `commercial`**:
+  - `salePrice: int`: Precio regular (Nivel 1) en centavos para la sucursal.
+  - `salePrice2: int`: Precio preferencial (Nivel 2) en centavos para la sucursal.
+  - `costPrice: int`: Costo operativo/insumos del estudio en centavos.
+  - `currency: str`: Divisa (`"USD"` por defecto).
+- **Creación Transaccional en Core (`LabTestsManager`)**:
+  - Al dar de alta un `LabTest` indicando `branchId`, se inserta la prueba en `lab_tests` y su `LabTestAccount` en la sucursal de origen con los precios provistos.
+  - Automáticamente, se aprovisionan en lote los `LabTestAccount` para todas las demás sucursales activas con valores en `0`.
+- **Aprovisionamiento de Nuevas Sedes**:
+  - Cuando se da de alta una nueva sucursal (`POST /branches`), el sistema genera en lote las cuentas con precio `0` para todas las pruebas activas existentes.
+- **Resolución Contextual en el POS**:
+  - Los endpoints de consulta `GET /lab_tests?branch_id=...` y `GET /lab_tests/search/...` ejecutan un pipeline de agregación con `$lookup` hacia `lab_test_accounts`, proyectando el precio correspondiente a la sucursal activa en tiempo de ejecución.
+

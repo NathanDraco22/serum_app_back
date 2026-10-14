@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-
+from core.lab_tests import LabTestsManager
 from repos.v1.lab_tests import (
     CreateLabTest,
     LabTestInDb,
@@ -14,18 +14,28 @@ class LabTestsController:
         self.lab_tests_repo = lab_tests_repo
 
     async def create_lab_test(self, body: CreateLabTest) -> LabTestInDb:
-        return await self.lab_tests_repo.create_lab_test(body)
+        return await LabTestsManager.get_instance().create_lab_test(body)
 
-    async def get_all_lab_tests(self) -> ListResponse[LabTestInDb]:
-        lab_tests = await self.lab_tests_repo.get_all_lab_tests()
+    async def get_all_lab_tests(
+        self, branch_id: str | None = None
+    ) -> ListResponse[LabTestInDb]:
+        lab_tests = await self.lab_tests_repo.get_all_lab_tests(branch_id=branch_id)
         return ListResponse(count=len(lab_tests), data=lab_tests)
 
-    async def search_lab_test_by_text(self, text_query: str) -> ListResponse[LabTestInDb]:
-        lab_tests = await self.lab_tests_repo.search_lab_test_by_text(text_query)
+    async def search_lab_test_by_text(
+        self, text_query: str, branch_id: str | None = None
+    ) -> ListResponse[LabTestInDb]:
+        lab_tests = await self.lab_tests_repo.search_lab_test_by_text(
+            text_query, branch_id=branch_id
+        )
         return ListResponse(count=len(lab_tests), data=lab_tests)
 
-    async def get_lab_test_by_id(self, lab_test_id: str) -> LabTestInDb:
-        lab_test = await self.lab_tests_repo.get_lab_test_by_id(lab_test_id)
+    async def get_lab_test_by_id(
+        self, lab_test_id: str, branch_id: str | None = None
+    ) -> LabTestInDb:
+        lab_test = await self.lab_tests_repo.get_lab_test_by_id(
+            lab_test_id, branch_id=branch_id
+        )
         if lab_test is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

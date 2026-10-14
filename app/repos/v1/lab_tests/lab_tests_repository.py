@@ -1,3 +1,5 @@
+from typing import Any
+
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
 from tools.search_tools import generate_prefixes
@@ -18,30 +20,47 @@ class LabTestsRepository:
             cls._instance = cls(LabTestsDataSource())
         return cls._instance
 
-    async def create_lab_test(self, create_lab_test: CreateLabTest) -> LabTestInDb:
+    async def create_lab_test(
+        self, create_lab_test: CreateLabTest, session: Any = None
+    ) -> LabTestInDb:
+        create_data = create_lab_test.model_dump()
+        # branchId is processed by Core for LabTestAccount, not needed as top-level in LabTests
+        create_data.pop("branchId", None)
         new_lab_test = LabTestInDb(
             id=UuidTool.generate_uuid(),
             createdAt=TimeTools.get_now_in_milliseconds(),
-            **create_lab_test.model_dump(),
+            **create_data,
         )
         new_lab_test_data = new_lab_test.model_dump()
         new_lab_test_data["searchPrefixes"] = generate_prefixes(new_lab_test.name)
 
-        result = await self.lab_tests_ds.create_lab_test(new_lab_test_data)
+        result = await self.lab_tests_ds.create_lab_test(
+            new_lab_test_data, session=session
+        )
         return LabTestInDb.model_validate(result)
 
-    async def get_all_lab_tests(self) -> list[LabTestInDb]:
-        results = await self.lab_tests_ds.get_all_lab_tests()
+    async def get_all_lab_tests(
+        self, branch_id: str | None = None
+    ) -> list[LabTestInDb]:
+        results = await self.lab_tests_ds.get_all_lab_tests(branch_id=branch_id)
         return [LabTestInDb.model_validate(r) for r in results]
 
-    async def get_lab_test_by_id(self, lab_test_id: str) -> LabTestInDb | None:
-        result = await self.lab_tests_ds.get_lab_test_by_id(lab_test_id)
+    async def get_lab_test_by_id(
+        self, lab_test_id: str, branch_id: str | None = None
+    ) -> LabTestInDb | None:
+        result = await self.lab_tests_ds.get_lab_test_by_id(
+            lab_test_id, branch_id=branch_id
+        )
         if result is None:
             return None
         return LabTestInDb.model_validate(result)
 
-    async def search_lab_test_by_text(self, text_query: str) -> list[LabTestInDb]:
-        results = await self.lab_tests_ds.search_lab_test_by_text(text_query)
+    async def search_lab_test_by_text(
+        self, text_query: str, branch_id: str | None = None
+    ) -> list[LabTestInDb]:
+        results = await self.lab_tests_ds.search_lab_test_by_text(
+            text_query, branch_id=branch_id
+        )
         return [LabTestInDb.model_validate(r) for r in results]
 
     async def update_lab_test_by_id(

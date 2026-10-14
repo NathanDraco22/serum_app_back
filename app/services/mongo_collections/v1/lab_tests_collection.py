@@ -9,29 +9,112 @@ from services import BaseMongoCollection
 class LabTestsCollection(BaseMongoCollection):
     collection_name = "LabTests"
 
-    async def create_lab_test(self, lab_test: dict) -> None:
-        collection = self._collection
-        await collection.insert_one(lab_test)
+    @staticmethod
+    def _get_branch_account_lookup_stages(branch_id: str) -> list[dict[str, Any]]:
+        return [
+            {
+                "$lookup": {
+                    "from": "LabTestAccounts",
+                    "let": {"testId": "$id"},
+                    "pipeline": [
+                        {
+                            "$match": {
+                                "$expr": {
+                                    "$and": [
+                                        {"$eq": ["$labTestId", "$$testId"]},
+                                        {"$eq": ["$branchId", branch_id]},
+                                        {"$eq": ["$isDeleted", False]},
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    "as": "_accountDocs",
+                }
+            },
+            {
+                "$addFields": {
+                    "_account": {"$arrayElemAt": ["$_accountDocs", 0]},
+                }
+            },
+            {
+                "$addFields": {
+                    "commercial": {
+                        "$ifNull": [
+                            "$_account.commercial",
+                            {
+                                "salePrice": "$salePrice",
+                                "salePrice2": "$salePrice2",
+                                "costPrice": 0,
+                                "currency": "$currency",
+                            },
+                        ]
+                    },
+                    "salePrice": {
+                        "$ifNull": ["$_account.commercial.salePrice", "$salePrice"]
+                    },
+                    "salePrice2": {
+                        "$ifNull": ["$_account.commercial.salePrice2", "$salePrice2"]
+                    },
+                    "costPrice": {
+                        "$ifNull": ["$_account.commercial.costPrice", 0]
+                    },
+                }
+            },
+            {
+                "$project": {
+                    "_accountDocs": 0,
+                    "_account": 0,
+                }
+            },
+        ]
 
-    async def fetch_all_lab_tests(self) -> list[dict[str, Any]]:
+    async def create_lab_test(self, lab_test: dict, session: Any = None) -> None:
         collection = self._collection
-        cursor = collection.find({"isDeleted": False})
+        await collection.insert_one(lab_test, session=session)
+
+    async def fetch_all_lab_tests(
+        self, branch_id: str | None = None
+    ) -> list[dict[str, Any]]:
+        collection = self._collection
+        if branch_id:
+            pipeline = [
+                {"$match": {"isDeleted": False}},
+                *self._get_branch_account_lookup_stages(branch_id),
+            ]
+            cursor = await collection.aggregate(pipeline)
+        else:
+            cursor = collection.find({"isDeleted": False})
 
         result = await cursor.to_list(length=None)
         await cursor.close()
 
         return result
 
-    async def fetch_lab_test_by_id(self, lab_test_id: str) -> dict[str, Any] | None:
+    async def fetch_lab_test_by_id(
+        self, lab_test_id: str, branch_id: str | None = None
+    ) -> dict[str, Any] | None:
         collection = self._collection
+        if branch_id:
+            pipeline = [
+                {"$match": {"id": lab_test_id, "isDeleted": False}},
+                *self._get_branch_account_lookup_stages(branch_id),
+            ]
+            cursor = await collection.aggregate(pipeline)
+            results = await cursor.to_list(length=1)
+            await cursor.close()
+            return results[0] if results else None
+
         result = await collection.find_one({"id": lab_test_id, "isDeleted": False})
         return result
 
-    async def search_lab_test_by_text(self, text_query: str) -> list[dict[str, Any]]:
+    async def search_lab_test_by_text(
+        self, text_query: str, branch_id: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = self._collection
         safe_query = re.escape(text_query)
 
-        pipeline = [
+        pipeline: list[dict[str, Any]] = [
             {
                 "$match": {
                     "$text": {
@@ -63,8 +146,15 @@ class LabTestsCollection(BaseMongoCollection):
             {"$addFields": {"finalScore": {"$add": ["$baseScore", "$positionBoost"]}}},
             {"$sort": {"finalScore": -1, "parameterName": 1}},
             {"$limit": 20},
-            {"$project": {"baseScore": 0, "positionBoost": 0, "finalScore": 0}},
         ]
+
+        if branch_id:
+            pipeline.extend(self._get_branch_account_lookup_stages(branch_id))
+
+        pipeline.append(
+            {"$project": {"baseScore": 0, "positionBoost": 0, "finalScore": 0}}
+        )
+
         cursor = await collection.aggregate(pipeline)
         result = await cursor.to_list(length=None)
         await cursor.close()

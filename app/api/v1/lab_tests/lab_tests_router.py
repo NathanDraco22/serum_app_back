@@ -14,18 +14,28 @@ async def create_lab_test(body: CreateLabTest) -> LabTestInDb:
 
 
 @lab_tests_router.get("")
-async def get_all_lab_tests() -> ListResponse[LabTestInDb]:
-    return await lab_tests_controller.get_all_lab_tests()
+async def get_all_lab_tests(
+    branch_id: str | None = None,
+) -> ListResponse[LabTestInDb]:
+    return await lab_tests_controller.get_all_lab_tests(branch_id=branch_id)
 
 
 @lab_tests_router.get("/search/{text_query}")
-async def search_lab_test_by_text(text_query: str) -> ListResponse[LabTestInDb]:
-    return await lab_tests_controller.search_lab_test_by_text(text_query)
+async def search_lab_test_by_text(
+    text_query: str, branch_id: str | None = None
+) -> ListResponse[LabTestInDb]:
+    return await lab_tests_controller.search_lab_test_by_text(
+        text_query, branch_id=branch_id
+    )
 
 
 @lab_tests_router.get("/{lab_test_id}")
-async def get_lab_test_by_id(lab_test_id: str) -> LabTestInDb:
-    return await lab_tests_controller.get_lab_test_by_id(lab_test_id)
+async def get_lab_test_by_id(
+    lab_test_id: str, branch_id: str | None = None
+) -> LabTestInDb:
+    return await lab_tests_controller.get_lab_test_by_id(
+        lab_test_id, branch_id=branch_id
+    )
 
 
 @lab_tests_router.patch("/{lab_test_id}")

@@ -77,6 +77,7 @@ serum_app_back/
 | **Patients** | `patients/` | `patients/` | `patients_collection.py` | Expediente demográfico maestro. Requiere `originBranch: str` para trazabilidad de creación. Requisito obligatorio para generar orden médica. |
 | **Doctors** | `doctors/` | `doctors/` | `doctors_collection.py` | Catálogo de médicos referentes. Requiere `originBranch: str` para saber sucursal de alta. |
 | **LabTests** | `lab_tests/` | `lab_tests/` | `lab_tests_collection.py` | Catálogo unificado global: Pruebas individuales y Packs (`isPack: true/false`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
+| **LabTestAccounts** | `lab_test_accounts/` | `lab_test_accounts/` | `lab_test_accounts_collection.py` | Cuentas comerciales por sucursal (`branchId`, `labTestId`, `commercial: {salePrice, salePrice2, costPrice}`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
 | **Quotations** | `quotations/` | `quotations/` | `quotations_collection.py` | Preventa y presupuestos con snapshots opcionales de cliente y médico (`clientInfo`, `doctorInfo`). Requiere `branchId: str`. Ver [Cotizaciones](reglas_negocio/cotizaciones.md). |
 | **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Requiere `branchId: str`. Datos congelados de paciente, precios y parámetros. Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
 | **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal (`branchId: str`), saldos por método (`cash`, `card`, `transfer`). |
@@ -116,15 +117,19 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
    - Utiliza `$inc` atómico y `find_one_and_update(..., upsert=True)` en MongoDB.
 
 
-5. **`app/core/security/`**:
+5. **`app/core/lab_tests/`**:
+   - `LabTestsManager`: Orquestador de creación atómica de pruebas clínicas y aprovisionamiento de cuentas por sucursal.
+   - `process_create_lab_test.py`: Transacción en MongoDB para insertar `LabTest` + `LabTestAccount` de origen + cuentas en 0 para las demás sucursales.
+
+6. **`app/core/security/`**:
    - `token_manager.py`: Creación y validación de tokens JWT (HS256) con expiraciones en segundos Unix.
    - `password_hasher.py`: Hashing y verificación de contraseñas mediante `passlib` / `bcrypt`.
 
-6. **`app/core/exceptions/`**:
+7. **`app/core/exceptions/`**:
    - Excepciones de dominio desacopladas de FastAPI (ej. `CashRegisterAlreadyOpen`, `OrderNotFound`, `InsufficientMethodBalance`).
    - Se registran en `app/regis_exception_handlers.py` para retornar el código HTTP apropiado.
 
-7. **`app/core/default_values/`**:
+8. **`app/core/default_values/`**:
    - Inicialización idempotente en startup (`lifespan` ➔ `services_initializer.py`):
      - `create_default_branch.py`: Creación de sucursal inicial `ORIGIN_BRANCH` ("Origen").
      - `create_default_cash_register.py`: Creación de caja registradora inicial `ORIGIN_CASH` ("Caja Principal") asociada a `ORIGIN_BRANCH`.

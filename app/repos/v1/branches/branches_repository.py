@@ -25,6 +25,38 @@ class BranchesRepository:
             **create_branch.model_dump(),
         )
         result = await self.branches_ds.create_branch(new_branch.model_dump())
+
+        # Auto-provisionar cuentas de pruebas de laboratorio para esta nueva sede
+        try:
+            from services.mongo_collections.v1 import (
+                LabTestAccountsCollection,
+                LabTestsCollection,
+            )
+
+            lab_tests = await LabTestsCollection.get_instance().fetch_all_lab_tests()
+            if lab_tests:
+                accounts_col = LabTestAccountsCollection.get_instance()
+                new_accounts = [
+                    {
+                        "id": UuidTool.generate_uuid(),
+                        "branchId": new_branch.id,
+                        "labTestId": t["id"],
+                        "commercial": {
+                            "salePrice": 0,
+                            "salePrice2": 0,
+                            "costPrice": 0,
+                            "currency": t.get("currency", "USD"),
+                        },
+                        "createdAt": new_branch.createdAt,
+                        "updatedAt": None,
+                        "isDeleted": False,
+                    }
+                    for t in lab_tests
+                ]
+                await accounts_col.create_accounts_batch(new_accounts)
+        except Exception:
+            pass
+
         return BranchInDb.model_validate(result)
 
     async def get_all_branches(self) -> list[BranchInDb]:
