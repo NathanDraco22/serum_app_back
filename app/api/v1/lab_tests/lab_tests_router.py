@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from repos.v1.lab_tests import CreateLabTest, LabTestInDb, UpdateLabTest
 from responses.v1 import ListResponse
@@ -15,26 +15,34 @@ async def create_lab_test(body: CreateLabTest) -> LabTestInDb:
 
 @lab_tests_router.get("")
 async def get_all_lab_tests(
-    branch_id: str | None = None,
+    branchId: str | None = Query(None),
+    branch_id: str | None = Query(None),
 ) -> ListResponse[LabTestInDb]:
-    return await lab_tests_controller.get_all_lab_tests(branch_id=branch_id)
+    effective_branch = branchId or branch_id
+    return await lab_tests_controller.get_all_lab_tests(branchId=effective_branch)
 
 
 @lab_tests_router.get("/search/{text_query}")
 async def search_lab_test_by_text(
-    text_query: str, branch_id: str | None = None
+    text_query: str,
+    branchId: str | None = Query(None),
+    branch_id: str | None = Query(None),
 ) -> ListResponse[LabTestInDb]:
+    effective_branch = branchId or branch_id
     return await lab_tests_controller.search_lab_test_by_text(
-        text_query, branch_id=branch_id
+        text_query, branchId=effective_branch
     )
 
 
 @lab_tests_router.get("/{lab_test_id}")
 async def get_lab_test_by_id(
-    lab_test_id: str, branch_id: str | None = None
+    lab_test_id: str,
+    branchId: str | None = Query(None),
+    branch_id: str | None = Query(None),
 ) -> LabTestInDb:
+    effective_branch = branchId or branch_id
     return await lab_tests_controller.get_lab_test_by_id(
-        lab_test_id, branch_id=branch_id
+        lab_test_id, branchId=effective_branch
     )
 
 

@@ -52,26 +52,45 @@ class LabTestAccountsRepository:
         await self.ds.create_accounts_batch(docs, session=session)
         return accounts_in_db
 
+    async def get_by_id(
+        self, account_id: str, session: Any = None
+    ) -> LabTestAccountInDb | None:
+        result = await self.ds.get_by_id(account_id, session=session)
+        if result is None:
+            return None
+        return LabTestAccountInDb.model_validate(result)
+
+    async def get_all(
+        self,
+        branchId: str | None = None,
+        labTestId: str | None = None,
+        session: Any = None,
+    ) -> list[LabTestAccountInDb]:
+        results = await self.ds.get_all(
+            branchId=branchId, labTestId=labTestId, session=session
+        )
+        return [LabTestAccountInDb.model_validate(r) for r in results]
+
     async def get_by_branch_and_test(
-        self, branch_id: str, lab_test_id: str, session: Any = None
+        self, branchId: str, labTestId: str, session: Any = None
     ) -> LabTestAccountInDb | None:
         result = await self.ds.get_by_branch_and_test(
-            branch_id, lab_test_id, session=session
+            branchId, labTestId, session=session
         )
         if result is None:
             return None
         return LabTestAccountInDb.model_validate(result)
 
     async def get_by_branch(
-        self, branch_id: str, session: Any = None
+        self, branchId: str, session: Any = None
     ) -> list[LabTestAccountInDb]:
-        results = await self.ds.get_by_branch(branch_id, session=session)
+        results = await self.ds.get_by_branch(branchId, session=session)
         return [LabTestAccountInDb.model_validate(r) for r in results]
 
     async def get_by_test_id(
-        self, lab_test_id: str, session: Any = None
+        self, labTestId: str, session: Any = None
     ) -> list[LabTestAccountInDb]:
-        results = await self.ds.get_by_test_id(lab_test_id, session=session)
+        results = await self.ds.get_by_test_id(labTestId, session=session)
         return [LabTestAccountInDb.model_validate(r) for r in results]
 
     async def update_commercial(
@@ -90,14 +109,14 @@ class LabTestAccountsRepository:
 
     async def update_commercial_by_branch_and_test(
         self,
-        branch_id: str,
-        lab_test_id: str,
+        branchId: str,
+        labTestId: str,
         update_model: UpdateLabTestAccountCommercial,
         session: Any = None,
     ) -> LabTestAccountInDb | None:
         commercial_data = update_model.model_dump(exclude_unset=True)
         result = await self.ds.update_commercial_by_branch_and_test(
-            branch_id, lab_test_id, commercial_data, session=session
+            branchId, labTestId, commercial_data, session=session
         )
         if result is None:
             return None

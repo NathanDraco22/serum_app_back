@@ -4,6 +4,9 @@ from pymongo import IndexModel, ReturnDocument
 from services import BaseMongoCollection
 
 
+from tools.time_tools import TimeTools
+
+
 class LabTestAccountsCollection(BaseMongoCollection):
     collection_name = "LabTestAccounts"
 
@@ -21,36 +24,62 @@ class LabTestAccountsCollection(BaseMongoCollection):
         collection = self._collection
         await collection.insert_many(accounts, session=session)
 
+    async def fetch_by_id(
+        self, account_id: str, session: Any = None
+    ) -> dict[str, Any] | None:
+        collection = self._collection
+        return await collection.find_one(
+            {"id": account_id, "isDeleted": False},
+            session=session,
+        )
+
+    async def fetch_all(
+        self,
+        branchId: str | None = None,
+        labTestId: str | None = None,
+        session: Any = None,
+    ) -> list[dict[str, Any]]:
+        collection = self._collection
+        query: dict[str, Any] = {"isDeleted": False}
+        if branchId:
+            query["branchId"] = branchId
+        if labTestId:
+            query["labTestId"] = labTestId
+        cursor = collection.find(query, session=session)
+        result = await cursor.to_list(length=None)
+        await cursor.close()
+        return result
+
     async def fetch_by_branch_and_test(
-        self, branch_id: str, lab_test_id: str, session: Any = None
+        self, branchId: str, labTestId: str, session: Any = None
     ) -> dict[str, Any] | None:
         collection = self._collection
         return await collection.find_one(
             {
-                "branchId": branch_id,
-                "labTestId": lab_test_id,
+                "branchId": branchId,
+                "labTestId": labTestId,
                 "isDeleted": False,
             },
             session=session,
         )
 
     async def fetch_by_branch(
-        self, branch_id: str, session: Any = None
+        self, branchId: str, session: Any = None
     ) -> list[dict[str, Any]]:
         collection = self._collection
         cursor = collection.find(
-            {"branchId": branch_id, "isDeleted": False}, session=session
+            {"branchId": branchId, "isDeleted": False}, session=session
         )
         result = await cursor.to_list(length=None)
         await cursor.close()
         return result
 
     async def fetch_by_test_id(
-        self, lab_test_id: str, session: Any = None
+        self, labTestId: str, session: Any = None
     ) -> list[dict[str, Any]]:
         collection = self._collection
         cursor = collection.find(
-            {"labTestId": lab_test_id, "isDeleted": False}, session=session
+            {"labTestId": labTestId, "isDeleted": False}, session=session
         )
         result = await cursor.to_list(length=None)
         await cursor.close()
@@ -60,7 +89,9 @@ class LabTestAccountsCollection(BaseMongoCollection):
         self, account_id: str, commercial: dict[str, Any], session: Any = None
     ) -> dict[str, Any] | None:
         collection = self._collection
-        update_doc: dict[str, Any] = {}
+        update_doc: dict[str, Any] = {
+            "updatedAt": TimeTools.get_now_in_milliseconds()
+        }
         for key, val in commercial.items():
             update_doc[f"commercial.{key}"] = val
 
@@ -74,20 +105,22 @@ class LabTestAccountsCollection(BaseMongoCollection):
 
     async def update_commercial_by_branch_and_test(
         self,
-        branch_id: str,
-        lab_test_id: str,
+        branchId: str,
+        labTestId: str,
         commercial: dict[str, Any],
         session: Any = None,
     ) -> dict[str, Any] | None:
         collection = self._collection
-        update_doc: dict[str, Any] = {}
+        update_doc: dict[str, Any] = {
+            "updatedAt": TimeTools.get_now_in_milliseconds()
+        }
         for key, val in commercial.items():
             update_doc[f"commercial.{key}"] = val
 
         result = await collection.find_one_and_update(
             {
-                "branchId": branch_id,
-                "labTestId": lab_test_id,
+                "branchId": branchId,
+                "labTestId": labTestId,
                 "isDeleted": False,
             },
             {"$set": update_doc},
@@ -97,12 +130,12 @@ class LabTestAccountsCollection(BaseMongoCollection):
         return result
 
     async def delete_by_test_id(
-        self, lab_test_id: str, session: Any = None
+        self, labTestId: str, session: Any = None
     ) -> None:
         collection = self._collection
         await collection.update_many(
-            {"labTestId": lab_test_id},
-            {"$set": {"isDeleted": True}},
+            {"labTestId": labTestId},
+            {"$set": {"isDeleted": True, "updatedAt": TimeTools.get_now_in_milliseconds()}},
             session=session,
         )
 

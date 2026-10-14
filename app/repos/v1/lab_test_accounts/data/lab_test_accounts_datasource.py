@@ -18,25 +18,42 @@ class LabTestAccountsDataSource:
         await col.create_accounts_batch(accounts, session=session)
         return accounts
 
+    async def get_by_id(
+        self, account_id: str, session: Any = None
+    ) -> dict[str, Any] | None:
+        col = LabTestAccountsCollection.get_instance()
+        return await col.fetch_by_id(account_id, session=session)
+
+    async def get_all(
+        self,
+        branchId: str | None = None,
+        labTestId: str | None = None,
+        session: Any = None,
+    ) -> list[dict[str, Any]]:
+        col = LabTestAccountsCollection.get_instance()
+        return await col.fetch_all(
+            branchId=branchId, labTestId=labTestId, session=session
+        )
+
     async def get_by_branch_and_test(
-        self, branch_id: str, lab_test_id: str, session: Any = None
+        self, branchId: str, labTestId: str, session: Any = None
     ) -> dict[str, Any] | None:
         col = LabTestAccountsCollection.get_instance()
         return await col.fetch_by_branch_and_test(
-            branch_id, lab_test_id, session=session
+            branchId, labTestId, session=session
         )
 
     async def get_by_branch(
-        self, branch_id: str, session: Any = None
+        self, branchId: str, session: Any = None
     ) -> list[dict[str, Any]]:
         col = LabTestAccountsCollection.get_instance()
-        return await col.fetch_by_branch(branch_id, session=session)
+        return await col.fetch_by_branch(branchId, session=session)
 
     async def get_by_test_id(
-        self, lab_test_id: str, session: Any = None
+        self, labTestId: str, session: Any = None
     ) -> list[dict[str, Any]]:
         col = LabTestAccountsCollection.get_instance()
-        return await col.fetch_by_test_id(lab_test_id, session=session)
+        return await col.fetch_by_test_id(labTestId, session=session)
 
     async def update_commercial(
         self, account_id: str, commercial: dict[str, Any], session: Any = None
@@ -46,12 +63,12 @@ class LabTestAccountsDataSource:
 
     async def update_commercial_by_branch_and_test(
         self,
-        branch_id: str,
-        lab_test_id: str,
+        branchId: str,
+        labTestId: str,
         commercial: dict[str, Any],
         session: Any = None,
     ) -> dict[str, Any] | None:
         col = LabTestAccountsCollection.get_instance()
         return await col.update_commercial_by_branch_and_test(
-            branch_id, lab_test_id, commercial, session=session
+            branchId, labTestId, commercial, session=session
         )

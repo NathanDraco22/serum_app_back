@@ -40,26 +40,29 @@ class LabTestsRepository:
         return LabTestInDb.model_validate(result)
 
     async def get_all_lab_tests(
-        self, branch_id: str | None = None
+        self, branchId: str | None = None, branch_id: str | None = None
     ) -> list[LabTestInDb]:
-        results = await self.lab_tests_ds.get_all_lab_tests(branch_id=branch_id)
+        effective_branch = branchId or branch_id
+        results = await self.lab_tests_ds.get_all_lab_tests(branchId=effective_branch)
         return [LabTestInDb.model_validate(r) for r in results]
 
     async def get_lab_test_by_id(
-        self, lab_test_id: str, branch_id: str | None = None
+        self, lab_test_id: str, branchId: str | None = None, branch_id: str | None = None
     ) -> LabTestInDb | None:
+        effective_branch = branchId or branch_id
         result = await self.lab_tests_ds.get_lab_test_by_id(
-            lab_test_id, branch_id=branch_id
+            lab_test_id, branchId=effective_branch
         )
         if result is None:
             return None
         return LabTestInDb.model_validate(result)
 
     async def search_lab_test_by_text(
-        self, text_query: str, branch_id: str | None = None
+        self, text_query: str, branchId: str | None = None, branch_id: str | None = None
     ) -> list[LabTestInDb]:
+        effective_branch = branchId or branch_id
         results = await self.lab_tests_ds.search_lab_test_by_text(
-            text_query, branch_id=branch_id
+            text_query, branchId=effective_branch
         )
         return [LabTestInDb.model_validate(r) for r in results]
 

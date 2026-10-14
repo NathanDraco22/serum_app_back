@@ -10,7 +10,7 @@ class LabTestsCollection(BaseMongoCollection):
     collection_name = "LabTests"
 
     @staticmethod
-    def _get_branch_account_lookup_stages(branch_id: str) -> list[dict[str, Any]]:
+    def _get_branch_account_lookup_stages(branchId: str) -> list[dict[str, Any]]:
         return [
             {
                 "$lookup": {
@@ -22,7 +22,7 @@ class LabTestsCollection(BaseMongoCollection):
                                 "$expr": {
                                     "$and": [
                                         {"$eq": ["$labTestId", "$$testId"]},
-                                        {"$eq": ["$branchId", branch_id]},
+                                        {"$eq": ["$branchId", branchId]},
                                         {"$eq": ["$isDeleted", False]},
                                     ]
                                 }
@@ -74,13 +74,14 @@ class LabTestsCollection(BaseMongoCollection):
         await collection.insert_one(lab_test, session=session)
 
     async def fetch_all_lab_tests(
-        self, branch_id: str | None = None
+        self, branchId: str | None = None, branch_id: str | None = None
     ) -> list[dict[str, Any]]:
+        effective_branch = branchId or branch_id
         collection = self._collection
-        if branch_id:
+        if effective_branch:
             pipeline = [
                 {"$match": {"isDeleted": False}},
-                *self._get_branch_account_lookup_stages(branch_id),
+                *self._get_branch_account_lookup_stages(effective_branch),
             ]
             cursor = await collection.aggregate(pipeline)
         else:
@@ -92,13 +93,14 @@ class LabTestsCollection(BaseMongoCollection):
         return result
 
     async def fetch_lab_test_by_id(
-        self, lab_test_id: str, branch_id: str | None = None
+        self, lab_test_id: str, branchId: str | None = None, branch_id: str | None = None
     ) -> dict[str, Any] | None:
+        effective_branch = branchId or branch_id
         collection = self._collection
-        if branch_id:
+        if effective_branch:
             pipeline = [
                 {"$match": {"id": lab_test_id, "isDeleted": False}},
-                *self._get_branch_account_lookup_stages(branch_id),
+                *self._get_branch_account_lookup_stages(effective_branch),
             ]
             cursor = await collection.aggregate(pipeline)
             results = await cursor.to_list(length=1)
@@ -109,8 +111,9 @@ class LabTestsCollection(BaseMongoCollection):
         return result
 
     async def search_lab_test_by_text(
-        self, text_query: str, branch_id: str | None = None
+        self, text_query: str, branchId: str | None = None, branch_id: str | None = None
     ) -> list[dict[str, Any]]:
+        effective_branch = branchId or branch_id
         collection = self._collection
         safe_query = re.escape(text_query)
 
@@ -148,8 +151,8 @@ class LabTestsCollection(BaseMongoCollection):
             {"$limit": 20},
         ]
 
-        if branch_id:
-            pipeline.extend(self._get_branch_account_lookup_stages(branch_id))
+        if effective_branch:
+            pipeline.extend(self._get_branch_account_lookup_stages(effective_branch))
 
         pipeline.append(
             {"$project": {"baseScore": 0, "positionBoost": 0, "finalScore": 0}}
