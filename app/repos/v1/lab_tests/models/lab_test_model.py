@@ -26,6 +26,7 @@ class CreateLabTest(BaseLabTest):
 
 
 class UpdateLabTest(BaseModel):
+    branchId: str | None = None
     name: str | None = None
     code: str | None = None
     commercialCategory: str | None = None

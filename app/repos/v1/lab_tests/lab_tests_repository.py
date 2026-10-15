@@ -70,6 +70,7 @@ class LabTestsRepository:
         self, lab_test_id: str, lab_test: UpdateLabTest
     ) -> LabTestInDb | None:
         updated_data = lab_test.model_dump(exclude_unset=True)
+        updated_data.pop("branchId", None)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 
         if "name" in updated_data and updated_data["name"]:

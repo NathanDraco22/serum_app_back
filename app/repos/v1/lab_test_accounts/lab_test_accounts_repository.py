@@ -99,7 +99,7 @@ class LabTestAccountsRepository:
         update_model: UpdateLabTestAccountCommercial,
         session: Any = None,
     ) -> LabTestAccountInDb | None:
-        commercial_data = update_model.model_dump(exclude_unset=True)
+        commercial_data = update_model.model_dump(exclude_none=True)
         result = await self.ds.update_commercial(
             account_id, commercial_data, session=session
         )
@@ -114,7 +114,7 @@ class LabTestAccountsRepository:
         update_model: UpdateLabTestAccountCommercial,
         session: Any = None,
     ) -> LabTestAccountInDb | None:
-        commercial_data = update_model.model_dump(exclude_unset=True)
+        commercial_data = update_model.model_dump(exclude_none=True)
         result = await self.ds.update_commercial_by_branch_and_test(
             branchId, labTestId, commercial_data, session=session
         )
