@@ -359,5 +359,930 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null
+  },
+  {
+    "name": "Eritrocitos",
+    "code": "ERI",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "xmm3",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 3.78,
+        "maxValue": 5.7
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Hemoglobina",
+    "code": "HB",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "g/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 12.0,
+        "maxValue": 17.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Hematocrito",
+    "code": "HTC",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 36.0,
+        "maxValue": 50.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "VCM (Volumen Corpuscular Medio)",
+    "code": "VCM",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "um3",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 80.0,
+        "maxValue": 110.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "HCM (Hemoglobina Corpuscular Media)",
+    "code": "HCM",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 26.0,
+        "maxValue": 34.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "CHCM (Concentración de Hemoglobina Corpuscular Media)",
+    "code": "CHCM",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "g/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 31.0,
+        "maxValue": 36.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Leucocitos",
+    "code": "LEU",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "x mm3",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 4000.0,
+        "maxValue": 10000.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Plaquetas",
+    "code": "PLAQ",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mmx3",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 150000.0,
+        "maxValue": 450000.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Segmentados",
+    "code": "SEG",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 40.0,
+        "maxValue": 70.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Linfocitos",
+    "code": "LINF",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 20.0,
+        "maxValue": 40.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Eosinófilos",
+    "code": "EOS",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 5.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Monocitos",
+    "code": "MON",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 3.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Bandas",
+    "code": "BAN",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 3.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Basófilos",
+    "code": "BAS",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 2.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Linfocitos Atípicos",
+    "code": "LINF-ATIP",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 2.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Biometría Hemática Completa",
+    "code": "BHC",
+    "commercialCategory": "Hematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "ERI",
+      "HB",
+      "HTC",
+      "VCM",
+      "HCM",
+      "CHCM",
+      "LEU",
+      "PLAQ",
+      "SEG",
+      "LINF",
+      "EOS",
+      "MON",
+      "BAN",
+      "BAS",
+      "LINF-ATIP"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Color (Orina)",
+    "code": "COL-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Amarillo",
+      "Amarillo Claro",
+      "Ámbar",
+      "Rojizo",
+      "Incoloro"
+    ],
+    "expectedQualitativeValue": "Amarillo"
+  },
+  {
+    "name": "Aspecto (Orina)",
+    "code": "ASP-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Límpido",
+      "Ligero Turbio",
+      "Turbio"
+    ],
+    "expectedQualitativeValue": "Límpido"
+  },
+  {
+    "name": "Sedimento (Orina)",
+    "code": "SED-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Nulo",
+      "Escaso",
+      "Moderado",
+      "Abundante"
+    ],
+    "expectedQualitativeValue": "Escaso"
+  },
+  {
+    "name": "Densidad (Orina)",
+    "code": "DEN-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 1.005,
+        "maxValue": 1.03
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "pH (Orina)",
+    "code": "PH-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 5.0,
+        "maxValue": 8.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Leucocitos (Orina)",
+    "code": "LEU-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Trazas",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Glucosa (Orina)",
+    "code": "GLU-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Normal",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Proteínas (Orina)",
+    "code": "PROT-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Trazas",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Cuerpos Cetónicos",
+    "code": "CET-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Trazas",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Bilirrubina (Orina)",
+    "code": "BIL-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Sangre Oculta (Orina)",
+    "code": "SANG-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Trazas",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Nitritos",
+    "code": "NIT-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Urobilinógeno",
+    "code": "URO-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Normal",
+      "Negativo",
+      "+",
+      "++",
+      "+++"
+    ],
+    "expectedQualitativeValue": "Normal"
+  },
+  {
+    "name": "Células Epiteliales",
+    "code": "CEL-EPI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escasas",
+      "Moderadas",
+      "Abundantes"
+    ],
+    "expectedQualitativeValue": "Escasas"
+  },
+  {
+    "name": "Leucocitos Libres",
+    "code": "LEU-LIB",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Leucocitos Agrupados",
+    "code": "LEU-AGR",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Eritrocitos (Sedimento Urinario)",
+    "code": "ERI-SED",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Cristales",
+    "code": "CRIS-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escasos",
+      "Moderados",
+      "Abundantes"
+    ],
+    "expectedQualitativeValue": "No se observó"
+  },
+  {
+    "name": "Cilindros",
+    "code": "CIL-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Hialinos",
+      "Granulosos",
+      "Leucocitarios"
+    ],
+    "expectedQualitativeValue": "No se observó"
+  },
+  {
+    "name": "Bacterias",
+    "code": "BAC-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escasas",
+      "Moderadas",
+      "Abundantes"
+    ],
+    "expectedQualitativeValue": "Escasas"
+  },
+  {
+    "name": "Hilos Mucosos",
+    "code": "HIL-MUC",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escasos",
+      "Moderados",
+      "Abundantes"
+    ],
+    "expectedQualitativeValue": "No se observó"
+  },
+  {
+    "name": "Estearasa Leucocitaria",
+    "code": "EST-LEU",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo"
+  },
+  {
+    "name": "Levaduras",
+    "code": "LEV-ORI",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "x Campos",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escasas",
+      "Moderadas",
+      "Abundantes"
+    ],
+    "expectedQualitativeValue": "No se observó"
+  },
+  {
+    "name": "Examen General de Orina",
+    "code": "EGO",
+    "commercialCategory": "Uroanálisis",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "COL-ORI",
+      "ASP-ORI",
+      "SED-ORI",
+      "DEN-ORI",
+      "PH-ORI",
+      "LEU-ORI",
+      "GLU-ORI",
+      "PROT-ORI",
+      "CET-ORI",
+      "BIL-ORI",
+      "SANG-ORI",
+      "NIT-ORI",
+      "URO-ORI",
+      "CEL-EPI",
+      "LEU-LIB",
+      "LEU-AGR",
+      "ERI-SED",
+      "CRIS-ORI",
+      "CIL-ORI",
+      "BAC-ORI",
+      "HIL-MUC",
+      "EST-LEU",
+      "LEV-ORI"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
   }
 ]

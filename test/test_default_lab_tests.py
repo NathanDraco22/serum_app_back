@@ -23,24 +23,54 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
     tests_by_code = {t.code: t for t in all_tests if t.code}
 
     expected_codes = [
+        # Lote 1: Química clínica y Pruebas especiales
         "GLU", "CREA", "TGO", "TGP", "GGT",
         "BIL-T", "BIL-D", "BIL-I", "ALP", "PROT-T",
-        "TSH", "T4L", "T3", "INS", "PERF-HEP"
+        "TSH", "T4L", "T3", "INS", "PERF-HEP",
+        # Lote 2: Hematología
+        "ERI", "HB", "HTC", "VCM", "HCM", "CHCM", "LEU", "PLAQ",
+        "SEG", "LINF", "EOS", "MON", "BAN", "BAS", "LINF-ATIP", "BHC",
+        # Lote 2: Uroanálisis (EGO)
+        "COL-ORI", "ASP-ORI", "SED-ORI", "DEN-ORI", "PH-ORI", "LEU-ORI",
+        "GLU-ORI", "PROT-ORI", "CET-ORI", "BIL-ORI", "SANG-ORI", "NIT-ORI",
+        "URO-ORI", "CEL-EPI", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
+        "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI", "EGO"
     ]
 
     for code in expected_codes:
         assert code in tests_by_code, f"El test con código '{code}' debería haberse cargado desde static."
 
-    # 3. Validar el Pack y la resolución de childTestIds
-    pack = tests_by_code["PERF-HEP"]
-    assert pack.isPack is True
-    assert len(pack.childTestIds) == 8
-
-    expected_child_codes = [
+    # 3. Validar los Packs y la resolución de childTestIds
+    # 3.1 Perfil Hepático
+    pack_hep = tests_by_code["PERF-HEP"]
+    assert pack_hep.isPack is True
+    assert len(pack_hep.childTestIds) == 8
+    expected_hep_codes = [
         "TGO", "TGP", "GGT", "BIL-T", "BIL-D", "BIL-I", "ALP", "PROT-T"
     ]
-    expected_child_ids = [tests_by_code[c].id for c in expected_child_codes]
-    assert set(pack.childTestIds) == set(expected_child_ids)
+    assert set(pack_hep.childTestIds) == {tests_by_code[c].id for c in expected_hep_codes}
+
+    # 3.2 Biometría Hemática Completa
+    pack_bhc = tests_by_code["BHC"]
+    assert pack_bhc.isPack is True
+    assert len(pack_bhc.childTestIds) == 15
+    expected_bhc_codes = [
+        "ERI", "HB", "HTC", "VCM", "HCM", "CHCM", "LEU", "PLAQ",
+        "SEG", "LINF", "EOS", "MON", "BAN", "BAS", "LINF-ATIP"
+    ]
+    assert set(pack_bhc.childTestIds) == {tests_by_code[c].id for c in expected_bhc_codes}
+
+    # 3.3 Examen General de Orina
+    pack_ego = tests_by_code["EGO"]
+    assert pack_ego.isPack is True
+    assert len(pack_ego.childTestIds) == 23
+    expected_ego_codes = [
+        "COL-ORI", "ASP-ORI", "SED-ORI", "DEN-ORI", "PH-ORI", "LEU-ORI",
+        "GLU-ORI", "PROT-ORI", "CET-ORI", "BIL-ORI", "SANG-ORI", "NIT-ORI",
+        "URO-ORI", "CEL-EPI", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
+        "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI"
+    ]
+    assert set(pack_ego.childTestIds) == {tests_by_code[c].id for c in expected_ego_codes}
 
     # 4. Validar existencia de cuentas comerciales para ORIGIN_BRANCH
     for code in expected_codes:
