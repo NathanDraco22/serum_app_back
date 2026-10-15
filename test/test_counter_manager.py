@@ -3,12 +3,14 @@ from dotenv import load_dotenv
 
 from core.counter_manager import CounterManager
 from core.services_initializer import init_services
+from repos.v1.branches import BranchesRepository, CreateBranch
 from repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
 from repos.v1.doctors import CreateDoctor, DoctorsRepository
 from repos.v1.orders import CreateOrder, OrdersRepository
 from repos.v1.patients import CreatePatient, PatientsRepository
 from repos.v1.quotations import CreateQuotation, QuotationsRepository
 from services.mongo_collections.v1 import (
+    BranchesCollection,
     CashShiftsCollection,
     CountersCollection,
     DoctorsCollection,
@@ -61,7 +63,13 @@ async def test_counter_manager_and_entity_ids():
     assert s1 == "1"
     assert s2 == "2"
 
-    # 6. Setters
+    # 6. Branches: starts at 1 (ORIGIN_BRANCH), next is BR2, BR3...
+    b1 = await counter_mgr.next_branch_number()
+    b2 = await counter_mgr.next_branch_number()
+    assert b1 == "BR2"
+    assert b2 == "BR3"
+
+    # 7. Setters
     await counter_mgr.set_patient_number(99)
     p100 = await counter_mgr.next_patient_number()
     assert p100 == "0100"
@@ -74,6 +82,10 @@ async def test_counter_manager_and_entity_ids():
     s10 = await counter_mgr.next_shift_number()
     assert s10 == "10"
 
+    await counter_mgr.set_branch_number(19)
+    b20 = await counter_mgr.next_branch_number()
+    assert b20 == "BR20"
+
     # --- Creación de Entidades usando Repositorios ---
 
     # Reset collections
@@ -82,6 +94,7 @@ async def test_counter_manager_and_entity_ids():
     await OrdersCollection.get_instance()._collection.delete_many({})
     await QuotationsCollection.get_instance()._collection.delete_many({})
     await CashShiftsCollection.get_instance()._collection.delete_many({})
+    await BranchesCollection.get_instance()._collection.delete_many({})
     await counters_col.delete_many({})
 
 
@@ -178,4 +191,25 @@ async def test_counter_manager_and_entity_ids():
         )
     )
     assert shift2.id == "2"
+
+    # 6. Crear Sucursales
+    branches_repo = BranchesRepository.get_instance()
+    branch1 = await branches_repo.create_branch(
+        CreateBranch(
+            name="Sucursal Norte",
+            address="Av. Siempre Viva 123",
+            phone="555-0101",
+        )
+    )
+    assert branch1.id == "BR2"
+
+    branch2 = await branches_repo.create_branch(
+        CreateBranch(
+            name="Sucursal Sur",
+            address="Av. Central 456",
+            phone="555-0102",
+        )
+    )
+    assert branch2.id == "BR3"
+
 

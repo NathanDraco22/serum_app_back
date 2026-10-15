@@ -1,4 +1,5 @@
 from repos.v1.branches.models.branch_model import BranchInDb
+from repos.v1.counters import CountersRepository
 from services.mongo_collections.v1.branches_collection import BranchesCollection
 from tools.time_tools import TimeTools
 
@@ -20,4 +21,10 @@ async def create_default_branch(branch_name: str | None = None) -> BranchInDb:
         ORIGIN_BRANCH_ID, new_branch.model_dump()
     )
 
+    counters_repo = CountersRepository.get_instance()
+    existing_counter = await counters_repo.get_counter("branchNumber")
+    if existing_counter is None:
+        await counters_repo.set_counter("branchNumber", 1)
+
     return new_branch
+

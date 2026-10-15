@@ -67,3 +67,19 @@ class CounterManager:
         )
         return str(res.value)
 
+    async def next_branch_number(self, session: Any = None) -> str:
+        counter = await self.counters_repository.get_counter("branchNumber")
+        if counter is None:
+            await self.counters_repository.set_counter("branchNumber", 1, session)
+        res = await self.counters_repository.increment_counter(
+            "branchNumber", session
+        )
+        return f"BR{res.value}"
+
+    async def set_branch_number(self, number: int, session: Any = None) -> str:
+        res = await self.counters_repository.set_counter(
+            "branchNumber", number, session
+        )
+        return f"BR{res.value}"
+
+

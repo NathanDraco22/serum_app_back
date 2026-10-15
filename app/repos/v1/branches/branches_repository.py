@@ -1,3 +1,4 @@
+from core.counter_manager import CounterManager
 from tools.time_tools import TimeTools
 from tools.uuid_tool import UuidTool
 
@@ -18,8 +19,9 @@ class BranchesRepository:
         return cls._instance
 
     async def create_branch(self, create_branch: CreateBranch) -> BranchInDb:
+        branch_id = await CounterManager().next_branch_number()
         new_branch = BranchInDb(
-            id=UuidTool.generate_uuid(),
+            id=branch_id,
             createdAt=TimeTools.get_now_in_milliseconds(),
             updatedAt=None,
             **create_branch.model_dump(),
