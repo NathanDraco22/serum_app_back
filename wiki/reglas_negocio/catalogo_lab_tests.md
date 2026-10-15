@@ -29,6 +29,7 @@ Representa un análisis clínico específico (ej. *Glucosa*, *Colesterol Total*,
 Representa una oferta o combo comercial que agrupa múltiples pruebas individuales (ej. *Perfil Lipídico*, *Perfil Hepático*, *Checkup General*).
 - **Precio de paquete (`salePrice`)**: Precio especial del combo en centavos (Nivel 1).
 - **Precio de paquete preferencial (`salePrice2`)**: Precio de combo preferencial en centavos (Nivel 2).
+- **Sumatoria Automática vs Tarifa Fija (`useChildTestsPriceSum: bool`)**: Flag booleano (por defecto `true`). Si es `true`, el precio de venta se calcula de forma reactiva sumando los precios de sus `childTestIds`. Si es `false`, se establece una tarifa manual fija estrictamente mayor a 0.
 - **Pruebas contenidas (`childTestIds`)**: Lista de IDs de las pruebas individuales que componen el paquete.
 - **Venta flexible**: Al crear cotizaciones u órdenes, se puede vender el pack completo por su precio de combo o seleccionar únicamente pruebas individuales facturando solo las pruebas elegidas.
 

@@ -12,6 +12,7 @@ class BaseLabTest(BaseModel):
     salePrice2: int = 0
     currency: str = "USD"
     isPack: bool = False
+    useChildTestsPriceSum: bool = True
     childTestIds: list[str] = []
     dataType: str = "numeric"
     unitOfMeasure: str = ""
@@ -35,6 +36,7 @@ class UpdateLabTest(BaseModel):
     costPrice: int | None = None
     currency: str | None = None
     isPack: bool | None = None
+    useChildTestsPriceSum: bool | None = None
     childTestIds: list[str] | None = None
     dataType: str | None = None
     unitOfMeasure: str | None = None
