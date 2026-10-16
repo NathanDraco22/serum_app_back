@@ -1,5 +1,11 @@
 from .data.orders_datasource import OrdersDataSource
-from .models.order_model import CreateOrder, OrderInDb, UpdateOrder
+from .models.order_model import (
+    CreateOrder,
+    OrderApproval,
+    OrderInDb,
+    OrderItem,
+    UpdateOrder,
+)
 from .orders_repository import OrdersRepository
 
 __all__ = [
@@ -7,5 +13,7 @@ __all__ = [
     "CreateOrder",
     "UpdateOrder",
     "OrderInDb",
+    "OrderItem",
+    "OrderApproval",
     "OrdersRepository",
 ]

@@ -49,3 +49,6 @@ class InvalidAmount(Exception):
 class CashMovementNotFound(Exception):
     ...
 
+class OrderIsBlocked(Exception):
+    ...
+

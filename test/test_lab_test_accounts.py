@@ -30,6 +30,10 @@ async def test_lab_test_accounts_and_core_process():
     lab_tests_col = LabTestsCollection.get_instance()._collection
     accounts_col = LabTestAccountsCollection.get_instance()._collection
 
+    await branches_col.delete_many({})
+    await lab_tests_col.delete_many({})
+    await accounts_col.delete_many({})
+
     branches_repo = BranchesRepository.get_instance()
     lab_tests_repo = LabTestsRepository.get_instance()
     accounts_repo = LabTestAccountsRepository.get_instance()

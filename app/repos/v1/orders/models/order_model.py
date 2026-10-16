@@ -2,6 +2,7 @@ from typing import Literal
 from pydantic import BaseModel
 
 from repos.v1._shared_models import IncludedTest
+from repos.v1.common.models.user_info import UserInfo
 
 OrderStatus = Literal["pending", "completed", "cancelled", "paid", "partiallyPaid"]
 
@@ -28,8 +29,17 @@ class OrderItem(BaseModel):
     labTestId: str
     name: str
     salePriceApplied: int
+    originalPrice: int = 0
     isPack: bool = False
     priceLevel: int = 1
+
+
+class OrderApproval(BaseModel):
+    requiresApproval: bool = False
+    isApproved: bool = False
+    approvedBy: UserInfo | None = None
+    approvedAt: int | None = None
+    reason: str | None = None
 
 
 class OrderTestResult(IncludedTest):
@@ -49,6 +59,8 @@ class BaseOrder(BaseModel):
     paidAmount: int = 0
     status: OrderStatus = "pending"
     results: list[OrderTestResult] = []
+    isBlocked: bool = False
+    approval: OrderApproval | None = None
 
 
 class CreateOrder(BaseOrder):
@@ -67,6 +79,8 @@ class UpdateOrder(BaseModel):
     paidAmount: int | None = None
     status: str | None = None
     results: list[OrderTestResult] | None = None
+    isBlocked: bool | None = None
+    approval: OrderApproval | None = None
 
 
 class OrderInDb(BaseOrder):

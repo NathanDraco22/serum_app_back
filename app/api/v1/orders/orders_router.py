@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 
 from repos.v1.common.filter_params import OrderFilterParams
 from repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
 
 from .orders_controller import orders_controller
-from .orders_schemas import OrderPayRequest
+from .orders_schemas import OrderApproveRequest, OrderPayRequest
 
 orders_router = APIRouter(tags=["ordersV1"])
 
@@ -40,3 +40,10 @@ async def delete_order_by_id(order_id: str) -> OrderInDb:
 @orders_router.post("/{order_id}/pay")
 async def pay_order(order_id: str, body: OrderPayRequest) -> OrderInDb:
     return await orders_controller.pay_order(order_id, body)
+
+
+@orders_router.post("/{order_id}/approve")
+async def approve_order(
+    order_id: str, body: OrderApproveRequest, req: Request
+) -> OrderInDb:
+    return await orders_controller.approve_order(order_id, body, req)

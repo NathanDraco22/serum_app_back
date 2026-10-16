@@ -18,6 +18,7 @@ from core.exceptions import (
     InvalidMovementType,
     InvalidAmount,
     CashMovementNotFound,
+    OrderIsBlocked,
 )
 
 
@@ -242,6 +243,19 @@ async def handle_cash_movement_not_found_exception(request: Request, exc: Except
     )
 
 
+async def handle_order_is_blocked_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, OrderIsBlocked) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "ORDER_IS_BLOCKED"},
+    )
+
+
 _exceptions_handlers = {
     CashRegisterAlreadyOpen: handle_cash_register_already_open_exception,
     CashRegisterNotFound: handle_cash_register_not_found_exception,
@@ -260,6 +274,7 @@ _exceptions_handlers = {
     InvalidMovementType: handle_invalid_movement_type_exception,
     InvalidAmount: handle_invalid_amount_exception,
     CashMovementNotFound: handle_cash_movement_not_found_exception,
+    OrderIsBlocked: handle_order_is_blocked_exception,
 }
 
 

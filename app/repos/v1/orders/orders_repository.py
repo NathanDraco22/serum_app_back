@@ -58,6 +58,23 @@ class OrdersRepository:
                 ).model_dump()
 
 
+        # Validar si algún ítem tiene precio modificado respecto a su precio 1 de catálogo
+        has_modified_price = any(
+            item.originalPrice > 0 and item.salePriceApplied != item.originalPrice
+            for item in create_order.items
+        )
+        if has_modified_price:
+            approval = order_dict.get("approval")
+            if not approval or not approval.get("isApproved"):
+                order_dict["isBlocked"] = True
+                order_dict["approval"] = {
+                    "requiresApproval": True,
+                    "isApproved": False,
+                    "approvedBy": None,
+                    "approvedAt": None,
+                    "reason": (approval.get("reason") if approval else None) or "Precio modificado arbitrariamente",
+                }
+
         order_id = await CounterManager().next_order_number()
         new_order = OrderInDb(
             id=order_id,

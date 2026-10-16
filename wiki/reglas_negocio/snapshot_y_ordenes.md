@@ -48,3 +48,32 @@ Cuando se crea la orden:
    - `NORMAL`: Dentro del rango de referencia.
    - `HIGH` / `LOW`: Por encima o por debajo de los límites.
    - `ABNORMAL`: En pruebas cualitativas donde el resultado difiere del esperado.
+
+---
+
+## 4. Modificación Arbitraria de Precios y Bloqueo de Órdenes (`isBlocked`)
+
+Para mantener la flexibilidad comercial en ventanilla sin vulnerar el control financiero:
+
+1. **Auditoría de Precios Originales (`originalPrice`)**:
+   - Cada ítem de la orden (`OrderItem`) congela el precio original del catálogo (`originalPrice`, correspondiente a Precio 1 en centavos) junto con el precio cobrado (`salePriceApplied`).
+2. **Detección Automática de Discrepancia**:
+   - Si al emitir la orden cualquier ítem tiene `originalPrice > 0` y `salePriceApplied != originalPrice`, el sistema marca la orden automáticamente con:
+     - `isBlocked: True`
+     - `approval.requiresApproval: True`
+     - `approval.isApproved: False`
+3. **Restricciones de una Orden Bloqueada**:
+   - **Prohibido el Cobro**: El cobro total o parcial (`pay_order`) es rechazado con la excepción `OrderIsBlocked` (HTTP 400 con código `ORDER_IS_BLOCKED`).
+   - **Prohibida la Captura de Resultados Clínicos**: No se permite ingresar ni modificar resultados analíticos (`results`) en una orden bloqueada.
+   - **Permitida la Eliminación**: Una orden bloqueada puede ser eliminada libremente siempre y cuando no tenga pagos registrados (`paidAmount == 0`).
+4. **Flujo de Autorización y Desbloqueo (`accessLevel > 3`)**:
+   - Un usuario con `accessLevel > 3` (Supervisor o Administrador) puede desbloquear la orden:
+     - **En Ventanilla (Operador)**: El operador solicita autorización mediante el modal de credenciales de supervisor (`supervisorUsername`, `supervisorPassword`, `reason`).
+     - **En Sesión de Supervisor**: Si el usuario autenticado activo ya posee `accessLevel > 3`, puede autorizar la orden con un solo clic o durante su creación.
+   - Al aprobarse (`POST /api/v1/orders/{order_id}/approve`):
+     - `isBlocked = False`
+     - `approval.isApproved = True`
+     - `approval.approvedBy = UserInfo(id, name)`
+     - `approval.approvedAt = timestamp`
+     - `approval.reason = motivo`
+   - Una vez desbloqueada, la orden puede cobrarse y procesarse con total normalidad.

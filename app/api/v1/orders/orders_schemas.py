@@ -11,3 +11,10 @@ class OrderPayRequest(BaseModel):
     registerId: str | None = None
     paymentMethod: Literal["cash", "card", "transfer"]
     performedBy: UserInfo
+
+
+class OrderApproveRequest(BaseModel):
+    supervisorUsername: str | None = None
+    supervisorPassword: str | None = None
+    approvedBy: UserInfo | None = None
+    reason: str = "Aprobado por supervisor"
