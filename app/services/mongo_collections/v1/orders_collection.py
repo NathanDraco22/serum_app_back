@@ -52,21 +52,27 @@ class OrdersCollection(BaseMongoCollection):
 
         return result
 
-    async def fetch_order_by_id(self, order_id: str) -> dict[str, Any] | None:
+    async def fetch_order_by_id(
+        self, order_id: str, session: Any = None
+    ) -> dict[str, Any] | None:
         collection = self._collection
-        result = await collection.find_one({"id": order_id, "isDeleted": {"$ne": True}})
+        result = await collection.find_one(
+            {"id": order_id, "isDeleted": {"$ne": True}}, session=session
+        )
         return result
 
     async def update_order_by_id(
         self,
         order_id: str,
         order: dict,
+        session: Any = None,
     ) -> dict[str, Any] | None:
         collection = self._collection
 
         result = await collection.find_one_and_update(
             {"id": order_id},
             {"$set": order},
+            session=session,
             return_document=ReturnDocument.AFTER,
         )
 

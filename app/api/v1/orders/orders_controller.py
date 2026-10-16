@@ -9,7 +9,7 @@ from repos.v1.orders import (
 )
 from core.order_payment.order_payment import OrderPayIntent
 from core.order_payment.order_payment_manager import OrderPaymentManager
-from core.exceptions import OrderAlreadyPaid, OrderCannotBeDeleted, OrderNotFound
+from core.exceptions import OrderCannotBeDeleted
 from responses.v1 import ListResponse
 from .orders_schemas import OrderPayRequest
 
@@ -38,13 +38,6 @@ class OrdersController:
         return order
 
     async def pay_order(self, order_id: str, body: OrderPayRequest) -> OrderInDb:
-        order = await self.orders_repo.get_order_by_id(order_id)
-        if order is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Order not found",
-            )
-
         pay_intent = OrderPayIntent(
             orderId=order_id,
             amount=body.amount,
@@ -53,19 +46,8 @@ class OrdersController:
             paymentMethod=body.paymentMethod,
             performedBy=body.performedBy,
         )
+        return await self.order_payment_manager.pay_order(pay_intent)
 
-        try:
-            return await self.order_payment_manager.pay_order(pay_intent)
-        except OrderAlreadyPaid:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Order cannot receive payments",
-            )
-        except OrderNotFound:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Order not found",
-            )
 
     async def update_order_by_id(self, order_id: str, body: UpdateOrder) -> OrderInDb:
         updated_order = await self.orders_repo.update_order_by_id(order_id, body)

@@ -1,2 +1,2 @@
 # Don't edit this file manually, it's managed by Onion CLI
-mongo-collections = [ "Orders", "Quotations", "CashShifts", "Exams", "CoreSettings", "Roles", "LabTests",]
+mongo-collections = [ "LabTests", "CashMovements", "Quotations", "Receipts", "CoreSettings", "Roles", "Exams", "CashShifts", "Orders",]

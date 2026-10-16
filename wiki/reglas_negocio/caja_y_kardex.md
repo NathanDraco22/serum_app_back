@@ -62,3 +62,35 @@ La entidad `CashShift` mantiene el balance desglosado por:
 - `cardBalance`: Cobros mediante terminales bancarias.
 - `transferBalance`: Cobros mediante transferencias electrónicas.
 - `totalBalance`: Sumatoria total disponible en el turno (`initialBalance + cashBalance + cardBalance + transferBalance`).
+
+---
+
+## 5. Movimientos Libres de Caja (`CashMovement`)
+
+Para registrar entradas y salidas extraordinarias de efectivo o fondos en el turno (`shiftId`), se utiliza el módulo `CashMovement`:
+1. **Documento Unificado**: Modela tanto ingresos como egresos mediante el campo `movementType` (`"income"` | `"withdrawal"`).
+2. **Campos Requeridos**:
+   - `shiftId`: ID del turno abierto obligatorio.
+   - `branchId`: Sucursal donde se genera el movimiento.
+   - `movementType`: `"income"` o `"withdrawal"`.
+   - `paymentMethod`: Método afectado (`"cash"`, `"card"`, `"transfer"`, default: `"cash"`).
+   - `amount`: Monto en centavos `int` ($> 0$).
+   - `concept`: Descripción o motivo obligatorio.
+   - `performedBy`: Operador responsable (`UserInfo`).
+3. **Consistencia Atómica Multi-Colección**:
+   - Se procesa en una transacción atómica de MongoDB (`app/core/cash_movements/process_cash_movement.py`).
+   - Valida que el turno esté `"OPEN"`.
+   - Para egresos (`withdrawal`), valida que exista saldo disponible en el turno (`InsufficientMethodBalance`).
+   - Actualiza concurrentemente `CashShifts` (`$inc`).
+   - Inserta el registro en `CashMovements`.
+   - Inserta el asiento inmutable en `CashTransactions` con prefijo `[Ingreso libre]` o `[Egreso libre]`.
+4. **Anulación Atómica con Reversión de Saldo (`DELETE /cash-movements/{id}`)**:
+   - Para rectificar errores humanos sin romper la auditoría contable:
+   - Se procesa atómicamente en `app/core/cash_movements/process_cancel_cash_movement.py`.
+   - Valida que el movimiento exista y no haya sido anulado previamente.
+   - Valida que el turno (`shiftId`) siga en estado `"OPEN"` (un turno `"CLOSED"` no puede ser alterado).
+   - Si se anula un ingreso (`income`), valida que haya fondos suficientes para retirarlo (`InsufficientMethodBalance`).
+   - Invierte el saldo atómicamente en `CashShift` (`-amount` para ingreso, `+amount` para egreso).
+   - Marca el movimiento con borrado lógico (`isDeleted = True`, `updatedAt = now`).
+   - Registra un contra-asiento compensatorio inmutable en `CashTransactions` con prefijo `[Anulación de ingreso libre]` o `[Anulación de egreso libre]`.
+

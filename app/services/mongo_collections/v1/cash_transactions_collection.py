@@ -7,9 +7,11 @@ from services import BaseMongoCollection
 class CashTransactionsCollection(BaseMongoCollection):
     collection_name = "CashTransactions"
 
-    async def create_cash_transaction(self, cash_transaction: dict) -> None:
+    async def create_cash_transaction(
+        self, cash_transaction: dict, session: Any = None
+    ) -> None:
         collection = self._collection
-        await collection.insert_one(cash_transaction)
+        await collection.insert_one(cash_transaction, session=session)
 
     async def fetch_all_cash_transactions(
         self, filters: dict | None = None

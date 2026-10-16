@@ -82,4 +82,16 @@ class CounterManager:
         )
         return f"BR{res.value}"
 
+    async def next_receipt_number(self, session: Any = None) -> str:
+        res = await self.counters_repository.increment_counter(
+            "receiptNumber", session
+        )
+        return str(res.value)
+
+    async def set_receipt_number(self, number: int, session: Any = None) -> str:
+        res = await self.counters_repository.set_counter(
+            "receiptNumber", number, session
+        )
+        return str(res.value)
+
 
