@@ -12,6 +12,7 @@ from .create_default_roles import (
     ROLE_OPERATOR_NAME,
     create_default_roles,
 )
+from .create_default_app_settings import create_default_app_settings
 from .create_default_lab_tests import create_default_lab_tests
 from .create_root_user import ROOT_PASSWORD_PLAIN, ROOT_USER_ID, ROOT_USERNAME, create_root_user
 
@@ -32,4 +33,5 @@ __all__ = [
     "ROOT_PASSWORD_PLAIN",
     "create_root_user",
     "create_default_lab_tests",
+    "create_default_app_settings",
 ]

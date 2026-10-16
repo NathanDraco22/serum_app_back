@@ -89,6 +89,7 @@ serum_app_back/
 | **Counters** | N/A (Interno) | `counters/` | `counters_collection.py` | **Correlativos e IDs Secuenciales**: Colección atómica con `$inc` y `upsert` para IDs de pacientes, doctores, órdenes, cotizaciones y turnos de caja. |
 | **Reports** | `reports/` | N/A (Agregaciones) | Varias colecciones | **Business Intelligence**: 5 pipelines de agregación nativos en MongoDB (Financiero, Top Médicos, Demanda de Exámenes, Cuentas por Cobrar y Auditoría de Arqueos). Ver [Reportes Analíticos](reglas_negocio/reportes_analiticos.md). |
 | **ApiKeys** | `api_keys/` | `api_keys/` | `api_keys_collection.py` | **Integraciones y Acceso Externo**: Llaves prefijadas `srm_live_...`, enmascaramiento, scopes (`bi:read`), soft delete y validación unificada en `app_middleware`. |
+| **AppSettings** | `app_settings/` | `app_settings/` | `app_settings_collection.py` | **Configuración Global del Sistema**: Parámetros operativos y comerciales (`useCost`, `usePrice2`, `allowEditPrice`). Valores por defecto en `False`, inicialización en lifespan y caché en memoria con `AppSettingsTool`. Ver [Configuración del Sistema](reglas_negocio/configuracion_sistema.md). |
 
 
 ---

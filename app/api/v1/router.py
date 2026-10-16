@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from .api_keys.api_keys_router import api_keys_router
+from .app_settings.app_settings_router import app_settings_router
 from .auths.auths_router import auths_router
 from .branches.branches_router import branches_router
 from .cash_movements.cash_movements_router import cash_movements_router
@@ -22,6 +23,7 @@ from .users.users_router import users_router
 router_v1 = APIRouter(tags=["apiV1"])
 
 router_v1.include_router(api_keys_router, prefix="/api-keys")
+router_v1.include_router(app_settings_router, prefix="/app-settings")
 router_v1.include_router(auths_router, prefix='/auths')
 router_v1.include_router(branches_router, prefix="/branches")
 router_v1.include_router(cash_movements_router, prefix='/cash-movements')

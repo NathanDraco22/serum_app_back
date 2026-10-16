@@ -18,3 +18,4 @@ Documentación detallada sobre el comportamiento, validaciones y lógica de nego
 | **[Cotizaciones y Preventa](cotizaciones.md)** | Manejo de clientes casuales y registrados, datos de cliente y médico opcionales, tarifas congeladas y carácter informativo independiente. |
 | **[Autenticación y Roles](autenticacion_y_roles.md)** | Sesiones JWT (HS256), refresh tokens, endpoint `/check-user` y segmentación por sucursales. |
 | **[Reportes Analíticos](reportes_analiticos.md)** | Pipelines de agregación en MongoDB, contratos de los 5 endpoints, reglas de "Sin Médico" y control de arqueos. |
+| **[Configuración Global del Sistema](configuracion_sistema.md)** | Parámetros comerciales (`useCost`, `usePrice2`, `allowEditPrice`), valores por defecto en False, lifespan y tool en memoria. |
