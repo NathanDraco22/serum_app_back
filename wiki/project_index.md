@@ -79,7 +79,7 @@ serum_app_back/
 | **LabTests** | `lab_tests/` | `lab_tests/` | `lab_tests_collection.py` | Catálogo unificado global: Pruebas individuales y Packs (`isPack: true/false`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
 | **LabTestAccounts** | `lab_test_accounts/` | `lab_test_accounts/` | `lab_test_accounts_collection.py` | Cuentas comerciales por sucursal (`branchId`, `labTestId`, `commercial: {salePrice, salePrice2, costPrice}`). Ver [Catálogo LabTest](reglas_negocio/catalogo_lab_tests.md). |
 | **Quotations** | `quotations/` | `quotations/` | `quotations_collection.py` | Preventa y presupuestos con snapshots opcionales de cliente y médico (`clientInfo`, `doctorInfo`). Requiere `branchId: str`. Ver [Cotizaciones](reglas_negocio/cotizaciones.md). |
-| **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Requiere `branchId: str`. Datos congelados de paciente, precios y parámetros. Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
+| **Orders** | `orders/` | `orders/` | `orders_collection.py` | **Snapshot Inmutable**: Requiere `branchId: str`. Datos congelados de paciente, precios y parámetros. Bloqueo de órdenes por precio modificado (`isBlocked`), auditoría de precio base con `originalPrice`, y endpoint `POST /orders/{id}/approve` para autorización por supervisores (`accessLevel > 3`). Ver [Snapshot y Órdenes](reglas_negocio/snapshot_y_ordenes.md). |
 | **CashRegisters** | `cash_registers/` | `cash_registers/` | `cash_registers_collection.py` | Cajas físicas por sucursal (`branchId: str`), saldos por método (`cash`, `card`, `transfer`). |
 | **CashShifts** | `cash_shifts/` | `cash_shifts/` | `cash_shifts_collection.py` | **Turnos de Caja ("La persona es la caja")**: Apertura con fondo inicial, corte y arqueo de caja con diferencias. |
 | **CashMovements** | `cash_movements/` | `cash_movements/` | `cash_movements_collection.py` | **Movimientos Libres de Caja**: Ingresos y egresos libres vinculados a `shiftId` que actualizan saldo del turno e impactan Kardex. |
@@ -112,7 +112,8 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
 
 3. **`app/core/order_payment/`**:
    - `OrderPaymentManager`: Orquesta el cobro de una orden médica y su reflejo inmediato en el balance de la caja activa y en el Kardex.
-   - Actualiza el estado de la orden (`pending` ➔ `partiallyPaid` ➔ `paid`).
+   - Valida el bloqueo de orden: Si `order.isBlocked == True`, aborta la transacción y lanza `OrderIsBlocked` (HTTP 400).
+   - Actualiza el estado de la orden (`pending` ➔ `partiallyPaid` ➔ `paid`) y genera el recibo automático (`Receipt`).
 
 4. **`app/core/reports/`**:
    - `ReportsManager`: Fachada orquestadora analítica.

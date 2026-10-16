@@ -12,7 +12,7 @@ Documentación detallada sobre el comportamiento, validaciones y lógica de nego
 
 | Documento | Descripción |
 | :--- | :--- |
-| **[Snapshot y Órdenes](snapshot_y_ordenes.md)** | Integridad histórica mediante Snapshots, por qué se congelan datos médicos y ciclo de vida de la Orden. |
+| **[Snapshot y Órdenes](snapshot_y_ordenes.md)** | Integridad histórica mediante Snapshots, ciclo de vida de la orden, modificación arbitraria de precios, bloqueo automático (`isBlocked`) y autorización por supervisor (`accessLevel > 3`). |
 | **[Catálogo de LabTests](catalogo_lab_tests.md)** | Pruebas individuales, perfiles/packs compuestos, tipos de datos (`numeric`, `boolean`, `text`) y rangos demográficos. |
 | **[Caja y Kardex Financiero](caja_y_kardex.md)** | Libro contable inmutable, control de arqueo, desglose por métodos de pago y regla de montos en centavos. |
 | **[Cotizaciones y Preventa](cotizaciones.md)** | Manejo de clientes casuales y registrados, datos de cliente y médico opcionales, tarifas congeladas y carácter informativo independiente. |
