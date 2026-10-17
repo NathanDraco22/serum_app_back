@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 
-from repos.v1.core_settings import (
+from serum.repos.v1.core_settings import (
     CoreSettingInDb,
     CreateCoreSetting,
     DecodedCoreSetting,

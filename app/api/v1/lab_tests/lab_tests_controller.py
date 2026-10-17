@@ -1,12 +1,12 @@
 from fastapi import HTTPException, status
-from core.lab_tests import LabTestsManager
-from repos.v1.lab_test_accounts import (
+from serum.core.lab_tests import LabTestsManager
+from serum.repos.v1.lab_test_accounts import (
     CreateLabTestAccount,
     LabTestAccountsRepository,
     LabTestCommercial,
     UpdateLabTestAccountCommercial,
 )
-from repos.v1.lab_tests import (
+from serum.repos.v1.lab_tests import (
     CreateLabTest,
     LabTestInDb,
     LabTestsRepository,

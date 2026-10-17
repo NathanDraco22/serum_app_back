@@ -1,20 +1,20 @@
 import pytest
 from dotenv import load_dotenv
 
-from core.counter_manager import CounterManager
-from core.exceptions import InvalidAmount, OrderAlreadyPaid
-from core.order_payment.order_payment import OrderPayIntent
-from core.order_payment.process_order_payment import process_order_payment
-from core.services_initializer import init_services
-from repos.v1.branches import BranchesRepository, CreateBranch
-from repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
-from repos.v1.common.filter_params import ReceiptFilterParams
-from repos.v1.common.models.user_info import UserInfo
-from repos.v1.orders import CreateOrder, OrdersRepository
-from repos.v1.orders.models.order_model import OrderItem
-from repos.v1.patients import CreatePatient, PatientsRepository
-from repos.v1.receipts import CreateReceipt, ReceiptsRepository
-from services.mongo_collections.v1 import (
+from serum.core.counter_manager import CounterManager
+from serum.core.exceptions import InvalidAmount, OrderAlreadyPaid
+from serum.core.order_payment.order_payment import OrderPayIntent
+from serum.core.order_payment.process_order_payment import process_order_payment
+from serum.services_initializer import init_services
+from serum.repos.v1.branches import BranchesRepository, CreateBranch
+from serum.repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
+from serum.repos.v1.common.filter_params import ReceiptFilterParams
+from serum.repos.v1.common.models.user_info import UserInfo
+from serum.repos.v1.orders import CreateOrder, OrdersRepository
+from serum.repos.v1.orders.models.order_model import OrderItem
+from serum.repos.v1.patients import CreatePatient, PatientsRepository
+from serum.repos.v1.receipts import CreateReceipt, ReceiptsRepository
+from serum.services.mongo_collections.v1 import (
     BranchesCollection,
     CashShiftsCollection,
     CountersCollection,

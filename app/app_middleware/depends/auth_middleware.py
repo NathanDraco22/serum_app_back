@@ -1,9 +1,9 @@
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 
-from core.security import TokenManager
-from repos.v1.api_keys import ApiKeyInDb, ApiKeysRepository
-from repos.v1.users import UserInDb, UsersRepository
+from serum.core.security import TokenManager
+from serum.repos.v1.api_keys import ApiKeyInDb, ApiKeysRepository
+from serum.repos.v1.users import UserInDb, UsersRepository
 
 
 async def auth_middleware(req: Request) -> None:

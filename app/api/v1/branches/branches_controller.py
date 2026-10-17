@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from repos.v1.branches import (
+from serum.repos.v1.branches import (
     BranchesRepository,
     BranchInDb,
     CreateBranch,

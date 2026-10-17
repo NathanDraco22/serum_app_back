@@ -2,7 +2,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-from repos.v1.common.models.user_info import UserInfo
+from serum.repos.v1.common.models.user_info import UserInfo
 
 PaymentMethodType = Literal["cash", "card", "transfer"]
 

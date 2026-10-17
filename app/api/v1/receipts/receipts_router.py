@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
-from repos.v1.common.filter_params import ReceiptFilterParams
-from repos.v1.receipts import ReceiptInDb, UpdateReceipt
+from serum.repos.v1.common.filter_params import ReceiptFilterParams
+from serum.repos.v1.receipts import ReceiptInDb, UpdateReceipt
 from responses.v1 import ListResponse
 
 from .receipts_controller import receipts_controller

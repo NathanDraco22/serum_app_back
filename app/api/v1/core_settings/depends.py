@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import APIKeyHeader
 
-from core.security import TokenManager
+from serum.core.security import TokenManager
 
 header_schema = APIKeyHeader(name="Authorization", auto_error=True)
 

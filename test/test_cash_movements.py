@@ -1,7 +1,7 @@
 import pytest
 from dotenv import load_dotenv
 
-from core.exceptions import (
+from serum.core.exceptions import (
     CashMovementNotFound,
     CashShiftNotFound,
     CashShiftNotOpen,
@@ -10,18 +10,18 @@ from core.exceptions import (
     InvalidAmount,
     InvalidMovementType,
 )
-from core.cash_movements import CashMovementManager
-from core.services_initializer import init_services
-from repos.v1.branches import BranchesRepository, CreateBranch
-from repos.v1.cash_movements import (
+from serum.core.cash_movements import CashMovementManager
+from serum.services_initializer import init_services
+from serum.repos.v1.branches import BranchesRepository, CreateBranch
+from serum.repos.v1.cash_movements import (
     CashMovementsRepository,
     CreateCashMovement,
     UpdateCashMovement,
 )
-from repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
-from repos.v1.common.filter_params import CashMovementFilterParams
-from repos.v1.common.models.user_info import UserInfo
-from services.mongo_collections.v1 import (
+from serum.repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
+from serum.repos.v1.common.filter_params import CashMovementFilterParams
+from serum.repos.v1.common.models.user_info import UserInfo
+from serum.services.mongo_collections.v1 import (
     BranchesCollection,
     CashMovementsCollection,
     CashShiftsCollection,
@@ -218,7 +218,7 @@ async def test_cash_movements_flow_and_kardex_impact():
             initialBalance=10000,
         )
     )
-    from repos.v1.cash_shifts.models.cash_shift_model import CloseCashShift
+    from serum.repos.v1.cash_shifts.models.cash_shift_model import CloseCashShift
     await CashShiftsRepository.get_instance().close_shift(
         closed_shift.id,
         CloseCashShift(declaredCash=10000),

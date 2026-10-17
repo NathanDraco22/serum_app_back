@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from repos.v1.patients import (
+from serum.repos.v1.patients import (
     CreatePatient,
     PatientInDb,
     PatientsRepository,

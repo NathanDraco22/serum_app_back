@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query
 
-from repos.v1.lab_tests import CreateLabTest, LabTestInDb, UpdateLabTest
+from serum.repos.v1.lab_tests import CreateLabTest, LabTestInDb, UpdateLabTest
 from responses.v1 import ListResponse
 
 from .lab_tests_controller import lab_tests_controller

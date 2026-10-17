@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel
 
 from app_middleware.depends.auth_middleware import auth_middleware
-from repos.v1.api_keys import (
+from serum.repos.v1.api_keys import (
     ApiKeyInDb,
     CreateApiKey,
     CreatedApiKeyResponse,

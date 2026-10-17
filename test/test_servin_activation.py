@@ -3,10 +3,10 @@ from httpx import ASGITransport, AsyncClient
 import jwt
 import pytest
 
-from app.core.security import TokenManager
-from app.core.services_initializer import init_services
-from app.main import app
-from app.services.mongo_collections.v1.core_settings_collection import (
+from serum.core.security import TokenManager
+from serum.services_initializer import init_services
+from main import app
+from serum.services.mongo_collections.v1.core_settings_collection import (
     CoreSettingsCollection,
 )
 

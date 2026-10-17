@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
-from repos.v1.common.filter_params import QuotationFilterParams
-from repos.v1.quotations import CreateQuotation, QuotationInDb, UpdateQuotation
+from serum.repos.v1.common.filter_params import QuotationFilterParams
+from serum.repos.v1.quotations import CreateQuotation, QuotationInDb, UpdateQuotation
 from responses.v1 import ListResponse
 
 from .quotations_controller import quotations_controller

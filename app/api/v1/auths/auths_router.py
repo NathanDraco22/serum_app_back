@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from repos.v1.auths import (
+from serum.repos.v1.auths import (
     CheckUserRequest,
     CheckUserResponse,
     LoginAttempt,
@@ -8,7 +8,7 @@ from repos.v1.auths import (
     RefreshTokenRequest,
     RefreshTokenResponse,
 )
-from repos.v1.core_settings import ServinStatusResponse
+from serum.repos.v1.core_settings import ServinStatusResponse
 
 from .auths_controller import auths_controller
 

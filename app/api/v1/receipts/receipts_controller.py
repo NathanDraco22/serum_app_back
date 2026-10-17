@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 
-from repos.v1.common.filter_params import ReceiptFilterParams
-from repos.v1.receipts import (
+from serum.repos.v1.common.filter_params import ReceiptFilterParams
+from serum.repos.v1.receipts import (
     CreateReceipt,
     ReceiptInDb,
     ReceiptsRepository,

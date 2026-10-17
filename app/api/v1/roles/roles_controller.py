@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from repos.v1.roles import (
+from serum.repos.v1.roles import (
     CreateRole,
     RoleInDb,
     RolesRepository,

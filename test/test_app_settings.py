@@ -3,20 +3,20 @@ from dotenv import load_dotenv
 from httpx import ASGITransport, AsyncClient
 
 from main import app
-from core.services_initializer import init_services
-from repos.v1.app_settings import (
+from serum.services_initializer import init_services
+from serum.repos.v1.app_settings import (
     AppSettingsRepository,
 )
-from services.mongo_collections.v1.app_settings_collection import (
+from serum.services.mongo_collections.v1.app_settings_collection import (
     AppSettingsCollection,
 )
-from tools.app_settings_tool import AppSettingsTool
+from serum.tools.app_settings_tool import AppSettingsTool
 
 
 @pytest.mark.asyncio
 async def test_app_settings_lifecycle_and_endpoints():
     load_dotenv("app/.env")
-    from services.mongo_service import MongoService
+    from serum.services.mongo_service import MongoService
 
     await MongoService().init_service()
 

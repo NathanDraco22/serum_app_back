@@ -12,6 +12,7 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "pymongo>=4.17.0",
     "pyjwt>=2.13.0",
+    "serum-business",
 ]
 
 [dependency-groups]
@@ -24,4 +25,10 @@ dev = [
 ]
 
 [tool.uv.sources]
+serum-business = { path = "./packages/serum-business", editable = true }
 onion = { git = "https://github.com/NathanDraco22/onion-cli.git" }
+
+[tool.ty.environment]
+extra-paths = [
+    "./app", ".venv/Lib/site-packages", "./packages/serum-business/src"
+]

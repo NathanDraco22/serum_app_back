@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from repos.v1.roles import CreateRole, RoleInDb, UpdateRole
+from serum.repos.v1.roles import CreateRole, RoleInDb, UpdateRole
 from responses.v1 import ListResponse
 
 from .roles_controller import roles_controller

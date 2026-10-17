@@ -1,6 +1,6 @@
 from fastapi import Request, status, FastAPI
 from fastapi.responses import JSONResponse
-from core.exceptions import (
+from serum.core.exceptions import (
     CashRegisterAlreadyOpen,
     CashRegisterNotFound,
     CashRegisterNotOpen,

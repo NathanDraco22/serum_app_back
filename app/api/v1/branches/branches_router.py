@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from repos.v1.branches import BranchInDb, CreateBranch, UpdateBranch
+from serum.repos.v1.branches import BranchInDb, CreateBranch, UpdateBranch
 from responses.v1 import ListResponse
 
 from .branches_controller import branches_controller

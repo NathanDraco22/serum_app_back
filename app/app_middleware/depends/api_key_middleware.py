@@ -1,7 +1,7 @@
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 
-from repos.v1.api_keys import ApiKeyInDb, ApiKeysRepository
+from serum.repos.v1.api_keys import ApiKeyInDb, ApiKeysRepository
 
 
 async def api_key_middleware(req: Request) -> ApiKeyInDb:

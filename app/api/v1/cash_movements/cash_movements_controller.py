@@ -1,13 +1,13 @@
 from fastapi import HTTPException, status
 
-from core.cash_movements import CashMovementManager
-from repos.v1.cash_movements import (
+from serum.core.cash_movements import CashMovementManager
+from serum.repos.v1.cash_movements import (
     CashMovementInDb,
     CashMovementsRepository,
     CreateCashMovement,
     UpdateCashMovement,
 )
-from repos.v1.common.filter_params import CashMovementFilterParams
+from serum.repos.v1.common.filter_params import CashMovementFilterParams
 from responses.v1 import ListResponse
 
 

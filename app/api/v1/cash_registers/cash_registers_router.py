@@ -1,10 +1,10 @@
 from fastapi import APIRouter
-from repos.v1.cash_registers import (
+from serum.repos.v1.cash_registers import (
     CashRegisterInDb,
     CreateCashRegister,
     UpdateCashRegister,
 )
-from repos.v1.cash_transactions import CashTransactionInDb
+from serum.repos.v1.cash_transactions import CashTransactionInDb
 from responses.v1 import ListResponse
 
 from .cash_registers_controller import cash_registers_controller

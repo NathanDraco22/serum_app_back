@@ -2,19 +2,19 @@ import httpx
 import pytest
 from dotenv import load_dotenv
 
-from core.lab_tests import LabTestsManager
-from core.services_initializer import init_services
+from serum.core.lab_tests import LabTestsManager
+from serum.services_initializer import init_services
 from main import app
-from repos.v1.branches import BranchesRepository, CreateBranch
-from repos.v1.lab_test_accounts import (
+from serum.repos.v1.branches import BranchesRepository, CreateBranch
+from serum.repos.v1.lab_test_accounts import (
     LabTestAccountsRepository,
     UpdateLabTestAccountCommercial,
 )
-from repos.v1.lab_tests import (
+from serum.repos.v1.lab_tests import (
     CreateLabTest,
     LabTestsRepository,
 )
-from services.mongo_collections.v1 import (
+from serum.services.mongo_collections.v1 import (
     BranchesCollection,
     LabTestAccountsCollection,
     LabTestsCollection,

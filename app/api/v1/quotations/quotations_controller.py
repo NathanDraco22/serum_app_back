@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 
-from repos.v1.common.filter_params import QuotationFilterParams
-from repos.v1.quotations import (
+from serum.repos.v1.common.filter_params import QuotationFilterParams
+from serum.repos.v1.quotations import (
     CreateQuotation,
     QuotationInDb,
     QuotationsRepository,

@@ -2,26 +2,24 @@ import pytest
 from dotenv import load_dotenv
 from fastapi import Request
 
-from core.counter_manager import CounterManager
-from core.exceptions import OrderIsBlocked
-from core.order_payment.order_payment import OrderPayIntent
-from core.order_payment.order_payment_manager import OrderPaymentManager
-from core.security import SysPasswordHasher, TokenManager
-from core.services_initializer import init_services
-from repos.v1.branches import BranchesRepository, CreateBranch
-from repos.v1.cash_registers import CashRegistersRepository, CreateCashRegister
-from repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
-from repos.v1.common.models.user_info import UserInfo
-from repos.v1.orders import (
+from serum.core.exceptions import OrderIsBlocked
+from serum.core.order_payment.order_payment import OrderPayIntent
+from serum.core.order_payment.order_payment_manager import OrderPaymentManager
+from serum.services_initializer import init_services
+from serum.repos.v1.branches import BranchesRepository, CreateBranch
+from serum.repos.v1.cash_registers import CashRegistersRepository, CreateCashRegister
+from serum.repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
+from serum.repos.v1.common.models.user_info import UserInfo
+from serum.repos.v1.orders import (
     CreateOrder,
     OrderItem,
     OrdersRepository,
     UpdateOrder,
 )
-from repos.v1.orders.models.order_model import OrderTestResult
-from repos.v1.patients import CreatePatient, PatientsRepository
-from repos.v1.users import CreateUser, UsersRepository
-from services.mongo_collections.v1 import (
+from serum.repos.v1.orders.models.order_model import OrderTestResult
+from serum.repos.v1.patients import CreatePatient, PatientsRepository
+from serum.repos.v1.users import CreateUser, UsersRepository
+from serum.services.mongo_collections.v1 import (
     BranchesCollection,
     CashRegistersCollection,
     CashShiftsCollection,
@@ -66,7 +64,7 @@ async def test_order_blocking_and_approval_flow():
     )
 
     # Supervisor user (accessLevel 4)
-    supervisor = await UsersRepository.get_instance().create_user(
+    _ = await UsersRepository.get_instance().create_user(
         CreateUser(
             username="supervisor1",
             password="SuperSecret123",

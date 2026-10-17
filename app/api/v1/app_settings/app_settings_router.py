@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from repos.v1.app_settings import (
+from serum.repos.v1.app_settings import (
     AppSettingInDb,
     CreateAppSetting,
     UpdateAppSetting,

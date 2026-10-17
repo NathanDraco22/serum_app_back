@@ -1,4 +1,4 @@
-from repos.v1.api_keys import (
+from serum.repos.v1.api_keys import (
     ApiKeyInDb,
     ApiKeysRepository,
     CreateApiKey,

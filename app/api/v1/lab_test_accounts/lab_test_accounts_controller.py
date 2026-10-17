@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from repos.v1.lab_test_accounts import (
+from serum.repos.v1.lab_test_accounts import (
     LabTestAccountInDb,
     LabTestAccountsRepository,
     UpdateLabTestAccountCommercial,

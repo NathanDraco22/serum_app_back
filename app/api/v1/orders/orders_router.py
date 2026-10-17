@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 
-from repos.v1.common.filter_params import OrderFilterParams
-from repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
+from serum.repos.v1.common.filter_params import OrderFilterParams
+from serum.repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
 
 from .orders_controller import orders_controller

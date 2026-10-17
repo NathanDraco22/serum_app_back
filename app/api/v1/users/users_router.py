@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from repos.v1.users import CreateUser, UpdateUser, UserInDb
+from serum.repos.v1.users import CreateUser, UpdateUser, UserInDb
 from responses.v1 import ListResponse
 
 from .users_controller import users_controller

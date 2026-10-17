@@ -5,7 +5,7 @@ from api.v1.reports.reports_schemas import (
     ShiftsAuditReportResponse,
     TopDoctorsReportResponse,
 )
-from core.reports.reports_manager import ReportsManager
+from serum.core.reports.reports_manager import ReportsManager
 
 
 class ReportsController:

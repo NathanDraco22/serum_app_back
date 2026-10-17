@@ -1,18 +1,18 @@
 from fastapi import HTTPException, status
-from repos.v1.cash_registers import (
+from serum.repos.v1.cash_registers import (
     CashRegisterInDb,
     CashRegistersRepository,
     CreateCashRegister,
     UpdateCashRegister,
 )
-from repos.v1.cash_transactions import CashTransactionInDb
-from core.cash_register.cash_register_manager import CashRegisterManager
-from core.cash_register.process_opening import OpenCashIntent
-from core.cash_register.process_closing import CloseCashIntent
-from core.cash_register.process_income import IncomeIntent
-from core.cash_register.process_withdrawal import WithdrawalIntent
-from core.cash_register.process_payment import PaymentIntent
-from core.exceptions import (
+from serum.repos.v1.cash_transactions import CashTransactionInDb
+from serum.core.cash_register.cash_register_manager import CashRegisterManager
+from serum.core.cash_register.process_opening import OpenCashIntent
+from serum.core.cash_register.process_closing import CloseCashIntent
+from serum.core.cash_register.process_income import IncomeIntent
+from serum.core.cash_register.process_withdrawal import WithdrawalIntent
+from serum.core.cash_register.process_payment import PaymentIntent
+from serum.core.exceptions import (
     CashRegisterAlreadyOpen,
     CashRegisterNotOpen,
     CashRegisterAlreadyClosed,

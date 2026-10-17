@@ -1,19 +1,19 @@
 from fastapi import HTTPException, status
 
-from core.default_values import (
+from serum.core.default_values import (
     ORIGIN_BRANCH_ID,
     create_default_branch,
     create_default_cash_register,
     create_default_roles,
 )
-from repos.v1.core_settings import (
+from serum.repos.v1.core_settings import (
     CoreSettingInDb,
     CoreSettingsRepository,
     CreateCoreSetting,
     DecodedCoreSetting,
     UpdateCoreSetting,
 )
-from repos.v1.users import CreateUser, UsersRepository
+from serum.repos.v1.users import CreateUser, UsersRepository
 
 
 class CoreSettingsController:

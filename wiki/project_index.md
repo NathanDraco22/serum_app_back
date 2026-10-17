@@ -29,11 +29,11 @@ El backend está construido con **FastAPI** y **MongoDB (asynchronous via `pymon
 Cliente HTTP 
    ➔ Router (`app/api/v1/<entity>/<entity>_router.py`)
    ➔ Controller (`app/api/v1/<entity>/<entity>_controller.py`)
-   ➔ Repository (`app/repos/v1/<entity>/<entity>_repository.py`)
-      (o Core Manager en `app/core/<module>/` para operaciones transaccionales complejas)
-   ➔ DataSource (`app/repos/v1/<entity>/<entity>_data_source.py`)
-   ➔ Collection (`app/services/mongo_collections/v1/<entity>_collection.py`)
-   ➔ MongoDB
+   ➔ Repository (`packages/serum-business/src/serum/repos/v1/<entity>/<entity>_repository.py`)
+      (o Core Manager en `serum.core.<module>` para operaciones transaccionales complejas)
+   ➔ DataSource (`serum.repos.v1.<entity>.<entity>_data_source.py`)
+   ➔ Collection (`serum.services.mongo_collections.v1.<entity>_collection.py`)
+   ➔ MongoDB (con resolución de base de datos dinámica por tenant según `serumCtx.get().businessNickname`)
 ```
 
 ---
@@ -42,18 +42,25 @@ Cliente HTTP
 
 ```
 serum_app_back/
-├── app/
+├── app/                                # Capa de Transporte, API HTTP y Middlewares
 │   ├── main.py                         # Inicialización de FastAPI, CORS y registro de routers
-│   ├── app_lifespan.py                 # Ciclo de vida (startup/shutdown) e inicio de servicios
+│   ├── app_lifespan.py                 # Ciclo de vida (startup/shutdown) e inicio de servicios de negocio
 │   ├── regis_exception_handlers.py     # Manejador centralizado: DomainException → HTTP Status
-│   ├── api/v1/                         # Routers y Controllers por entidad
-│   ├── app_middleware/                 # Middlewares unificados (auth_middleware para Bearer JWT o API Key)
-│   ├── core/                           # Lógica transversal, operaciones transaccionales y seguridad
-│   ├── repos/v1/                       # Modelos Pydantic, Repositorios y DataSources
-│   ├── services/                       # Infraestructura y conexión a MongoDB
-│   ├── tools/                          # Utilidades transversales (UUID, Time, Search)
+│   ├── api/v1/                         # Routers y Controllers HTTP por entidad
+│   ├── app_middleware/                 # Middlewares (auth_middleware, api_key_middleware, multi_tenant_middleware)
 │   ├── responses/                      # Wrappers de respuesta HTTP (ej. ListResponse)
-│   └── config/                         # Configuraciones del servidor
+│   └── config/                         # Configuraciones del servidor (onion-config.toml, pem)
+├── packages/
+│   └── serum-business/                 # Paquete independiente de Dominio y Persistencia (instalado editable)
+│       ├── pyproject.toml              # Definición del paquete Python de negocio
+│       └── src/serum/
+│           ├── serum_config.py         # Configuración y contexto multi-tenant (SerumConfig, SerumContext, serumCtx)
+│           ├── services_initializer.py # Inicialización de base de datos e índices
+│           ├── core/                   # Orquestadores transaccionales, managers, seguridad y excepciones
+│           ├── repos/v1/               # Modelos Pydantic, Repositorios y DataSources
+│           ├── services/               # Conexión a MongoDB (MongoService multi-tenant, colecciones e índices)
+│           └── tools/                  # Utilidades transversales (UUID, Time, Search, AppSettings)
+├── test/                               # Suite de pruebas unitarias y de integración
 ├── wiki/                               # Wiki dedicada del servidor
 │   ├── project_index.md                # ESTE ARCHIVO (Mapa rector del proyecto)
 │   ├── AGENTS.md                       # Protocolo obligatorio para agentes IA
@@ -61,7 +68,7 @@ serum_app_back/
 │   ├── reglas_negocio/                 # Especificación de reglas médicas, caja y cotizaciones
 │   └── arquitectura/                   # Detalle de capas y convenciones de código
 ├── AGENTS.md                           # Guía de estilo y convenciones del backend
-└── pyproject.toml                      # Gestión de dependencias (uv / Python)
+└── pyproject.toml                      # Gestión de dependencias raíz (uv / Python)
 ```
 
 ---

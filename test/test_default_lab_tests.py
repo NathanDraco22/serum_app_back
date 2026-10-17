@@ -1,11 +1,11 @@
 import pytest
 from dotenv import load_dotenv
 
-from core.default_values.create_default_branch import ORIGIN_BRANCH_ID
-from core.default_values.create_default_lab_tests import create_default_lab_tests
-from core.services_initializer import init_services
-from repos.v1.lab_test_accounts import LabTestAccountsRepository
-from repos.v1.lab_tests import LabTestsRepository
+from serum.core.default_values.create_default_branch import ORIGIN_BRANCH_ID
+from serum.core.default_values.create_default_lab_tests import create_default_lab_tests
+from serum.services_initializer import init_services
+from serum.repos.v1.lab_test_accounts import LabTestAccountsRepository
+from serum.repos.v1.lab_tests import LabTestsRepository
 
 
 @pytest.mark.asyncio

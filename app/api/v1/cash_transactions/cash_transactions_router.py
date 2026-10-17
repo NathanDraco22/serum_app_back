@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from repos.v1.cash_transactions import CashTransactionInDb
-from repos.v1.common.filter_params.cash_transaction_filter_params import (
+from serum.repos.v1.cash_transactions import CashTransactionInDb
+from serum.repos.v1.common.filter_params.cash_transaction_filter_params import (
     CashTransactionFilterParams,
 )
 from responses.v1 import ListResponse

@@ -1,12 +1,12 @@
 from fastapi import HTTPException, status
-from repos.v1.app_settings import (
+from serum.repos.v1.app_settings import (
     AppSettingInDb,
     AppSettingsRepository,
     CreateAppSetting,
     UpdateAppSetting,
 )
 from responses.v1 import ListResponse
-from tools.app_settings_tool import AppSettingsTool
+from serum.tools.app_settings_tool import AppSettingsTool
 
 
 class AppSettingsController:

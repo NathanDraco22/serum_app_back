@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Depends
 
-from repos.v1.cash_movements import (
+from serum.repos.v1.cash_movements import (
     CashMovementInDb,
     CreateCashMovement,
     UpdateCashMovement,
 )
-from repos.v1.common.filter_params import CashMovementFilterParams
+from serum.repos.v1.common.filter_params import CashMovementFilterParams
 from responses.v1 import ListResponse
 
 from .cash_movements_controller import cash_movements_controller

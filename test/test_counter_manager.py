@@ -1,15 +1,15 @@
 import pytest
 from dotenv import load_dotenv
 
-from core.counter_manager import CounterManager
-from core.services_initializer import init_services
-from repos.v1.branches import BranchesRepository, CreateBranch
-from repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
-from repos.v1.doctors import CreateDoctor, DoctorsRepository
-from repos.v1.orders import CreateOrder, OrdersRepository
-from repos.v1.patients import CreatePatient, PatientsRepository
-from repos.v1.quotations import CreateQuotation, QuotationsRepository
-from services.mongo_collections.v1 import (
+from serum.core.counter_manager import CounterManager
+from serum.services_initializer import init_services
+from serum.repos.v1.branches import BranchesRepository, CreateBranch
+from serum.repos.v1.cash_shifts import CashShiftsRepository, CreateCashShift
+from serum.repos.v1.doctors import CreateDoctor, DoctorsRepository
+from serum.repos.v1.orders import CreateOrder, OrdersRepository
+from serum.repos.v1.patients import CreatePatient, PatientsRepository
+from serum.repos.v1.quotations import CreateQuotation, QuotationsRepository
+from serum.services.mongo_collections.v1 import (
     BranchesCollection,
     CashShiftsCollection,
     CountersCollection,

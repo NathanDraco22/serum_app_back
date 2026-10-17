@@ -3,6 +3,7 @@ from .depends import (
     auth_middleware,
     get_current_api_key,
     get_current_user,
+    multi_tenant_middleware,
 )
 
 __all__ = [
@@ -10,4 +11,5 @@ __all__ = [
     "auth_middleware",
     "get_current_user",
     "get_current_api_key",
+    "multi_tenant_middleware",
 ]

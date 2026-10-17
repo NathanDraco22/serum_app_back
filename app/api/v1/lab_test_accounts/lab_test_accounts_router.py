@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from repos.v1.common.filter_params import LabTestAccountFilterParams
-from repos.v1.lab_test_accounts import (
+from serum.repos.v1.common.filter_params import LabTestAccountFilterParams
+from serum.repos.v1.lab_test_accounts import (
     LabTestAccountInDb,
     UpdateLabTestAccountCommercial,
 )

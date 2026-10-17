@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 
-from core.security import SysPasswordHasher, TokenManager
-from repos.v1.auths import (
+from serum.core.security import SysPasswordHasher, TokenManager
+from serum.repos.v1.auths import (
     CheckUserRequest,
     CheckUserResponse,
     LoginAttempt,
@@ -9,12 +9,12 @@ from repos.v1.auths import (
     RefreshTokenRequest,
     RefreshTokenResponse,
 )
-from repos.v1.core_settings import (
+from serum.repos.v1.core_settings import (
     CoreSettingsRepository,
     DecodedCoreSetting,
     ServinStatusResponse,
 )
-from repos.v1.users import UsersRepository
+from serum.repos.v1.users import UsersRepository
 
 
 class AuthController:

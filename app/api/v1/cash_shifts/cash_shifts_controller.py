@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 
-from repos.v1.cash_shifts import (
+from serum.repos.v1.cash_shifts import (
     CloseCashShift,
     CreateCashShift,
     UpdateCashShift,

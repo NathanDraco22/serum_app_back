@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from repos.v1.patients import CreatePatient, PatientInDb, UpdatePatient
+from serum.repos.v1.patients import CreatePatient, PatientInDb, UpdatePatient
 from responses.v1 import ListResponse
 
 from .patients_controller import patients_controller

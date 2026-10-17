@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from repos.v1.doctors import CreateDoctor, DoctorInDb, UpdateDoctor
+from serum.repos.v1.doctors import CreateDoctor, DoctorInDb, UpdateDoctor
 from responses.v1 import ListResponse
 
 from .doctors_controller import doctors_controller

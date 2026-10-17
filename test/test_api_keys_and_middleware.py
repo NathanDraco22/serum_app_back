@@ -10,16 +10,16 @@ from app_middleware.depends.auth_middleware import (
     get_current_api_key,
     get_current_user,
 )
-from core.security import TokenManager
-from core.services_initializer import init_services
+from serum.core.security import TokenManager
+from serum.services_initializer import init_services
 from main import app
-from repos.v1.api_keys import (
+from serum.repos.v1.api_keys import (
     ApiKeysRepository,
     CreateApiKey,
 )
-from repos.v1.users import CreateUser, UsersRepository
-from services.mongo_collections.v1.api_keys_collection import ApiKeysCollection
-from services.mongo_collections.v1.users_collection import UsersCollection
+from serum.repos.v1.users import CreateUser, UsersRepository
+from serum.services.mongo_collections.v1.api_keys_collection import ApiKeysCollection
+from serum.services.mongo_collections.v1.users_collection import UsersCollection
 
 
 def _build_request(headers_dict: dict[str, str]) -> Request:
