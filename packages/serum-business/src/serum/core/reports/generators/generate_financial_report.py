@@ -1,6 +1,6 @@
 from typing import Any
 
-from api.v1.reports.reports_schemas import (
+from serum.core.reports.reports_schemas import (
     FinancialBranchReport,
     FinancialReportResponse,
     FinancialSummaryReport,

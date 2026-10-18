@@ -12,6 +12,7 @@ from serum.services.mongo_collections.v1 import (
 from serum.core.exceptions import (
     CashRegisterNotFound,
     CashRegisterNotOpen,
+    InvalidAmount,
     InvalidPaymentMethod,
 )
 
@@ -26,6 +27,9 @@ class PaymentIntent(BaseModel):
 async def process_payment(
     register_id: str, payment_intent: PaymentIntent
 ) -> CashTransactionInDb:
+    if payment_intent.amount <= 0:
+        raise InvalidAmount()
+
     if payment_intent.paymentMethod not in ("cash", "card", "transfer"):
         raise InvalidPaymentMethod()
 
@@ -37,7 +41,7 @@ async def process_payment(
         async with await session.start_transaction():
             async with session.bind(end_session=False):
                 register_data = await register_col.fetch_cash_register_by_id(
-                    register_id
+                    register_id, session=session
                 )
                 if register_data is None:
                     raise CashRegisterNotFound()
@@ -73,7 +77,7 @@ async def process_payment(
                 update_data["updatedAt"] = now
 
                 await register_col.update_cash_register_by_id(
-                    register_id, update_data
+                    register_id, update_data, session=session
                 )
 
                 transaction = CashTransactionInDb(
@@ -93,6 +97,8 @@ async def process_payment(
                     isDeleted=False,
                 )
 
-                await transaction_col.create_cash_transaction(transaction.model_dump())
+                await transaction_col.create_cash_transaction(
+                    transaction.model_dump(), session=session
+                )
 
                 return transaction

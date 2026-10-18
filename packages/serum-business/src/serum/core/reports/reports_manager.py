@@ -1,4 +1,4 @@
-from api.v1.reports.reports_schemas import (
+from serum.core.reports.reports_schemas import (
     FinancialReportResponse,
     LabTestsVolumeReportResponse,
     PendingBalancesReportResponse,

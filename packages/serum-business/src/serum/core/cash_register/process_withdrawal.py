@@ -14,6 +14,7 @@ from serum.core.exceptions import (
     CashRegisterNotOpen,
     ConceptRequired,
     InsufficientMethodBalance,
+    InvalidAmount,
     InvalidPaymentMethod,
 )
 
@@ -28,6 +29,9 @@ class WithdrawalIntent(BaseModel):
 async def process_withdrawal(
     register_id: str, withdrawal_intent: WithdrawalIntent
 ) -> CashTransactionInDb:
+    if withdrawal_intent.amount <= 0:
+        raise InvalidAmount()
+
     if not withdrawal_intent.concept.strip():
         raise ConceptRequired()
 
@@ -42,7 +46,7 @@ async def process_withdrawal(
         async with await session.start_transaction():
             async with session.bind(end_session=False):
                 register_data = await register_col.fetch_cash_register_by_id(
-                    register_id
+                    register_id, session=session
                 )
                 if register_data is None:
                     raise CashRegisterNotFound()
@@ -84,7 +88,7 @@ async def process_withdrawal(
                 update_data["updatedAt"] = now
 
                 await register_col.update_cash_register_by_id(
-                    register_id, update_data
+                    register_id, update_data, session=session
                 )
 
                 transaction = CashTransactionInDb(
@@ -104,6 +108,8 @@ async def process_withdrawal(
                     isDeleted=False,
                 )
 
-                await transaction_col.create_cash_transaction(transaction.model_dump())
+                await transaction_col.create_cash_transaction(
+                    transaction.model_dump(), session=session
+                )
 
                 return transaction

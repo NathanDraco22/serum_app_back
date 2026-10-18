@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from app_middleware.depends import multi_tenant_middleware
 
 from .api_keys.api_keys_router import api_keys_router
 from .app_settings.app_settings_router import app_settings_router
@@ -20,7 +21,10 @@ from .reports.reports_router import reports_router
 from .roles.roles_router import roles_router
 from .users.users_router import users_router
 
-router_v1 = APIRouter(tags=["apiV1"])
+router_v1 = APIRouter(
+    tags=["apiV1"],
+    dependencies=[Depends(multi_tenant_middleware)],
+)
 
 router_v1.include_router(api_keys_router, prefix="/api-keys")
 router_v1.include_router(app_settings_router, prefix="/app-settings")

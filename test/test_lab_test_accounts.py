@@ -185,7 +185,9 @@ async def test_lab_test_accounts_http_router():
 
     try:
         async with httpx.AsyncClient(
-            transport=httpx.ASGITransport(app=app), base_url="http://test"
+            transport=httpx.ASGITransport(app=app),
+            base_url="http://test",
+            headers={"X-Servin": "SerumDB"},
         ) as client:
             # 1. GET /api/v1/lab-test-accounts (filtro branchId)
             res_all = await client.get(

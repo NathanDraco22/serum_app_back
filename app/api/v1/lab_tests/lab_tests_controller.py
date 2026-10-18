@@ -66,7 +66,9 @@ class LabTestsController:
             v is not None
             for v in (body.salePrice, body.salePrice2, body.costPrice, body.currency)
         ):
-            branch_id = body.branchId or "ORIGIN_BRANCH"
+            from serum.serum_config import serumCtx
+
+            branch_id = body.branchId or serumCtx.get().branchId or "ORIGIN_BRANCH"
             accounts_repo = LabTestAccountsRepository.get_instance()
             update_commercial = UpdateLabTestAccountCommercial(
                 salePrice=body.salePrice,
@@ -85,10 +87,10 @@ class LabTestsController:
                         branchId=branch_id,
                         labTestId=lab_test_id,
                         commercial=LabTestCommercial(
-                            salePrice=body.salePrice or updated_lab_test.salePrice,
-                            salePrice2=body.salePrice2 or updated_lab_test.salePrice2,
-                            costPrice=body.costPrice or updated_lab_test.costPrice,
-                            currency=body.currency or updated_lab_test.currency,
+                            salePrice=body.salePrice if body.salePrice is not None else updated_lab_test.salePrice,
+                            salePrice2=body.salePrice2 if body.salePrice2 is not None else updated_lab_test.salePrice2,
+                            costPrice=body.costPrice if body.costPrice is not None else updated_lab_test.costPrice,
+                            currency=body.currency if body.currency is not None else updated_lab_test.currency,
                         ),
                     )
                 )

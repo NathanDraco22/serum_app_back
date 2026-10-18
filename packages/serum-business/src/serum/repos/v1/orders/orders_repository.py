@@ -75,6 +75,12 @@ class OrdersRepository:
                     "reason": (approval.get("reason") if approval else None) or "Precio modificado arbitrariamente",
                 }
 
+        # Calcular totalPrice automáticamente si items tiene elementos y no se envió o es 0
+        if order_dict.get("items") and order_dict.get("totalPrice", 0) <= 0:
+            order_dict["totalPrice"] = sum(
+                item.get("salePriceApplied", 0) for item in order_dict["items"]
+            )
+
         order_id = await CounterManager().next_order_number()
         new_order = OrderInDb(
             id=order_id,

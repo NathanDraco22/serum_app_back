@@ -18,19 +18,22 @@ La aplicación sigue el principio de dependencias concéntricas: las capas exter
    - Define las rutas, parámetros de URL (`Path`, `Query`), códigos de estado de éxito y esquemas OpenAPI.
    - **Solo delega al Controller**. No contiene lógica de negocio ni persistencia.
 2. **Controller (`app/api/v1/<entity>/<entity>_controller.py`)**:
-   - Orquesta la llamada a Repositorios o a managers de la capa `core/`.
+   - Orquesta la llamada a Repositorios o a managers de la capa `serum.core`.
    - Empaqueta las respuestas en wrappers estandarizados (ej. `ListResponse`).
-3. **Repository (`app/repos/v1/<entity>/<entity>_repository.py`)**:
+3. **Repository (`packages/serum-business/src/serum/repos/v1/<entity>/<entity>_repository.py`)**:
+   - Importable como `serum.repos.v1.<entity>.<Entity>Repository`.
    - Encapsula las reglas de negocio de la entidad.
    - Genera UUIDs (`UuidTool.generate_uuid()`), timestamps (`TimeTools.get_now_in_milliseconds()`) y aplica el borrado lógico (`isDeleted = True`).
    - Solo interactúa con el `DataSource`.
-4. **Core (`app/core/`)**:
-   - Módulos transversales y operaciones transaccionales complejas que involucran múltiples repositorios (ej. `OrderPaymentManager`, `CashRegisterManager`).
+4. **Core (`packages/serum-business/src/serum/core/`)**:
+   - Importable como `serum.core.<module>`.
+   - Módulos transversales y operaciones transaccionales complejas que involucran múltiples repositorios (ej. `OrderPaymentManager`, `CashRegisterManager`, `CashMovementManager`).
    - Gestión de seguridad, hashing de contraseñas y emisión de JWTs.
-5. **DataSource (`app/repos/v1/<entity>/<entity>_data_source.py`)**:
+5. **DataSource (`packages/serum-business/src/serum/repos/v1/<entity>/data/<entity>_datasource.py`)**:
    - Interfaz de persistencia encargada de realizar queries a bajo nivel a la colección de base de datos.
-6. **Collection (`app/services/mongo_collections/v1/<entity>_collection.py`)**:
-   - Conecta con el driver asíncrono `AsyncMongoClient` de `pymongo`, extiende de `BaseMongoCollection` y provee acceso tipado a la colección física de MongoDB.
+6. **Collection (`packages/serum-business/src/serum/services/mongo_collections/v1/<entity>_collection.py`)**:
+   - Importable como `serum.services.mongo_collections.v1.<Entity>Collection`.
+   - Conecta con el driver asíncrono `AsyncMongoClient` de `pymongo`, extiende de `BaseMongoCollection` y provee acceso tipado a la colección física de MongoDB con soporte multi-tenant dinámico.
 
 ---
 

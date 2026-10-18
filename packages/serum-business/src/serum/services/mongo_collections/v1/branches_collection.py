@@ -22,7 +22,7 @@ class BranchesCollection(BaseMongoCollection):
 
     async def fetch_all_branches(self) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find()
+        cursor = collection.find({"isDeleted": {"$ne": True}})
 
         result = await cursor.to_list(length=None)
         await cursor.close()
@@ -31,7 +31,9 @@ class BranchesCollection(BaseMongoCollection):
 
     async def fetch_branch_by_id(self, branch_id: str) -> dict[str, Any] | None:
         collection = self._collection
-        result = await collection.find_one({"id": branch_id})
+        result = await collection.find_one(
+            {"id": branch_id, "isDeleted": {"$ne": True}}
+        )
         return result
 
     async def update_branch_by_id(
@@ -42,7 +44,7 @@ class BranchesCollection(BaseMongoCollection):
         collection = self._collection
 
         result = await collection.find_one_and_update(
-            {"id": branch_id},
+            {"id": branch_id, "isDeleted": {"$ne": True}},
             {"$set": branch},
             return_document=ReturnDocument.AFTER,
         )

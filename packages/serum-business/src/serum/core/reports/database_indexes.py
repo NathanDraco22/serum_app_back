@@ -8,9 +8,9 @@ from serum.services.mongo_collections.v1 import (
 )
 
 
-async def ensure_reports_indexes() -> None:
+async def ensure_reports_indexes(nickname: str | None = None) -> None:
     # 1. Colección Orders
-    orders_col = OrdersCollection.get_instance()._collection
+    orders_col = OrdersCollection.get_instance(nickname)._collection
     await orders_col.create_indexes(
         [
             IndexModel(
@@ -39,7 +39,7 @@ async def ensure_reports_indexes() -> None:
     )
 
     # 2. Colección CashTransactions
-    transactions_col = CashTransactionsCollection.get_instance()._collection
+    transactions_col = CashTransactionsCollection.get_instance(nickname)._collection
     await transactions_col.create_indexes(
         [
             IndexModel(
@@ -56,7 +56,7 @@ async def ensure_reports_indexes() -> None:
     )
 
     # 3. Colección CashShifts
-    shifts_col = CashShiftsCollection.get_instance()._collection
+    shifts_col = CashShiftsCollection.get_instance(nickname)._collection
     await shifts_col.create_indexes(
         [
             IndexModel(
@@ -72,7 +72,7 @@ async def ensure_reports_indexes() -> None:
     )
 
     # 4. Colección Quotations
-    quotations_col = QuotationsCollection.get_instance()._collection
+    quotations_col = QuotationsCollection.get_instance(nickname)._collection
     await quotations_col.create_indexes(
         [
             IndexModel(

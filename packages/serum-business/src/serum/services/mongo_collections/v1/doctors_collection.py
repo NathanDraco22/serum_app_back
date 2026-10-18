@@ -100,39 +100,49 @@ class DoctorsCollection(BaseMongoCollection):
         return result
 
     async def create_indexes(self):
+        from pymongo.errors import OperationFailure
+
         collection = self._collection
-        await collection.create_indexes(
-            [
-                IndexModel(
-                    [
-                        ("id", 1),
-                        ("isDeleted", 1),
-                    ],
-                    unique=True,
-                ),
-                IndexModel(
-                    [
-                        ("name", "text"),
-                        ("searchPrefixes", "text"),
-                        ("specialty", "text"),
-                        ("cardId", "text"),
-                        ("phone", "text"),
-                        ("id", "text"),
-                    ],
-                    weights={
-                        "name": 10,
-                        "searchPrefixes": 5,
-                        "specialty": 3,
-                        "cardId": 1,
-                        "phone": 1,
-                        "id": 1,
-                    },
-                    name="TextSearchIndex",
-                ),
-                IndexModel(
-                    [
-                        ("cardId", 1),
-                    ],
-                ),
-            ]
-        )
+        indexes = [
+            IndexModel(
+                [
+                    ("id", 1),
+                ],
+                unique=True,
+            ),
+            IndexModel(
+                [
+                    ("name", "text"),
+                    ("searchPrefixes", "text"),
+                    ("specialty", "text"),
+                    ("cardId", "text"),
+                    ("phone", "text"),
+                    ("id", "text"),
+                ],
+                weights={
+                    "name": 10,
+                    "searchPrefixes": 5,
+                    "specialty": 3,
+                    "cardId": 1,
+                    "phone": 1,
+                    "id": 1,
+                },
+                name="TextSearchIndex",
+            ),
+            IndexModel(
+                [
+                    ("cardId", 1),
+                ],
+            ),
+        ]
+        try:
+            await collection.create_indexes(indexes)
+        except OperationFailure as e:
+            if e.code in (85, 86):
+                try:
+                    await collection.drop_index("TextSearchIndex")
+                except Exception:
+                    pass
+                await collection.create_indexes(indexes)
+            else:
+                raise

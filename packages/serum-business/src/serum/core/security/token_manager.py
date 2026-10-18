@@ -15,7 +15,7 @@ REFRESH_TOKEN_TTL_SEC = 30 * 24 * 60 * 60  # 30 días en segundos
 class TokenManager:
     @staticmethod
     def _get_secret() -> str:
-        return os.getenv("JWT_SECRET", "secretApp")
+        return os.getenv("JWT_SECRET", "serum_super_secret_jwt_key_default_32bytes!!")
 
     @staticmethod
     def encode_token(payload: dict[str, Any]) -> str:
@@ -84,16 +84,38 @@ class TokenManager:
         )
 
     @staticmethod
+    def _find_service_public_key() -> Path | None:
+        env_path = os.getenv("SERVICE_PUBLIC_KEY_PATH")
+        if env_path and Path(env_path).exists():
+            return Path(env_path)
+
+        current = Path(__file__).resolve().parent
+        for _ in range(8):
+            for candidate in (
+                current / "app" / "config" / "service_public_key.pem",
+                current / "config" / "service_public_key.pem",
+            ):
+                if candidate.exists():
+                    return candidate
+            if current.parent == current:
+                break
+            current = current.parent
+
+        for rel in (
+            Path("app/config/service_public_key.pem"),
+            Path("config/service_public_key.pem"),
+        ):
+            if rel.exists():
+                return rel.resolve()
+
+        return None
+
+    @staticmethod
     def super_token_verify(token: str) -> dict[str, Any] | None:
-        key_path = (
-            Path(__file__).resolve().parent.parent.parent
-            / "config"
-            / "service_public_key.pem"
-        )
-        if not key_path.exists():
-            key_path = Path("app/config/service_public_key.pem")
-        if not key_path.exists():
-            key_path = Path("config/service_public_key.pem")
+        key_path = TokenManager._find_service_public_key()
+        if key_path is None or not key_path.exists():
+            logger.error("service_public_key.pem could not be located")
+            return None
 
         try:
             with open(key_path, "rb") as f:

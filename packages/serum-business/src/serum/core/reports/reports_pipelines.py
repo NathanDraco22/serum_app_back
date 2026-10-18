@@ -12,6 +12,7 @@ class ReportsPipelines:
     ) -> list[dict[str, Any]]:
         match_stage: dict[str, Any] = {
             "isDeleted": {"$ne": True},
+            "status": {"$ne": "cancelled"},
             "createdAt": {"$gte": start_date, "$lte": end_date},
         }
         if branch_id:
@@ -86,6 +87,7 @@ class ReportsPipelines:
     ) -> list[dict[str, Any]]:
         match_stage: dict[str, Any] = {
             "isDeleted": {"$ne": True},
+            "status": {"$ne": "cancelled"},
             "createdAt": {"$gte": start_date, "$lte": end_date},
         }
         if branch_id:
@@ -149,6 +151,7 @@ class ReportsPipelines:
     ) -> list[dict[str, Any]]:
         match_stage: dict[str, Any] = {
             "isDeleted": {"$ne": True},
+            "status": {"$ne": "cancelled"},
             "createdAt": {"$gte": start_date, "$lte": end_date},
         }
         if branch_id:
@@ -207,13 +210,18 @@ class ReportsPipelines:
                         "branchId": "$branchId",
                         "labTestId": "$items.labTestId",
                         "name": {
-                            "$ifNull": ["$items.testName", "$items.name"]
+                            "$ifNull": ["$items.name", "$items.testName"]
                         },
                         "isPack": {"$ifNull": ["$items.isPack", False]},
                     },
                     "timesOrdered": {"$sum": 1},
                     "totalRevenue": {
-                        "$sum": {"$ifNull": ["$items.price", 0]}
+                        "$sum": {
+                            "$ifNull": [
+                                "$items.quotedPrice",
+                                {"$ifNull": ["$items.price", 0]},
+                            ]
+                        }
                     },
                 }
             },
@@ -239,6 +247,7 @@ class ReportsPipelines:
     ) -> list[dict[str, Any]]:
         match_stage: dict[str, Any] = {
             "isDeleted": {"$ne": True},
+            "status": {"$ne": "cancelled"},
             "createdAt": {"$gte": start_date, "$lte": end_date},
             "$expr": {"$gt": ["$totalPrice", "$paidAmount"]},
         }

@@ -69,6 +69,11 @@ class CoreSettingsRepository:
     async def update_core_setting_by_nickname(
         self, core_setting_nickname: str, core_setting: UpdateCoreSetting
     ) -> CoreSettingInDb | None:
+        if core_setting.token is not None:
+            decoded_data = TokenManager.super_token_verify(core_setting.token)
+            if decoded_data is None:
+                return None
+
         updated_data = core_setting.model_dump(exclude_unset=True)
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 

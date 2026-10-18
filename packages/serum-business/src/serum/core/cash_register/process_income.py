@@ -13,6 +13,7 @@ from serum.core.exceptions import (
     CashRegisterNotFound,
     CashRegisterNotOpen,
     ConceptRequired,
+    InvalidAmount,
     InvalidPaymentMethod,
 )
 
@@ -27,6 +28,9 @@ class IncomeIntent(BaseModel):
 async def process_income(
     register_id: str, income_intent: IncomeIntent
 ) -> CashTransactionInDb:
+    if income_intent.amount <= 0:
+        raise InvalidAmount()
+
     if not income_intent.concept.strip():
         raise ConceptRequired()
 
@@ -41,7 +45,7 @@ async def process_income(
         async with await session.start_transaction():
             async with session.bind(end_session=False):
                 register_data = await register_col.fetch_cash_register_by_id(
-                    register_id
+                    register_id, session=session
                 )
                 if register_data is None:
                     raise CashRegisterNotFound()
@@ -77,7 +81,7 @@ async def process_income(
                 update_data["updatedAt"] = now
 
                 await register_col.update_cash_register_by_id(
-                    register_id, update_data
+                    register_id, update_data, session=session
                 )
 
                 transaction = CashTransactionInDb(
@@ -97,6 +101,8 @@ async def process_income(
                     isDeleted=False,
                 )
 
-                await transaction_col.create_cash_transaction(transaction.model_dump())
+                await transaction_col.create_cash_transaction(
+                    transaction.model_dump(), session=session
+                )
 
                 return transaction

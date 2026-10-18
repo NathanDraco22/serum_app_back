@@ -35,20 +35,24 @@ def _normalize_reference_values(ref_values: list[dict]) -> list[dict]:
 
 
 def _resolve_static_file_path() -> Path | None:
-    # 1. Relative to this file: app/core/default_values -> app/static/lab_tests_master.json
-    base_dir = Path(__file__).resolve().parent.parent.parent
-    candidate_1 = base_dir / "static" / "lab_tests_master.json"
-    if candidate_1.exists():
-        return candidate_1
+    current = Path(__file__).resolve().parent
+    for _ in range(8):
+        for candidate in (
+            current / "app" / "static" / "lab_tests_master.json",
+            current / "static" / "lab_tests_master.json",
+        ):
+            if candidate.exists():
+                return candidate
+        if current.parent == current:
+            break
+        current = current.parent
 
-    # 2. Fallbacks based on CWD
-    candidate_2 = Path("app/static/lab_tests_master.json").resolve()
-    if candidate_2.exists():
-        return candidate_2
-
-    candidate_3 = Path("static/lab_tests_master.json").resolve()
-    if candidate_3.exists():
-        return candidate_3
+    for rel in (
+        Path("app/static/lab_tests_master.json"),
+        Path("static/lab_tests_master.json"),
+    ):
+        if rel.exists():
+            return rel.resolve()
 
     return None
 

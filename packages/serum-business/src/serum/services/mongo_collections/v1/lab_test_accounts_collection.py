@@ -1,6 +1,7 @@
 from typing import Any
 
 from pymongo import IndexModel, ReturnDocument
+from pymongo.errors import OperationFailure
 from serum.services import BaseMongoCollection
 
 
@@ -141,25 +142,35 @@ class LabTestAccountsCollection(BaseMongoCollection):
 
     async def create_indexes(self):
         collection = self._collection
-        await collection.create_indexes(
-            [
-                IndexModel(
-                    [
-                        ("id", 1),
-                    ],
-                    unique=True,
-                ),
-                IndexModel(
-                    [
-                        ("branchId", 1),
-                        ("labTestId", 1),
-                    ],
-                    unique=True,
-                ),
-                IndexModel(
-                    [
-                        ("labTestId", 1),
-                    ],
-                ),
-            ]
-        )
+        indexes = [
+            IndexModel(
+                [
+                    ("id", 1),
+                ],
+                unique=True,
+            ),
+            IndexModel(
+                [
+                    ("branchId", 1),
+                    ("labTestId", 1),
+                ],
+                unique=True,
+                partialFilterExpression={"isDeleted": False},
+            ),
+            IndexModel(
+                [
+                    ("labTestId", 1),
+                ],
+            ),
+        ]
+        try:
+            await collection.create_indexes(indexes)
+        except OperationFailure as e:
+            if e.code in (85, 86):
+                try:
+                    await collection.drop_index("branchId_1_labTestId_1")
+                except Exception:
+                    pass
+                await collection.create_indexes(indexes)
+            else:
+                raise

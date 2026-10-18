@@ -107,7 +107,6 @@ class PatientsCollection(BaseMongoCollection):
             IndexModel(
                 [
                     ("id", 1),
-                    ("isDeleted", 1),
                 ],
                 unique=True,
             ),
@@ -137,8 +136,11 @@ class PatientsCollection(BaseMongoCollection):
         try:
             await collection.create_indexes(indexes)
         except OperationFailure as e:
-            if e.code == 85:
-                await collection.drop_index("TextSearchIndex")
+            if e.code in (85, 86):
+                try:
+                    await collection.drop_index("TextSearchIndex")
+                except Exception:
+                    pass
                 await collection.create_indexes(indexes)
             else:
                 raise

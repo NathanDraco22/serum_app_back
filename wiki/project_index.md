@@ -75,7 +75,7 @@ serum_app_back/
 
 ## 🧭 3. Módulos y Entidades del Sistema
 
-| Módulo / Entidad | Router & Controller (`app/api/v1/`) | Repositorio & DataSource (`app/repos/v1/`) | Colección MongoDB (`app/services/mongo_collections/v1/`) | Reglas de Negocio Clave |
+| Módulo / Entidad | Router & Controller (`app/api/v1/`) | Repositorio & DataSource (`serum.repos.v1`) | Colección MongoDB (`serum.services.mongo_collections.v1`) | Reglas de Negocio Clave |
 | :--- | :--- | :--- | :--- | :--- |
 | **Auths** | `auths/` | Autenticación, JWT, hashing | `users_collection.py` | JWT HS256, session (8h), refresh (30d), `/check-user`. Ver [Autenticación y Roles](reglas_negocio/autenticacion_y_roles.md). |
 | **Branches** | `branches/` | `branches/` | `branches_collection.py` | Sedes físicas del laboratorio que segmentan cajas, usuarios y flujo de dinero. |
@@ -101,11 +101,11 @@ serum_app_back/
 
 ---
 
-## ⚙️ 4. Capa Core y Orquestaciones Transaccionales (`app/core/`)
+## ⚙️ 4. Capa Core y Orquestaciones Transaccionales (`serum.core`)
 
-Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entidades y requieren consistencia atómica:
+Ubicada en `packages/serum-business/src/serum/core/`, maneja operaciones críticas que cruzan múltiples entidades y requieren consistencia atómica:
 
-1. **`app/core/cash_register/`**:
+1. **`serum.core.cash_register`**:
    - `CashRegisterManager`: Orquestador de operaciones de caja.
    - `process_opening.py`: Apertura de caja (crea transacción `opening` tipo `in` y marca `isOpen = True`).
    - `process_closing.py`: Cierre y arqueo de caja (transacción `closing` tipo `out` y marca `isOpen = False`).
@@ -113,40 +113,39 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
    - `process_withdrawal.py`: Retiros o egresos de caja (tipo `out`).
    - `process_payment.py`: Procesamiento de pagos directos a la caja.
 
-2. **`app/core/cash_movements/`**:
+2. **`serum.core.cash_movements`**:
    - `CashMovementManager`: Orquestador de movimientos libres de caja.
    - `process_cash_movement.py`: Transacción MongoDB atómica para procesar ingresos y egresos libres: valida turno abierto y fondos disponibles en retiros, actualiza atómicamente el balance del turno (`CashShift`), inserta el movimiento (`CashMovement`) y genera el asiento contable inmutable en el Kardex (`CashTransaction`).
 
-3. **`app/core/order_payment/`**:
+3. **`serum.core.order_payment`**:
    - `OrderPaymentManager`: Orquesta el cobro de una orden médica y su reflejo inmediato en el balance de la caja activa y en el Kardex.
    - Valida el bloqueo de orden: Si `order.isBlocked == True`, aborta la transacción y lanza `OrderIsBlocked` (HTTP 400).
    - Actualiza el estado de la orden (`pending` ➔ `partiallyPaid` ➔ `paid`) y genera el recibo automático (`Receipt`).
 
-4. **`app/core/reports/`**:
+4. **`serum.core.reports`**:
    - `ReportsManager`: Fachada orquestadora analítica.
    - `reports_pipelines.py`: Pipelines de agregación de MongoDB ($match, $group, $sort).
    - `generators/`: Módulos delegados (`generate_financial_report.py`, `generate_top_doctors_report.py`, `generate_lab_tests_volume_report.py`, `generate_pending_balances_report.py`, `generate_shifts_audit_report.py`, `reports_helpers.py`).
 
-4. **`app/core/counter_manager/`**:
+5. **`serum.core.counter_manager`**:
    - `CounterManager`: Orquestador transversal Singleton de correlativos e identificadores secuenciales.
    - Genera IDs formateados: `patientNumber` y `doctorNumber` (4 dígitos `zfill(4)`), `orderNumber`, `quotationNumber` y `shiftNumber` (numérico simple `str`).
    - Utiliza `$inc` atómico y `find_one_and_update(..., upsert=True)` en MongoDB.
 
-
-5. **`app/core/lab_tests/`**:
+6. **`serum.core.lab_tests`**:
    - `LabTestsManager`: Orquestador de creación atómica de pruebas clínicas y aprovisionamiento de cuentas por sucursal.
    - `process_create_lab_test.py`: Transacción en MongoDB para insertar `LabTest` + `LabTestAccount` de origen + cuentas en 0 para las demás sucursales.
 
-6. **`app/core/security/`**:
+7. **`serum.core.security`**:
    - `token_manager.py`: Creación y validación de tokens JWT (HS256) con expiraciones en segundos Unix.
    - `password_hasher.py`: Hashing y verificación de contraseñas mediante `passlib` / `bcrypt`.
 
-7. **`app/core/exceptions/`**:
+8. **`serum.core.exceptions`**:
    - Excepciones de dominio desacopladas de FastAPI (ej. `CashRegisterAlreadyOpen`, `OrderNotFound`, `InsufficientMethodBalance`).
    - Se registran en `app/regis_exception_handlers.py` para retornar el código HTTP apropiado.
 
-8. **`app/core/default_values/`**:
-   - Inicialización idempotente en startup (`lifespan` ➔ `services_initializer.py`):
+9. **`serum.core.default_values`**:
+   - Inicialización idempotente en startup (`lifespan` ➔ `serum.services_initializer.init_business_services`):
      - `create_default_branch.py`: Creación de sucursal inicial `ORIGIN_BRANCH` ("Origen").
      - `create_default_cash_register.py`: Creación de caja registradora inicial `ORIGIN_CASH` ("Caja Principal") asociada a `ORIGIN_BRANCH`.
      - `create_root_user.py`: Creación de usuario administrador `Serum` (clave `SerumRoot`).
@@ -167,3 +166,19 @@ Ubicada en `app/core/`, maneja operaciones críticas que cruzan múltiples entid
    - Todas las colecciones implementan borrado lógico mediante `isDeleted: bool = False`. La eliminación física en MongoDB está prohibida.
 5. **Driver de MongoDB**:
    - Uso exclusivo de la API asíncrona de `pymongo` (`AsyncMongoClient`, `AsyncCollection`).
+
+---
+
+## 🏛️ 6. Paquete de Negocio (`serum-business`) y Contexto Multi-Tenant
+
+Para la especificación técnica profunda de la separación del paquete de negocio y la arquitectura multi-tenant, consulta:  
+- 👉 **[Arquitectura Multi-Tenant y Aprovisionamiento (multi_tenant.md)](arquitectura/multi_tenant.md)**: Guía completa del modelo *Database-per-Tenant*, aprovisionamiento atómico, middleware `ContextVar` y conexión con Flutter.
+- 👉 **[Paquete serum-business y Modularización (serum_business_package.md)](arquitectura/serum_business_package.md)**: Desacoplamiento de capas, árbol de código y namespaces de import.
+
+### Resumen del Mecanismo Multi-Tenant:
+1. **Modelo Database-per-Tenant**: Cada laboratorio tiene su base de datos física dedicada (`client.get_database(nickname)`), eliminando discriminadores lógicos y garantizando aislamiento estricto.
+2. **Contexto Asíncrono**: `serum.serum_config.serumCtx` almacena `SerumContext(businessNickname, branchId)` por corrutina mediante `contextvars.ContextVar`.
+3. **Middleware de Entrada**: `app/app_middleware/depends/multi_tenant.py` (`multi_tenant_middleware`) extrae los headers obligatorios `x-tenant-nickname` / `X-Servin` y `x-branch` / `x-branch-id`, asignando y limpiando el contexto con `try ... finally: serumCtx.reset(token)`.
+4. **Instancias Aisladas de Colección**: `BaseMongoCollection._instances` mantiene un pool de instancias indexado por `nickname`.
+5. **Resolución de Base de Datos**: `serum.services.mongo_service.MongoService.get_collection()` resuelve dinámicamente `ctx.businessNickname` (directamente el `nickname`) si `businessNickname` está presente, o recurre a la base de datos por defecto (`SerumDB` / `DB_NAME`).
+6. **Aprovisionamiento Atómico**: `serum.core.tenant.provision_tenant.provision_tenant()` inicializa bajo demanda colecciones, índices, sucursal, roles, caja, settings, catálogo de pruebas y usuarios sin necesidad de reiniciar el servidor.

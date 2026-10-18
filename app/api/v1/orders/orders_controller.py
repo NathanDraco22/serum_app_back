@@ -66,6 +66,36 @@ class OrdersController:
         if order.isBlocked and body.results is not None:
             raise OrderIsBlocked()
 
+        # Proteger contra desbloqueo arbitrario a través de PATCH genérico
+        update_dict = body.model_dump(exclude_unset=True)
+        if order.isBlocked and update_dict.get("isBlocked") is False:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Una orden bloqueada solo puede ser aprobada a través del endpoint /approve",
+            )
+
+        # Si se modifican items, re-evaluar precios y bloqueo si la orden no está previamente aprobada
+        if body.items is not None:
+            has_modified_price = any(
+                item.originalPrice > 0 and item.salePriceApplied != item.originalPrice
+                for item in body.items
+            )
+            if has_modified_price:
+                current_approval = order.approval
+                if not current_approval or not current_approval.isApproved:
+                    body.isBlocked = True
+            # Recalcular totalPrice si no vino en el body
+            if body.totalPrice is None:
+                body.totalPrice = sum(item.salePriceApplied for item in body.items)
+
+        # Auto-transición a completed si se capturan todos los resultados y la orden ya está pagada
+        effective_results = body.results if body.results is not None else order.results
+        effective_paid = body.paidAmount if body.paidAmount is not None else order.paidAmount
+        effective_total = body.totalPrice if body.totalPrice is not None else order.totalPrice
+        if body.status is None and effective_results and effective_paid >= effective_total and effective_total > 0:
+            if all(r.resultValue is not None and str(r.resultValue).strip() != "" for r in effective_results):
+                body.status = "completed"
+
         updated_order = await self.orders_repo.update_order_by_id(order_id, body)
         if updated_order is None:
             raise HTTPException(

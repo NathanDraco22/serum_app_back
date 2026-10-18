@@ -50,6 +50,7 @@ class CashRegistersCollection(BaseMongoCollection):
         self,
         cash_register_id: str,
         cash_register: dict,
+        session: Any = None,
     ) -> dict[str, Any] | None:
         collection = self._collection
 
@@ -57,6 +58,7 @@ class CashRegistersCollection(BaseMongoCollection):
             {"id": cash_register_id},
             {"$set": cash_register},
             return_document=ReturnDocument.AFTER,
+            session=session,
         )
 
         return result

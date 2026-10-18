@@ -45,7 +45,10 @@ async def test_app_settings_lifecycle_and_endpoints():
 
     # 5. Probar endpoints REST con AsyncClient
     transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as ac:
+    headers = {"X-Servin": "SerumDB"}
+    async with AsyncClient(
+        transport=transport, base_url="http://test", headers=headers
+    ) as ac:
         # GET /api/v1/app-settings/current
         res_current = await ac.get("/api/v1/app-settings/current")
         assert res_current.status_code == 200

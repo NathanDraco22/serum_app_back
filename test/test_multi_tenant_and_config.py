@@ -47,11 +47,13 @@ async def test_serum_context_isolation_across_async_tasks():
 
 @pytest.mark.asyncio
 async def test_multi_tenant_middleware():
+    # 1. Petición con x-tenant-nickname y x-branch-id
     scope = {
         "type": "http",
+        "path": "/api/v1/patients",
         "headers": [
             (b"x-tenant-nickname", b"lab_central"),
-            (b"x-servin", b"branch_norte"),
+            (b"x-branch-id", b"branch_norte"),
         ],
     }
     request = Request(scope)
@@ -78,6 +80,38 @@ async def test_multi_tenant_middleware():
     assert serumCtx.get().businessNickname == ""
     assert serumCtx.get().branchId == ""
 
+    # 2. Petición con x-servin como nickname
+    scope_servin = {
+        "type": "http",
+        "path": "/api/v1/patients",
+        "headers": [
+            (b"x-servin", b"clinica_del_sol"),
+            (b"x-branch", b"branch_matriz"),
+        ],
+    }
+    req_servin = Request(scope_servin)
+    gen2 = multi_tenant_middleware(req_servin)
+    await anext(gen2)
+    assert serumCtx.get().businessNickname == "clinica_del_sol"
+    assert serumCtx.get().branchId == "branch_matriz"
+    try:
+        await anext(gen2)
+    except StopAsyncIteration:
+        pass
+
+    # 3. Petición sin header a /api/v1 debe arrojar 400 Bad Request
+    scope_no_tenant = {
+        "type": "http",
+        "path": "/api/v1/patients",
+        "headers": [],
+    }
+    req_no_tenant = Request(scope_no_tenant)
+    from fastapi import HTTPException
+    with pytest.raises(HTTPException) as exc_info:
+        gen3 = multi_tenant_middleware(req_no_tenant)
+        await anext(gen3)
+    assert exc_info.value.status_code == 400
+
 
 def test_mongo_service_dynamic_db_resolution():
     mongo = MongoService()
@@ -97,16 +131,43 @@ def test_mongo_service_dynamic_db_resolution():
     mongo.client = fake_client  # type: ignore
 
     try:
-        # 1. Sin tenant -> default DB
+        # 1. Sin tenant -> default DB ("SerumDB")
         serumCtx.set(SerumContext(businessNickname="", branchId=""))
         res1 = mongo.get_collection("Patients")
         assert res1 == ("SerumDB", "Patients")
 
-        # 2. Con tenant -> SerumDB_<tenant>
+        # 2. Con tenant -> nickname directo
         serumCtx.set(SerumContext(businessNickname="clinica_sur", branchId="b1"))
         res2 = mongo.get_collection("Patients")
-        assert res2 == ("SerumDB_clinica_sur", "Patients")
+        assert res2 == ("clinica_sur", "Patients")
     finally:
         serumCtx.set(SerumContext())
         if original_client:
             mongo.client = original_client
+
+
+def test_collection_instances_isolation():
+    from serum.services.mongo_collections.v1 import (
+        PatientsCollection,
+        OrdersCollection,
+    )
+
+    # 1. Instancias separadas para distintos tenants
+    pat_a = PatientsCollection.get_instance("lab_a")
+    pat_b = PatientsCollection.get_instance("lab_b")
+    assert pat_a is not pat_b
+    assert pat_a.nickname == "lab_a"
+    assert pat_b.nickname == "lab_b"
+
+    # 2. Misma instancia (cacheada) para el mismo tenant
+    pat_a_again = PatientsCollection.get_instance("lab_a")
+    assert pat_a is pat_a_again
+
+    # 3. Aislamiento entre distintas subclases
+    order_a = OrdersCollection.get_instance("lab_a")
+    assert pat_a is not order_a
+    assert "lab_a" in PatientsCollection._instances
+    assert "lab_a" in OrdersCollection._instances
+    assert isinstance(PatientsCollection._instances["lab_a"], PatientsCollection)
+    assert isinstance(OrdersCollection._instances["lab_a"], OrdersCollection)
+

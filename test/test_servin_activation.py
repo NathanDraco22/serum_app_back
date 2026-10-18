@@ -71,6 +71,7 @@ async def test_core_settings_activation_flow():
         # 1. Petición sin autorización -> rechazo
         res_no_auth = await client.post(
             "/api/v1/core-settings",
+            headers={"X-Servin": nickname},
             json={"nickname": nickname, "token": content_token},
         )
         assert res_no_auth.status_code in (401, 403)
@@ -110,7 +111,10 @@ async def test_core_settings_activation_flow():
         assert "already exists" in res_duplicate.json()["detail"]
 
         # 5. Consulta de estado del Servin (GET /api/v1/auths/servin-status)
-        res_status = await client.get("/api/v1/auths/servin-status")
+        res_status = await client.get(
+            "/api/v1/auths/servin-status",
+            headers={"X-Servin": nickname},
+        )
         assert res_status.status_code == 200
         status_data = res_status.json()
         assert status_data["nickname"] == nickname
@@ -130,9 +134,14 @@ async def test_core_settings_activation_flow():
         assert res_patch.status_code == 200
 
         # 7. Verificar que el estado refleja la suspensión
-        res_status_updated = await client.get("/api/v1/auths/servin-status")
+        res_status_updated = await client.get(
+            "/api/v1/auths/servin-status",
+            headers={"X-Servin": nickname},
+        )
         assert res_status_updated.status_code == 200
         assert res_status_updated.json()["isActive"] is False
 
         # Limpieza final
+        tenant_collection = CoreSettingsCollection.get_instance(nickname)._collection
+        await tenant_collection.delete_many({})
         await collection.delete_many({})

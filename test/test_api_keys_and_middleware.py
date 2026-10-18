@@ -231,13 +231,13 @@ async def test_api_keys_http_endpoints():
         role=user.role,
     )
 
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"Bearer {token}", "X-Servin": "SerumDB"}
 
     async with httpx.AsyncClient(
         transport=httpx.ASGITransport(app=app), base_url="http://test"
     ) as client:
         # 1. Petición sin auth -> 401
-        res_unauth = await client.get("/api/v1/api-keys")
+        res_unauth = await client.get("/api/v1/api-keys", headers={"X-Servin": "SerumDB"})
         assert res_unauth.status_code == 401
 
         # 2. Crear API Key
@@ -264,7 +264,8 @@ async def test_api_keys_http_endpoints():
 
         # 4. Probar que la API Key recién creada puede autenticar llamadas GET /api/v1/api-keys
         res_via_key = await client.get(
-            "/api/v1/api-keys", headers={"X-API-KEY": raw_key}
+            "/api/v1/api-keys",
+            headers={"X-API-KEY": raw_key, "X-Servin": "SerumDB"},
         )
         assert res_via_key.status_code == 200
 
@@ -279,7 +280,8 @@ async def test_api_keys_http_endpoints():
 
         # Con la llave desactivada, la petición vía X-API-KEY debe fallar (401)
         res_via_deactivated = await client.get(
-            "/api/v1/api-keys", headers={"X-API-KEY": raw_key}
+            "/api/v1/api-keys",
+            headers={"X-API-KEY": raw_key, "X-Servin": "SerumDB"},
         )
         assert res_via_deactivated.status_code == 401
 

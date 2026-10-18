@@ -1,11 +1,6 @@
 from fastapi import HTTPException, status
 
-from serum.core.default_values import (
-    ORIGIN_BRANCH_ID,
-    create_default_branch,
-    create_default_cash_register,
-    create_default_roles,
-)
+from serum.core.tenant import provision_tenant
 from serum.repos.v1.core_settings import (
     CoreSettingInDb,
     CoreSettingsRepository,
@@ -13,7 +8,7 @@ from serum.repos.v1.core_settings import (
     DecodedCoreSetting,
     UpdateCoreSetting,
 )
-from serum.repos.v1.users import CreateUser, UsersRepository
+from serum.repos.v1.users import UsersRepository
 
 
 class CoreSettingsController:
@@ -44,27 +39,12 @@ class CoreSettingsController:
                 detail="Invalid core setting token or signature",
             )
 
-        # 1. Crear / sincronizar sucursal con el nombre del establecimiento
-        await create_default_branch(branch_name=res.name)
-
-        # 2. Asegurar roles por defecto
-        await create_default_roles()
-
-        # 3. Asegurar caja registradora inicial
-        await create_default_cash_register()
-
-        # 4. Crear usuario administrador para el dueño si no existe
-        existing_user = await self.users_repo.get_user_by_username(res.ownerName)
-        if existing_user is None:
-            origin_user = CreateUser(
-                username=res.ownerName,
-                password="12345",
-                name=res.ownerName,
-                role="Admin",
-                accessLevel=5,
-                branches=[ORIGIN_BRANCH_ID],
-            )
-            await self.users_repo.create_user(origin_user)
+        # Aprovisionar de forma atómica la base de datos, colecciones, índices y defaults del laboratorio
+        await provision_tenant(
+            nickname=res.nickname,
+            establishment_name=res.name,
+            owner_name=res.ownerName,
+        )
 
         return res
 
