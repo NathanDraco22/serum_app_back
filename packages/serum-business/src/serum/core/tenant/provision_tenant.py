@@ -34,29 +34,17 @@ async def provision_tenant(
     """
     token = serumCtx.set(SerumContext(businessNickname=nickname))
     try:
-        # 1. Crear todos los índices de colecciones y reportes en la base de datos nickname
-        await MongoService().create_tenant_indexes(nickname=nickname)
-
-        # 2. Crear sucursal de origen
+        # 1. Crear sucursal de origen
         branch_name = establishment_name or "Origen"
         await create_default_branch(branch_name=branch_name)
 
-        # 3. Roles del sistema
+        # 2. Roles del sistema
         await create_default_roles()
 
-        # 4. Caja registradora principal
-        await create_default_cash_register()
-
-        # 5. Configuraciones de la aplicación
-        await create_default_app_settings()
-
-        # 6. Catálogo base de pruebas clínicas
-        await create_default_lab_tests()
-
-        # 7. Usuario Root del sistema
+        # 3. Usuario Root del sistema
         await create_root_user()
 
-        # 8. Usuario Administrador del propietario (si se especificó)
+        # 4. Usuario Administrador del propietario (si se especificó)
         if owner_name:
             users_repo = UsersRepository.get_instance()
             existing_user = await users_repo.get_user_by_username(owner_name)
@@ -70,5 +58,17 @@ async def provision_tenant(
                     branches=[ORIGIN_BRANCH_ID],
                 )
                 await users_repo.create_user(owner_user)
+
+        # 5. Caja registradora principal
+        await create_default_cash_register()
+
+        # 6. Configuraciones de la aplicación
+        await create_default_app_settings()
+
+        # 7. Crear todos los índices de colecciones y reportes en paralelo
+        await MongoService().create_tenant_indexes(nickname=nickname)
+
+        # 8. Catálogo base de pruebas clínicas (en lote masivo)
+        await create_default_lab_tests()
     finally:
         serumCtx.reset(token)

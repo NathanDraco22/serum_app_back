@@ -1,10 +1,16 @@
 import json
 import logging
 from pathlib import Path
+from typing import Any
 
 from serum.core.default_values.create_default_branch import ORIGIN_BRANCH_ID
-from serum.core.lab_tests import LabTestsManager
 from serum.repos.v1._shared_models import ReferenceValue
+from serum.repos.v1.branches import BranchesRepository
+from serum.repos.v1.lab_test_accounts import (
+    CreateLabTestAccount,
+    LabTestAccountsRepository,
+    LabTestCommercial,
+)
 from serum.repos.v1.lab_tests import (
     CreateLabTest,
     LabTestInDb,
@@ -24,7 +30,7 @@ def _normalize_gender(g: str) -> str:
     return "both"
 
 
-def _normalize_reference_values(ref_values: list[dict]) -> list[dict]:
+def _normalize_reference_values(ref_values: list[dict[str, Any]]) -> list[dict[str, Any]]:
     normalized = []
     for rv in ref_values:
         item = dict(rv)
@@ -43,9 +49,9 @@ def _resolve_static_file_path() -> Path | None:
         ):
             if candidate.exists():
                 return candidate
-        if current.parent == current:
-            break
-        current = current.parent
+            if current.parent == current:
+                break
+            current = current.parent
 
     for rel in (
         Path("app/static/lab_tests_master.json"),
@@ -57,27 +63,82 @@ def _resolve_static_file_path() -> Path | None:
     return None
 
 
-async def create_default_lab_tests() -> None:
+def _register_and_build_accounts(
+    created_tests: list[LabTestInDb],
+    active_branch_ids: list[str],
+    existing_by_code: dict[str, LabTestInDb],
+    existing_by_name: dict[str, LabTestInDb],
+) -> list[CreateLabTestAccount]:
+    """Registra pruebas creadas en los índices en memoria y genera cuentas comerciales por sucursal."""
+    accounts: list[CreateLabTestAccount] = []
+    for test in created_tests:
+        if test.code:
+            existing_by_code[test.code] = test
+        if test.name:
+            existing_by_name[test.name.strip().lower()] = test
+
+        origin_comm = LabTestCommercial(
+            salePrice=test.salePrice,
+            salePrice2=test.salePrice2,
+            costPrice=test.costPrice,
+            currency=test.currency,
+        )
+        accounts.append(
+            CreateLabTestAccount(
+                branchId=ORIGIN_BRANCH_ID,
+                labTestId=test.id,
+                commercial=origin_comm,
+            )
+        )
+        for branch_id in active_branch_ids:
+            if branch_id != ORIGIN_BRANCH_ID:
+                accounts.append(
+                    CreateLabTestAccount(
+                        branchId=branch_id,
+                        labTestId=test.id,
+                        commercial=LabTestCommercial(
+                            salePrice=0,
+                            salePrice2=0,
+                            costPrice=0,
+                            currency=test.currency,
+                        ),
+                    )
+                )
+    return accounts
+
+
+async def create_default_lab_tests(json_path: Path | None = None) -> None:
     """Carga e inicializa el catálogo de LabTests desde el archivo estático si no existen.
     
     Procesa en 2 fases:
     1. Pruebas individuales/atómicas (isPack: False)
     2. Packs/Perfiles (isPack: True), resolviendo childTestCodes -> childTestIds
     """
-    json_path = _resolve_static_file_path()
     if json_path is None:
-        logger.warning("No se encontró el archivo estático lab_tests_master.json")
+        json_path = _resolve_static_file_path()
+
+    if json_path is None or not json_path.exists():
+        logger.warning(
+            f"No se encontró el archivo estático lab_tests_master.json ({json_path})"
+        )
         return
 
     try:
         with open(json_path, "r", encoding="utf-8-sig") as f:
-            catalog_items: list[dict] = json.load(f)
+            catalog_items: list[dict[str, Any]] = json.load(f)
     except Exception as e:
         logger.error(f"Error al leer {json_path}: {e}")
         return
 
     lab_tests_repo = LabTestsRepository.get_instance()
-    lab_tests_manager = LabTestsManager.get_instance()
+    accounts_repo = LabTestAccountsRepository.get_instance()
+    branches_repo = BranchesRepository.get_instance()
+
+    # Obtener sucursales activas (para crear cuentas comerciales)
+    branches = await branches_repo.get_all_branches()
+    active_branch_ids = [b.id for b in branches] if branches else [ORIGIN_BRANCH_ID]
+    if ORIGIN_BRANCH_ID not in active_branch_ids:
+        active_branch_ids.append(ORIGIN_BRANCH_ID)
 
     # Obtener pruebas existentes para evitar duplicados
     existing_tests = await lab_tests_repo.get_all_lab_tests()
@@ -88,27 +149,34 @@ async def create_default_lab_tests() -> None:
         t.name.strip().lower(): t for t in existing_tests if t.name
     }
 
+    # Conjuntos para evitar duplicados dentro del mismo lote/archivo JSON
+    queued_codes: set[str] = set()
+    queued_names: set[str] = set()
+
     atomic_items = [item for item in catalog_items if not item.get("isPack", False)]
     pack_items = [item for item in catalog_items if item.get("isPack", False)]
 
-    # Fase 1: Insertar pruebas atómicas
+    # --- FASE 1: Preparar e insertar pruebas atómicas en lote ---
+    atomic_dtos: list[CreateLabTest] = []
+
     for item in atomic_items:
         code = item.get("code")
         name = item.get("name", "")
         normalized_name = name.strip().lower()
 
-        already_exists = (code and code in existing_by_code) or (
-            normalized_name in existing_by_name
+        already_exists = (
+            (code and (code in existing_by_code or code in queued_codes))
+            or (normalized_name in existing_by_name or normalized_name in queued_names)
         )
         if already_exists:
-            # Si ya existe, verificar si requiere normalizar géneros heredados en la base de datos (ej. "F" -> "female")
             target_test = (
                 existing_by_code.get(code)
                 if code
                 else existing_by_name.get(normalized_name)
             )
             if target_test and any(
-                rv.gender in ("F", "M") for rv in target_test.referenceValues
+                _normalize_gender(rv.gender) != rv.gender
+                for rv in target_test.referenceValues
             ):
                 updated_rvs = [
                     ReferenceValue(
@@ -137,28 +205,50 @@ async def create_default_lab_tests() -> None:
 
         try:
             create_dto = CreateLabTest(**payload)
-            created_test = await lab_tests_manager.create_lab_test(create_dto)
-            if created_test.code:
-                existing_by_code[created_test.code] = created_test
-            if created_test.name:
-                existing_by_name[created_test.name.strip().lower()] = created_test
+            atomic_dtos.append(create_dto)
+            if create_dto.code:
+                queued_codes.add(create_dto.code)
+            if create_dto.name:
+                queued_names.add(create_dto.name.strip().lower())
         except Exception as e:
-            logger.error(f"Error al crear prueba por defecto '{name}': {e}")
+            logger.error(f"Error al parsear prueba atómica '{name}': {e}")
 
-    # Fase 2: Insertar o actualizar Packs y vincular childTestIds
+    if atomic_dtos:
+        created_atomics = await lab_tests_repo.create_lab_tests_batch(atomic_dtos)
+        accounts_to_create = _register_and_build_accounts(
+            created_atomics,
+            active_branch_ids,
+            existing_by_code,
+            existing_by_name,
+        )
+        if accounts_to_create:
+            await accounts_repo.create_accounts_batch(accounts_to_create)
+
+    # --- FASE 2: Preparar e insertar Packs / Perfiles en lote ---
+    pack_dtos: list[CreateLabTest] = []
+
     for pack in pack_items:
         code = pack.get("code")
         name = pack.get("name", "")
         normalized_name = name.strip().lower()
         child_codes: list[str] = pack.get("childTestCodes", [])
 
-        # Resolver IDs a partir de los códigos
+        # Resolver IDs a partir de los códigos ya disponibles en memoria
         child_ids: list[str] = list(pack.get("childTestIds", []))
         if not child_ids and child_codes:
             for c_code in child_codes:
                 child_test = existing_by_code.get(c_code)
                 if child_test:
                     child_ids.append(child_test.id)
+                else:
+                    logger.warning(
+                        f"Pack '{name}' (código {code}): No se encontró la prueba hija con código '{c_code}'"
+                    )
+
+        already_exists = (
+            (code and (code in existing_by_code or code in queued_codes))
+            or (normalized_name in existing_by_name or normalized_name in queued_names)
+        )
 
         existing_pack = None
         if code and code in existing_by_code:
@@ -166,7 +256,7 @@ async def create_default_lab_tests() -> None:
         elif normalized_name in existing_by_name:
             existing_pack = existing_by_name[normalized_name]
 
-        if existing_pack is None:
+        if not already_exists:
             payload = dict(pack)
             payload.pop("childTestCodes", None)
             payload["childTestIds"] = child_ids
@@ -174,15 +264,14 @@ async def create_default_lab_tests() -> None:
 
             try:
                 create_dto = CreateLabTest(**payload)
-                created_pack = await lab_tests_manager.create_lab_test(create_dto)
-                if created_pack.code:
-                    existing_by_code[created_pack.code] = created_pack
-                if created_pack.name:
-                    existing_by_name[created_pack.name.strip().lower()] = created_pack
+                pack_dtos.append(create_dto)
+                if create_dto.code:
+                    queued_codes.add(create_dto.code)
+                if create_dto.name:
+                    queued_names.add(create_dto.name.strip().lower())
             except Exception as e:
-                logger.error(f"Error al crear pack por defecto '{name}': {e}")
-        else:
-            # Si el pack ya existe pero le faltaban childTestIds, vincularlos
+                logger.error(f"Error al parsear pack por defecto '{name}': {e}")
+        elif existing_pack is not None:
             if not existing_pack.childTestIds and child_ids:
                 try:
                     await lab_tests_repo.update_lab_test_by_id(
@@ -193,3 +282,15 @@ async def create_default_lab_tests() -> None:
                     logger.error(
                         f"Error al actualizar childTestIds de pack '{name}': {e}"
                     )
+
+    if pack_dtos:
+        created_packs = await lab_tests_repo.create_lab_tests_batch(pack_dtos)
+        pack_accounts_to_create = _register_and_build_accounts(
+            created_packs,
+            active_branch_ids,
+            existing_by_code,
+            existing_by_name,
+        )
+        if pack_accounts_to_create:
+            await accounts_repo.create_accounts_batch(pack_accounts_to_create)
+

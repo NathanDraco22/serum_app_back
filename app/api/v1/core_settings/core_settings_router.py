@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, BackgroundTasks, Depends
 
 from serum.repos.v1.core_settings import (
     CoreSettingInDb,
@@ -17,8 +17,13 @@ core_settings_router = APIRouter(
 
 
 @core_settings_router.post("")
-async def create_core_setting(body: CreateCoreSetting) -> DecodedCoreSetting:
-    return await core_settings_controller.create_core_setting(body)
+async def create_core_setting(
+    body: CreateCoreSetting,
+    background_tasks: BackgroundTasks,
+) -> DecodedCoreSetting:
+    return await core_settings_controller.create_core_setting(
+        body, background_tasks=background_tasks
+    )
 
 
 @core_settings_router.get("")

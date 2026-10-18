@@ -39,6 +39,29 @@ class LabTestsRepository:
         )
         return LabTestInDb.model_validate(result)
 
+    async def create_lab_tests_batch(
+        self, create_lab_tests: list[CreateLabTest], session: Any = None
+    ) -> list[LabTestInDb]:
+        now = TimeTools.get_now_in_milliseconds()
+        tests_in_db: list[LabTestInDb] = []
+        docs_to_insert: list[dict[str, Any]] = []
+
+        for item in create_lab_tests:
+            c_data = item.model_dump()
+            c_data.pop("branchId", None)
+            new_test = LabTestInDb(
+                id=UuidTool.generate_uuid(),
+                createdAt=now,
+                **c_data,
+            )
+            doc = new_test.model_dump()
+            doc["searchPrefixes"] = generate_prefixes(new_test.name)
+            tests_in_db.append(new_test)
+            docs_to_insert.append(doc)
+
+        await self.lab_tests_ds.create_lab_tests_batch(docs_to_insert, session=session)
+        return tests_in_db
+
     async def get_all_lab_tests(
         self, branchId: str | None = None, branch_id: str | None = None
     ) -> list[LabTestInDb]:

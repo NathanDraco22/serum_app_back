@@ -1,3 +1,4 @@
+import asyncio
 import os
 from typing import Any, Literal
 
@@ -55,13 +56,15 @@ class MongoService:
             PatientsCollection,
         )
 
-        await CountersCollection.get_instance(nickname).create_indexes()
-        await DoctorsCollection.get_instance(nickname).create_indexes()
-        await PatientsCollection.get_instance(nickname).create_indexes()
-        await LabTestsCollection.get_instance(nickname).create_indexes()
-        await LabTestAccountsCollection.get_instance(nickname).create_indexes()
-        await ApiKeysCollection.get_instance(nickname).create_indexes()
-        await ensure_reports_indexes(nickname=nickname)
+        await asyncio.gather(
+            CountersCollection.get_instance(nickname).create_indexes(),
+            DoctorsCollection.get_instance(nickname).create_indexes(),
+            PatientsCollection.get_instance(nickname).create_indexes(),
+            LabTestsCollection.get_instance(nickname).create_indexes(),
+            LabTestAccountsCollection.get_instance(nickname).create_indexes(),
+            ApiKeysCollection.get_instance(nickname).create_indexes(),
+            ensure_reports_indexes(nickname=nickname),
+        )
 
     async def create_indexes(self):
         await self.create_tenant_indexes(None)

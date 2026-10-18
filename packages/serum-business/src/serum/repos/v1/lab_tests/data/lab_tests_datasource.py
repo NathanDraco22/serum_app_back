@@ -11,6 +11,13 @@ class LabTestsDataSource:
         await collection.create_lab_test(lab_test, session=session)
         return lab_test
 
+    async def create_lab_tests_batch(
+        self, lab_tests: list[dict[str, Any]], session: Any = None
+    ) -> list[dict[str, Any]]:
+        collection = LabTestsCollection.get_instance()
+        await collection.create_lab_tests_batch(lab_tests, session=session)
+        return lab_tests
+
     async def get_all_lab_tests(
         self, branchId: str | None = None, branch_id: str | None = None
     ) -> list[dict[str, Any]]:

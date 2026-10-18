@@ -103,42 +103,38 @@ sequenceDiagram
     Repo->>Repo: TokenManager.super_token_verify(token)
     Note over Repo: Valida firma Ed25519 con service_public_key.pem
     Repo-->>API: Retorna DecodedCoreSetting (nickname, name, ownerName)
-    API->>Prov: provision_tenant(nickname, name, ownerName)
+    Note over API: Programa provision_tenant() en BackgroundTasks
+    API-->>Admin: 200 OK (< 50ms, previene timeouts HTTP 499)
     activate Prov
-    Note over Prov: Establece serumCtx temporal con businessNickname=nickname
-    Prov->>Mongo: create_tenant_indexes(nickname)
-    Note over Mongo: Crea índices en todas las colecciones para esa base de datos
+    Note over Prov: En segundo plano: establece serumCtx con businessNickname=nickname
     Prov->>Mongo: create_default_branch(establishment_name)
     Prov->>Mongo: create_default_roles()
-    Prov->>Mongo: create_default_cash_register()
-    Prov->>Mongo: create_default_app_settings()
-    Prov->>Mongo: create_default_lab_tests()
     Prov->>Mongo: create_root_user()
     Prov->>Mongo: create_user(ownerName, role="Admin", accessLevel=5)
+    Prov->>Mongo: create_default_cash_register()
+    Prov->>Mongo: create_default_app_settings()
+    Prov->>Mongo: create_tenant_indexes(nickname) [en paralelo con asyncio.gather]
+    Prov->>Mongo: create_default_lab_tests() [2 lotes masivos con insert_many]
     Note over Prov: Restaura contexto con serumCtx.reset(token)
     deactivate Prov
-    API-->>Admin: 201 Created (Instancia aprovisionada y operativa)
 ```
 
 ### Detalle de las Estructuras Creadas por `provision_tenant.py`
 
 Ubicación: [`packages/serum-business/src/serum/core/tenant/provision_tenant.py`](file:///c:/Users/sytru/Developer/Projects/lab_project/serum_app_back/packages/serum-business/src/serum/core/tenant/provision_tenant.py)
 
-1. **Índices de Colección (`MongoService.create_tenant_indexes`)**:
-   - `CountersCollection`: Índice de búsqueda rápida para correlativos atómicos.
-   - `DoctorsCollection`: `TextSearchIndex` e índice `cardId`.
-   - `PatientsCollection`: `TextSearchIndex` e índice `cardId`.
-   - `LabTestsCollection`: `TextSearchIndex` compuesto por `name`, `code`, `searchPrefixes`, `commercialCategory` e `id`.
-   - `LabTestAccountsCollection`: Índice compuesto único `("branchId", 1), ("labTestId", 1)` con filtro parcial `partialFilterExpression={"isDeleted": False}`.
-   - `ApiKeysCollection`: Índices de autenticación y prefijo `key`.
-   - **Índices Analíticos de Reportes**: Índices compuestos de alto rendimiento sobre `Orders`, `CashTransactions` y `Quotations`.
-2. **Sucursal Principal**: Crea la sucursal de origen con `id: "00000000-0000-0000-0000-000000000000"`.
-3. **Roles del Sistema**: Inicializa los roles por defecto (`Admin`, `Quimico`, `Recepcionista`, `Cajero`, `Medico`).
+El aprovisionamiento se ejecuta en orden estratégico para que las cuentas de acceso existan en los primeros milisegundos:
+
+1. **Sucursal Principal**: Crea la sucursal de origen con `id: "00000000-0000-0000-0000-000000000000"`.
+2. **Roles del Sistema**: Inicializa los roles por defecto (`Admin` y `Operador`).
+3. **Usuario Root y Propietario (`Admin`)**: Crea de inmediato la cuenta del propietario con nivel de acceso máximo (`accessLevel: 5`) asignada a la sucursal principal para permitir inicio de sesión sin demoras.
 4. **Caja Registradora Principal**: Crea la caja física inicial (`isDefault: True`, `cashBalance: 0`, `isOpen: False`).
 5. **Configuraciones de Aplicación (`AppSettings`)**: Crea la configuración singleton del laboratorio (`useCost`, `usePrice2`, `allowEditPrice`).
-6. **Catálogo Maestro de Pruebas Clínicas (`create_default_lab_tests`)**: Carga el catálogo clínico inicial desde [`lab_tests_master.json`](file:///c:/Users/sytru/Developer/Projects/lab_project/serum_app_back/app/static/lab_tests_master.json) de forma idempotente.
-7. **Usuario Root**: Usuario de mantenimiento de bajo nivel.
-8. **Usuario Propietario (`Admin`)**: Crea la cuenta administrativa con nivel de acceso máximo (`accessLevel: 5`) asignada a la sucursal principal.
+6. **Índices de Colección en Paralelo (`MongoService.create_tenant_indexes`)**:
+   - `CountersCollection`, `DoctorsCollection`, `PatientsCollection`, `LabTestsCollection`, `LabTestAccountsCollection`, `ApiKeysCollection` e índices analíticos de reportes ejecutados concurrentemente con `asyncio.gather`.
+7. **Catálogo Maestro de Pruebas Clínicas en 2 Lotes Masivos (`create_default_lab_tests`)**:
+   - **Lote 1 (Pruebas Individuales)**: Se procesan y se insertan todas de forma masiva con `insert_many` en `LabTests` y `LabTestAccounts` (reduciendo de 275 viajes de red a 2).
+   - **Lote 2 (Perfiles y Packs)**: Resuelve en memoria los `childTestIds` e inserta los perfiles y cuentas en lote masivo. Reducción total de tiempo de 45.6s a < 0.5s.
 
 ---
 

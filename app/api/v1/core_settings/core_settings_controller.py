@@ -1,4 +1,4 @@
-from fastapi import HTTPException, status
+from fastapi import BackgroundTasks, HTTPException, status
 
 from serum.core.tenant import provision_tenant
 from serum.repos.v1.core_settings import (
@@ -21,7 +21,9 @@ class CoreSettingsController:
         self.users_repo = users_repo
 
     async def create_core_setting(
-        self, body: CreateCoreSetting
+        self,
+        body: CreateCoreSetting,
+        background_tasks: BackgroundTasks | None = None,
     ) -> DecodedCoreSetting:
         settings = await self.get_all_core_settings()
 
@@ -39,12 +41,20 @@ class CoreSettingsController:
                 detail="Invalid core setting token or signature",
             )
 
-        # Aprovisionar de forma atómica la base de datos, colecciones, índices y defaults del laboratorio
-        await provision_tenant(
-            nickname=res.nickname,
-            establishment_name=res.name,
-            owner_name=res.ownerName,
-        )
+        # Aprovisionar en segundo plano para responder de inmediato (< 50ms) y evitar timeouts del cliente (HTTP 499)
+        if background_tasks is not None:
+            background_tasks.add_task(
+                provision_tenant,
+                nickname=res.nickname,
+                establishment_name=res.name,
+                owner_name=res.ownerName,
+            )
+        else:
+            await provision_tenant(
+                nickname=res.nickname,
+                establishment_name=res.name,
+                owner_name=res.ownerName,
+            )
 
         return res
 

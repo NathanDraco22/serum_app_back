@@ -73,6 +73,14 @@ class LabTestsCollection(BaseMongoCollection):
         collection = self._collection
         await collection.insert_one(lab_test, session=session)
 
+    async def create_lab_tests_batch(
+        self, lab_tests: list[dict[str, Any]], session: Any = None
+    ) -> None:
+        if not lab_tests:
+            return
+        collection = self._collection
+        await collection.insert_many(lab_tests, session=session)
+
     async def fetch_all_lab_tests(
         self, branchId: str | None = None, branch_id: str | None = None
     ) -> list[dict[str, Any]]:
