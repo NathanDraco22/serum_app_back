@@ -6,6 +6,7 @@ WORKDIR /home/server
 
 RUN pip install uv
 
+COPY packages packages
 COPY pyproject.toml .
 COPY uv.lock .
 
