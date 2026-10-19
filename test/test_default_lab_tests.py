@@ -34,7 +34,11 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
         "COL-ORI", "ASP-ORI", "SED-ORI", "DEN-ORI", "PH-ORI", "LEU-ORI",
         "GLU-ORI", "PROT-ORI", "CET-ORI", "BIL-ORI", "SANG-ORI", "NIT-ORI",
         "URO-ORI", "CEL-EPI", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
-        "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI", "EGO"
+        "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI", "EGO",
+        # Lote 3: Coprología y Serología
+        "COL-HEC", "CONS-HEC", "MUC-HEC", "PH-HEC", "PROT-HEC", "HB-HEC",
+        "PAR-HEC", "COG-HEC", "LEV-HEC", "FLOR-BAC", "PLA-ALIM", "EGH",
+        "HP-HEC", "PMN-NEUT", "MN-EOS", "AZUC-RED", "TW-HEC"
     ]
 
     for code in expected_codes:
@@ -71,6 +75,25 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
         "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI"
     ]
     assert set(pack_ego.childTestIds) == {tests_by_code[c].id for c in expected_ego_codes}
+
+    # 3.4 Examen General de Heces
+    pack_egh = tests_by_code["EGH"]
+    assert pack_egh.isPack is True
+    assert len(pack_egh.childTestIds) == 11
+    expected_egh_codes = [
+        "COL-HEC", "CONS-HEC", "MUC-HEC", "PH-HEC", "PROT-HEC", "HB-HEC",
+        "PAR-HEC", "COG-HEC", "LEV-HEC", "FLOR-BAC", "PLA-ALIM"
+    ]
+    assert set(pack_egh.childTestIds) == {tests_by_code[c].id for c in expected_egh_codes}
+
+    # 3.5 Tinción de Wright en Heces
+    pack_tw = tests_by_code["TW-HEC"]
+    assert pack_tw.isPack is True
+    assert len(pack_tw.childTestIds) == 6
+    expected_tw_codes = [
+        "COL-HEC", "CONS-HEC", "MUC-HEC", "PMN-NEUT", "MN-EOS", "AZUC-RED"
+    ]
+    assert set(pack_tw.childTestIds) == {tests_by_code[c].id for c in expected_tw_codes}
 
     # 4. Validar existencia de cuentas comerciales para ORIGIN_BRANCH
     for code in expected_codes:

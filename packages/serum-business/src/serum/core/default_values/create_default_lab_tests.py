@@ -3,6 +3,8 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from pydantic import BaseModel, ConfigDict
+
 from serum.core.default_values.create_default_branch import ORIGIN_BRANCH_ID
 from serum.repos.v1._shared_models import ReferenceValue
 from serum.repos.v1.branches import BranchesRepository
@@ -19,6 +21,19 @@ from serum.repos.v1.lab_tests import (
 )
 
 logger = logging.getLogger("serum.default_values")
+
+
+class ImportCatalogResult(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    success: bool = True
+    message: str = "Catálogo por defecto importado exitosamente"
+    atomicCreated: int = 0
+    packsCreated: int = 0
+    accountsCreated: int = 0
+    alreadyExisting: int = 0
+    totalProcessed: int = 0
+
 
 
 def _normalize_gender(g: str) -> str:
@@ -107,7 +122,9 @@ def _register_and_build_accounts(
     return accounts
 
 
-async def create_default_lab_tests(json_path: Path | None = None) -> None:
+async def create_default_lab_tests(
+    json_path: Path | None = None,
+) -> ImportCatalogResult:
     """Carga e inicializa el catálogo de LabTests desde el archivo estático si no existen.
     
     Procesa en 2 fases:
@@ -118,17 +135,18 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
         json_path = _resolve_static_file_path()
 
     if json_path is None or not json_path.exists():
-        logger.warning(
-            f"No se encontró el archivo estático lab_tests_master.json ({json_path})"
-        )
-        return
+        msg = f"No se encontró el archivo estático lab_tests_master.json ({json_path})"
+        logger.warning(msg)
+        return ImportCatalogResult(success=False, message=msg)
 
     try:
         with open(json_path, "r", encoding="utf-8-sig") as f:
             catalog_items: list[dict[str, Any]] = json.load(f)
     except Exception as e:
-        logger.error(f"Error al leer {json_path}: {e}")
-        return
+        msg = f"Error al leer {json_path}: {e}"
+        logger.error(msg)
+        return ImportCatalogResult(success=False, message=msg)
+
 
     lab_tests_repo = LabTestsRepository.get_instance()
     accounts_repo = LabTestAccountsRepository.get_instance()
@@ -153,6 +171,11 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
     queued_codes: set[str] = set()
     queued_names: set[str] = set()
 
+    already_existing_count = 0
+    total_accounts_created = 0
+    created_atomics_count = 0
+    created_packs_count = 0
+
     atomic_items = [item for item in catalog_items if not item.get("isPack", False)]
     pack_items = [item for item in catalog_items if item.get("isPack", False)]
 
@@ -169,6 +192,7 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
             or (normalized_name in existing_by_name or normalized_name in queued_names)
         )
         if already_exists:
+            already_existing_count += 1
             target_test = (
                 existing_by_code.get(code)
                 if code
@@ -215,6 +239,7 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
 
     if atomic_dtos:
         created_atomics = await lab_tests_repo.create_lab_tests_batch(atomic_dtos)
+        created_atomics_count = len(created_atomics)
         accounts_to_create = _register_and_build_accounts(
             created_atomics,
             active_branch_ids,
@@ -223,6 +248,7 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
         )
         if accounts_to_create:
             await accounts_repo.create_accounts_batch(accounts_to_create)
+            total_accounts_created += len(accounts_to_create)
 
     # --- FASE 2: Preparar e insertar Packs / Perfiles en lote ---
     pack_dtos: list[CreateLabTest] = []
@@ -271,8 +297,9 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
                     queued_names.add(create_dto.name.strip().lower())
             except Exception as e:
                 logger.error(f"Error al parsear pack por defecto '{name}': {e}")
-        elif existing_pack is not None:
-            if not existing_pack.childTestIds and child_ids:
+        else:
+            already_existing_count += 1
+            if existing_pack is not None and not existing_pack.childTestIds and child_ids:
                 try:
                     await lab_tests_repo.update_lab_test_by_id(
                         existing_pack.id,
@@ -285,6 +312,7 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
 
     if pack_dtos:
         created_packs = await lab_tests_repo.create_lab_tests_batch(pack_dtos)
+        created_packs_count = len(created_packs)
         pack_accounts_to_create = _register_and_build_accounts(
             created_packs,
             active_branch_ids,
@@ -293,4 +321,15 @@ async def create_default_lab_tests(json_path: Path | None = None) -> None:
         )
         if pack_accounts_to_create:
             await accounts_repo.create_accounts_batch(pack_accounts_to_create)
+            total_accounts_created += len(pack_accounts_to_create)
+
+    return ImportCatalogResult(
+        success=True,
+        message="Catálogo por defecto importado exitosamente",
+        atomicCreated=created_atomics_count,
+        packsCreated=created_packs_count,
+        accountsCreated=total_accounts_created,
+        alreadyExisting=already_existing_count,
+        totalProcessed=len(catalog_items),
+    )
 

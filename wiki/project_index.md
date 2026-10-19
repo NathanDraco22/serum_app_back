@@ -97,6 +97,8 @@ serum_app_back/
 | **Reports** | `reports/` | N/A (Agregaciones) | Varias colecciones | **Business Intelligence**: 5 pipelines de agregación nativos en MongoDB (Financiero, Top Médicos, Demanda de Exámenes, Cuentas por Cobrar y Auditoría de Arqueos). Ver [Reportes Analíticos](reglas_negocio/reportes_analiticos.md). |
 | **ApiKeys** | `api_keys/` | `api_keys/` | `api_keys_collection.py` | **Integraciones y Acceso Externo**: Llaves prefijadas `srm_live_...`, enmascaramiento, scopes (`bi:read`), soft delete y validación unificada en `app_middleware`. |
 | **AppSettings** | `app_settings/` | `app_settings/` | `app_settings_collection.py` | **Configuración Global del Sistema**: Parámetros operativos y comerciales (`useCost`, `usePrice2`, `allowEditPrice`). Valores por defecto en `False`, inicialización en lifespan y caché en memoria con `AppSettingsTool`. Ver [Configuración del Sistema](reglas_negocio/configuracion_sistema.md). |
+| **Imports** | `imports/` | N/A (`serum.core.default_values`) | `lab_tests_collection.py`, `lab_test_accounts_collection.py` | **Importaciones del Sistema**: `POST /imports/default-catalog` y alias `/imports/lab-tests` para inicializar o re-ejecutar la carga del catálogo maestro de pruebas clínicas (`lab_tests_master.json`) en el tenant activo, con seguridad híbrida (Super Token o JWT Admin con `accessLevel >= 4`) y respuesta estructurada `ImportCatalogResult`. |
+
 
 
 ---

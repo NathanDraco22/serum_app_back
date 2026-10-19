@@ -4,10 +4,10 @@ from serum.core.default_values import (
     create_default_app_settings,
     create_default_branch,
     create_default_cash_register,
-    create_default_lab_tests,
     create_default_roles,
     create_root_user,
 )
+
 from serum.repos.v1.users import CreateUser, UsersRepository
 from serum.serum_config import SerumContext, serumCtx
 from serum.services.mongo_service import MongoService
@@ -22,15 +22,16 @@ async def provision_tenant(
     owner_password: str = "12345",
 ) -> None:
     """
-    Aprovisiona de forma atómica una nueva base de datos para un laboratorio (tenant):
+    Aprovisiona de forma atómica y ultra ligera una nueva base de datos para un laboratorio (tenant):
     1. Establece el contexto aislado del tenant.
-    2. Crea todos los índices en todas las colecciones para esa base de datos.
-    3. Inicializa la sucursal principal con el nombre del establecimiento.
-    4. Inicializa los roles del sistema.
-    5. Inicializa la caja registradora principal.
-    6. Inicializa las configuraciones de la aplicación (AppSettings).
-    7. Inicializa el catálogo base de pruebas de laboratorio.
-    8. Crea el usuario Root y el usuario Administrador del propietario.
+    2. Crea la sucursal de origen.
+    3. Inicializa los roles del sistema.
+    4. Crea el usuario Root del sistema.
+    5. Crea el usuario Administrador del propietario (si se especificó).
+    6. Inicializa la caja registradora principal.
+    7. Inicializa las configuraciones de la aplicación (AppSettings).
+    8. Crea todos los índices en todas las colecciones para esa base de datos.
+    Nota: La importación del catálogo maestro se realiza bajo demanda vía POST /api/v1/imports/default-catalog.
     """
     token = serumCtx.set(SerumContext(businessNickname=nickname))
     try:
@@ -67,8 +68,6 @@ async def provision_tenant(
 
         # 7. Crear todos los índices de colecciones y reportes en paralelo
         await MongoService().create_tenant_indexes(nickname=nickname)
-
-        # 8. Catálogo base de pruebas clínicas (en lote masivo)
-        await create_default_lab_tests()
     finally:
         serumCtx.reset(token)
+

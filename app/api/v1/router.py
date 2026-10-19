@@ -11,6 +11,7 @@ from .cash_shifts.cash_shifts_router import cash_shifts_router
 from .cash_transactions.cash_transactions_router import cash_transactions_router
 from .core_settings.core_settings_router import core_settings_router
 from .doctors.doctors_router import doctors_router
+from .imports.imports_router import imports_router
 from .lab_test_accounts.lab_test_accounts_router import lab_test_accounts_router
 from .lab_tests.lab_tests_router import lab_tests_router
 from .orders.orders_router import orders_router
@@ -36,6 +37,7 @@ router_v1.include_router(cash_shifts_router, prefix='/cash-shifts')
 router_v1.include_router(cash_transactions_router, prefix="/cash-transactions")
 router_v1.include_router(core_settings_router, prefix='/core-settings')
 router_v1.include_router(doctors_router, prefix="/doctors")
+router_v1.include_router(imports_router, prefix="/imports")
 router_v1.include_router(lab_test_accounts_router, prefix="/lab-test-accounts")
 router_v1.include_router(lab_tests_router, prefix="/lab-tests")
 router_v1.include_router(orders_router, prefix="/orders")
@@ -45,4 +47,5 @@ router_v1.include_router(receipts_router, prefix='/receipts')
 router_v1.include_router(reports_router, prefix="/reports")
 router_v1.include_router(roles_router, prefix='/roles')
 router_v1.include_router(users_router, prefix="/users")
+
 

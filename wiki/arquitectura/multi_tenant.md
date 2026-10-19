@@ -132,11 +132,11 @@ El aprovisionamiento se ejecuta en orden estratégico para que las cuentas de ac
 5. **Configuraciones de Aplicación (`AppSettings`)**: Crea la configuración singleton del laboratorio (`useCost`, `usePrice2`, `allowEditPrice`).
 6. **Índices de Colección en Paralelo (`MongoService.create_tenant_indexes`)**:
    - `CountersCollection`, `DoctorsCollection`, `PatientsCollection`, `LabTestsCollection`, `LabTestAccountsCollection`, `ApiKeysCollection` e índices analíticos de reportes ejecutados concurrentemente con `asyncio.gather`.
-7. **Catálogo Maestro de Pruebas Clínicas en 2 Lotes Masivos (`create_default_lab_tests`)**:
-   - **Lote 1 (Pruebas Individuales)**: Se procesan y se insertan todas de forma masiva con `insert_many` en `LabTests` y `LabTestAccounts` (reduciendo de 275 viajes de red a 2).
-   - **Lote 2 (Perfiles y Packs)**: Resuelve en memoria los `childTestIds` e inserta los perfiles y cuentas en lote masivo. Reducción total de tiempo de 45.6s a < 0.5s.
+7. **Catálogo de Pruebas Clínicas (Desacoplado 100% bajo demanda)**:
+   - Los tenants nacen limpios (0 pruebas) en < 100ms. La importación o actualización del catálogo maestro (`lab_tests_master.json`) se realiza bajo demanda vía `POST /api/v1/imports/default-catalog` (o alias `/api/v1/imports/lab-tests`), procesando pruebas individuales, perfiles/packs y cuentas comerciales con inserciones masivas en 2 lotes (`insert_many`).
 
 ---
+
 
 ## 4. Flujo 2: Resolución de Peticiones en Tiempo de Ejecución
 
