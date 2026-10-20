@@ -1,4 +1,5 @@
 from fastapi import HTTPException, Request, status
+from serum.serum_config import serumCtx
 
 from serum.core.exceptions import OrderCannotBeDeleted, OrderIsBlocked
 from serum.core.order_payment.order_payment import OrderPayIntent
@@ -32,6 +33,11 @@ class OrdersController:
     async def get_all_orders(
         self, query_params: OrderFilterParams | None = None
     ) -> ListResponse[OrderInDb]:
+        if query_params is None:
+            query_params = OrderFilterParams()
+        if query_params.branchId is None and serumCtx.get().branchId:
+            query_params.branchId = serumCtx.get().branchId
+
         orders = await self.orders_repo.get_all_orders(query_params)
         return ListResponse(count=len(orders), data=orders)
 

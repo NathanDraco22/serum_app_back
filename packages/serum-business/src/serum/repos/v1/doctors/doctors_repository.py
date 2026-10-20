@@ -33,8 +33,10 @@ class DoctorsRepository:
 
         return DoctorInDb.model_validate(result)
 
-    async def get_all_doctors(self) -> list[DoctorInDb]:
-        results = await self.doctors_ds.get_all_doctors()
+    async def get_all_doctors(
+        self, origin_branch: str | None = None
+    ) -> list[DoctorInDb]:
+        results = await self.doctors_ds.get_all_doctors(origin_branch=origin_branch)
         return [DoctorInDb.model_validate(r) for r in results]
 
     async def get_doctor_by_id(self, doctor_id: str) -> DoctorInDb | None:
@@ -49,8 +51,12 @@ class DoctorsRepository:
             return None
         return DoctorInDb.model_validate(result)
 
-    async def search_doctor_by_text(self, text_query: str) -> list[DoctorInDb]:
-        results = await self.doctors_ds.search_doctor_by_text(text_query)
+    async def search_doctor_by_text(
+        self, text_query: str, origin_branch: str | None = None
+    ) -> list[DoctorInDb]:
+        results = await self.doctors_ds.search_doctor_by_text(
+            text_query, origin_branch=origin_branch
+        )
         return [DoctorInDb.model_validate(r) for r in results]
 
     async def update_doctor_by_id(

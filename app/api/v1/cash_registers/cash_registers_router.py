@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from serum.repos.v1.cash_registers import (
     CashRegisterInDb,
     CreateCashRegister,
@@ -25,8 +25,10 @@ async def create_cash_register(body: CreateCashRegister) -> CashRegisterInDb:
 
 
 @cash_registers_router.get("")
-async def get_all_cash_registers() -> ListResponse[CashRegisterInDb]:
-    return await cash_registers_controller.get_all_cash_registers()
+async def get_all_cash_registers(
+    branch_id: str | None = Query(None),
+) -> ListResponse[CashRegisterInDb]:
+    return await cash_registers_controller.get_all_cash_registers(branch_id=branch_id)
 
 
 @cash_registers_router.get("/{cash_register_id}")

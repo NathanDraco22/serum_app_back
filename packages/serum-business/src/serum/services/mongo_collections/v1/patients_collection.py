@@ -15,9 +15,15 @@ class PatientsCollection(BaseMongoCollection):
         collection = self._collection
         await collection.insert_one(patient)
 
-    async def fetch_all_patients(self) -> list[dict[str, Any]]:
+    async def fetch_all_patients(
+        self, origin_branch: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find({"isDeleted": False})
+        query: dict[str, Any] = {"isDeleted": False}
+        if origin_branch:
+            query["originBranch"] = origin_branch
+
+        cursor = collection.find(query)
 
         result = await cursor.to_list(length=None)
         await cursor.close()
@@ -34,20 +40,26 @@ class PatientsCollection(BaseMongoCollection):
         result = await collection.find_one({"cardId": card_id, "isDeleted": False})
         return result
 
-    async def search_patient_by_text(self, text_query: str) -> list[dict[str, Any]]:
+    async def search_patient_by_text(
+        self, text_query: str, origin_branch: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = self._collection
         safe_query = re.escape(text_query)
 
+        match_criteria: dict[str, Any] = {
+            "$text": {
+                "$search": safe_query,
+                "$caseSensitive": False,
+                "$diacriticSensitive": False,
+            },
+            "isDeleted": False,
+        }
+        if origin_branch:
+            match_criteria["originBranch"] = origin_branch
+
         pipeline = [
             {
-                "$match": {
-                    "$text": {
-                        "$search": safe_query,
-                        "$caseSensitive": False,
-                        "$diacriticSensitive": False,
-                    },
-                    "isDeleted": False,
-                }
+                "$match": match_criteria
             },
             {
                 "$addFields": {

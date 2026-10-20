@@ -33,8 +33,10 @@ class PatientsRepository:
 
         return PatientInDb.model_validate(result)
 
-    async def get_all_patients(self) -> list[PatientInDb]:
-        results = await self.patients_ds.get_all_patients()
+    async def get_all_patients(
+        self, origin_branch: str | None = None
+    ) -> list[PatientInDb]:
+        results = await self.patients_ds.get_all_patients(origin_branch=origin_branch)
         return [PatientInDb.model_validate(r) for r in results]
 
     async def get_patient_by_id(self, patient_id: str) -> PatientInDb | None:
@@ -49,8 +51,12 @@ class PatientsRepository:
             return None
         return PatientInDb.model_validate(result)
 
-    async def search_patient_by_text(self, text_query: str) -> list[PatientInDb]:
-        results = await self.patients_ds.search_patient_by_text(text_query)
+    async def search_patient_by_text(
+        self, text_query: str, origin_branch: str | None = None
+    ) -> list[PatientInDb]:
+        results = await self.patients_ds.search_patient_by_text(
+            text_query, origin_branch=origin_branch
+        )
         return [PatientInDb.model_validate(r) for r in results]
 
     async def update_patient_by_id(

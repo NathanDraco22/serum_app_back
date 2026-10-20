@@ -35,8 +35,10 @@ class CashRegistersRepository:
         )
         return CashRegisterInDb.model_validate(result)
 
-    async def get_all_cash_registers(self) -> list[CashRegisterInDb]:
-        results = await self.cash_registers_ds.get_all_cash_registers()
+    async def get_all_cash_registers(
+        self, branch_id: str | None = None
+    ) -> list[CashRegisterInDb]:
+        results = await self.cash_registers_ds.get_all_cash_registers(branch_id=branch_id)
         return [CashRegisterInDb.model_validate(r) for r in results]
 
     async def get_cash_register_by_id(

@@ -21,9 +21,15 @@ class CashRegistersCollection(BaseMongoCollection):
             upsert=True,
         )
 
-    async def fetch_all_cash_registers(self) -> list[dict[str, Any]]:
+    async def fetch_all_cash_registers(
+        self, branch_id: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find({"isDeleted": {"$ne": True}})
+        query: dict[str, Any] = {"isDeleted": {"$ne": True}}
+        if branch_id:
+            query["branchId"] = branch_id
+
+        cursor = collection.find(query)
 
         result = await cursor.to_list(length=None)
         await cursor.close()

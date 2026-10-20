@@ -9,9 +9,11 @@ class DoctorsDataSource:
         await collection.create_doctor(doctor)
         return doctor
 
-    async def get_all_doctors(self) -> list[dict[str, Any]]:
+    async def get_all_doctors(
+        self, origin_branch: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = DoctorsCollection.get_instance()
-        return await collection.fetch_all_doctors()
+        return await collection.fetch_all_doctors(origin_branch=origin_branch)
 
     async def get_doctor_by_id(self, doctor_id: str) -> dict[str, Any] | None:
         collection = DoctorsCollection.get_instance()
@@ -21,9 +23,13 @@ class DoctorsDataSource:
         collection = DoctorsCollection.get_instance()
         return await collection.get_doctor_by_card_id(card_id)
 
-    async def search_doctor_by_text(self, text_query: str) -> list[dict[str, Any]]:
+    async def search_doctor_by_text(
+        self, text_query: str, origin_branch: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = DoctorsCollection.get_instance()
-        return await collection.search_doctor_by_text(text_query)
+        return await collection.search_doctor_by_text(
+            text_query, origin_branch=origin_branch
+        )
 
     async def update_doctor_by_id(
         self, doctor_id: str, doctor: dict[str, Any]

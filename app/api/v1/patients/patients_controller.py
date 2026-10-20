@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from serum.serum_config import serumCtx
 
 from serum.repos.v1.patients import (
     CreatePatient,
@@ -23,12 +24,22 @@ class PatientsController:
                 )
         return await self.patients_repo.create_patient(body)
 
-    async def get_all_patients(self) -> ListResponse[PatientInDb]:
-        patients = await self.patients_repo.get_all_patients()
+    async def get_all_patients(
+        self, origin_branch: str | None = None
+    ) -> ListResponse[PatientInDb]:
+        effective_branch = origin_branch or serumCtx.get().branchId or None
+        patients = await self.patients_repo.get_all_patients(
+            origin_branch=effective_branch
+        )
         return ListResponse(count=len(patients), data=patients)
 
-    async def search_patient_by_text(self, text_query: str) -> ListResponse[PatientInDb]:
-        patients = await self.patients_repo.search_patient_by_text(text_query)
+    async def search_patient_by_text(
+        self, text_query: str, origin_branch: str | None = None
+    ) -> ListResponse[PatientInDb]:
+        effective_branch = origin_branch or serumCtx.get().branchId or None
+        patients = await self.patients_repo.search_patient_by_text(
+            text_query, origin_branch=effective_branch
+        )
         return ListResponse(count=len(patients), data=patients)
 
     async def get_patient_by_id(self, patient_id: str) -> PatientInDb:

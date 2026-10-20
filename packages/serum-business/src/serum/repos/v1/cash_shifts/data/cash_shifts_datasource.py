@@ -23,10 +23,10 @@ class CashShiftsDataSource:
         return await collection.fetch_cash_shift_by_id(cash_shift_id)
 
     async def get_active_shift_by_user(
-        self, user_id: str
+        self, user_id: str, branch_id: str | None = None
     ) -> dict[str, Any] | None:
         collection = CashShiftsCollection.get_instance()
-        return await collection.fetch_active_shift_by_user(user_id)
+        return await collection.fetch_active_shift_by_user(user_id, branch_id=branch_id)
 
     async def update_cash_shift_by_id(
         self, cash_shift_id: str, cash_shift: dict[str, Any]

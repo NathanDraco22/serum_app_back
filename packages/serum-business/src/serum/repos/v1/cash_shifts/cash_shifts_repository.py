@@ -133,7 +133,7 @@ class CashShiftsRepository:
 
     async def open_shift(self, create_cash_shift: CreateCashShift) -> CashShiftInDb:
         existing = await self.cash_shifts_ds.get_active_shift_by_user(
-            create_cash_shift.userId
+            create_cash_shift.userId, branch_id=create_cash_shift.branchId
         )
         if existing is not None:
             raise CashShiftAlreadyOpen()
@@ -202,8 +202,12 @@ class CashShiftsRepository:
 
         return CashShiftInDb.model_validate(result)
 
-    async def get_current_shift(self, user_id: str) -> CashShiftInDb | None:
-        result = await self.cash_shifts_ds.get_active_shift_by_user(user_id)
+    async def get_current_shift(
+        self, user_id: str, branch_id: str | None = None
+    ) -> CashShiftInDb | None:
+        result = await self.cash_shifts_ds.get_active_shift_by_user(
+            user_id, branch_id=branch_id
+        )
         if result is None:
             return None
         await self._enrich_shifts([result])

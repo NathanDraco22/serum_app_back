@@ -20,8 +20,13 @@ async def open_cash_shift(body: CreateCashShift) -> CashShiftInDb:
 
 
 @cash_shifts_router.get("/current")
-async def get_current_cash_shift(user_id: str = Query(...)) -> CashShiftInDb | None:
-    return await cash_shifts_controller.get_current_shift(user_id)
+async def get_current_cash_shift(
+    user_id: str = Query(...),
+    branch_id: str | None = Query(None),
+) -> CashShiftInDb | None:
+    return await cash_shifts_controller.get_current_shift(
+        user_id, branch_id=branch_id
+    )
 
 
 @cash_shifts_router.post("/{shift_id}/close")

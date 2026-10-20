@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from serum.serum_config import serumCtx
 
 from serum.repos.v1.cash_shifts import (
     CloseCashShift,
@@ -17,8 +18,13 @@ class CashShiftsController:
     async def open_shift(self, body: CreateCashShift) -> CashShiftInDb:
         return await self.cash_shifts_repo.open_shift(body)
 
-    async def get_current_shift(self, user_id: str) -> CashShiftInDb | None:
-        return await self.cash_shifts_repo.get_current_shift(user_id)
+    async def get_current_shift(
+        self, user_id: str, branch_id: str | None = None
+    ) -> CashShiftInDb | None:
+        effective_branch = branch_id or serumCtx.get().branchId or None
+        return await self.cash_shifts_repo.get_current_shift(
+            user_id, branch_id=effective_branch
+        )
 
     async def close_shift(
         self,
@@ -36,8 +42,9 @@ class CashShiftsController:
         user_id: str | None = None,
         status_filter: str | None = None,
     ) -> ListResponse[CashShiftInDb]:
+        effective_branch = branch_id or serumCtx.get().branchId or None
         cash_shifts = await self.cash_shifts_repo.get_all_cash_shifts(
-            branch_id=branch_id, user_id=user_id, status=status_filter
+            branch_id=effective_branch, user_id=user_id, status=status_filter
         )
         return ListResponse(count=len(cash_shifts), data=cash_shifts)
 

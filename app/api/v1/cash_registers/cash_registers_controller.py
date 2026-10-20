@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from serum.serum_config import serumCtx
 from serum.repos.v1.cash_registers import (
     CashRegisterInDb,
     CashRegistersRepository,
@@ -38,8 +39,13 @@ class CashRegistersController:
     async def create_cash_register(self, body: CreateCashRegister) -> CashRegisterInDb:
         return await self.cash_registers_repo.create_cash_register(body)
 
-    async def get_all_cash_registers(self) -> ListResponse[CashRegisterInDb]:
-        cash_registers = await self.cash_registers_repo.get_all_cash_registers()
+    async def get_all_cash_registers(
+        self, branch_id: str | None = None
+    ) -> ListResponse[CashRegisterInDb]:
+        effective_branch = branch_id or serumCtx.get().branchId or None
+        cash_registers = await self.cash_registers_repo.get_all_cash_registers(
+            branch_id=effective_branch
+        )
         return ListResponse(count=len(cash_registers), data=cash_registers)
 
     async def get_cash_register_by_id(self, cash_register_id: str) -> CashRegisterInDb:

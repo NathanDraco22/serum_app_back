@@ -11,9 +11,11 @@ class CashRegistersDataSource:
         await collection.create_cash_register(cash_register)
         return cash_register
 
-    async def get_all_cash_registers(self) -> list[dict[str, Any]]:
+    async def get_all_cash_registers(
+        self, branch_id: str | None = None
+    ) -> list[dict[str, Any]]:
         collection = CashRegistersCollection.get_instance()
-        return await collection.fetch_all_cash_registers()
+        return await collection.fetch_all_cash_registers(branch_id=branch_id)
 
     async def get_cash_register_by_id(
         self, cash_register_id: str

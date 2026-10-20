@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from serum.repos.v1.patients import CreatePatient, PatientInDb, UpdatePatient
 from responses.v1 import ListResponse
@@ -14,13 +14,20 @@ async def create_patient(body: CreatePatient) -> PatientInDb:
 
 
 @patients_router.get("")
-async def get_all_patients() -> ListResponse[PatientInDb]:
-    return await patients_controller.get_all_patients()
+async def get_all_patients(
+    origin_branch: str | None = Query(None),
+) -> ListResponse[PatientInDb]:
+    return await patients_controller.get_all_patients(origin_branch=origin_branch)
 
 
 @patients_router.get("/search/{text_query}")
-async def search_patient_by_text(text_query: str) -> ListResponse[PatientInDb]:
-    return await patients_controller.search_patient_by_text(text_query)
+async def search_patient_by_text(
+    text_query: str,
+    origin_branch: str | None = Query(None),
+) -> ListResponse[PatientInDb]:
+    return await patients_controller.search_patient_by_text(
+        text_query, origin_branch=origin_branch
+    )
 
 
 @patients_router.get("/{patient_id}")

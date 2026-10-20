@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from serum.serum_config import serumCtx
 
 from serum.core.cash_movements import CashMovementManager
 from serum.repos.v1.cash_movements import (
@@ -30,6 +31,11 @@ class CashMovementsController:
     async def get_all_cash_movements(
         self, query_params: CashMovementFilterParams | None = None
     ) -> ListResponse[CashMovementInDb]:
+        if query_params is None:
+            query_params = CashMovementFilterParams()
+        if query_params.branchId is None and serumCtx.get().branchId:
+            query_params.branchId = serumCtx.get().branchId
+
         cash_movements = await self.cash_movements_repo.get_all_cash_movements(
             query_params
         )

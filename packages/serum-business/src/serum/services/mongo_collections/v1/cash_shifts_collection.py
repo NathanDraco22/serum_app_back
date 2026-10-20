@@ -36,11 +36,19 @@ class CashShiftsCollection(BaseMongoCollection):
         return result
 
     async def fetch_active_shift_by_user(
-        self, user_id: str, session: Any = None
+        self, user_id: str, branch_id: str | None = None, session: Any = None
     ) -> dict[str, Any] | None:
         collection = self._collection
+        query: dict[str, Any] = {
+            "userId": user_id,
+            "status": "OPEN",
+            "isDeleted": {"$ne": True},
+        }
+        if branch_id:
+            query["branchId"] = branch_id
+
         result = await collection.find_one(
-            {"userId": user_id, "status": "OPEN", "isDeleted": {"$ne": True}},
+            query,
             session=session,
         )
         return result

@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from serum.serum_config import serumCtx
 
 from serum.repos.v1.common.filter_params import ReceiptFilterParams
 from serum.repos.v1.receipts import (
@@ -20,6 +21,11 @@ class ReceiptsController:
     async def get_all_receipts(
         self, query_params: ReceiptFilterParams | None = None
     ) -> ListResponse[ReceiptInDb]:
+        if query_params is None:
+            query_params = ReceiptFilterParams()
+        if query_params.branchId is None and serumCtx.get().branchId:
+            query_params.branchId = serumCtx.get().branchId
+
         receipts = await self.receipts_repo.get_all_receipts(query_params)
         return ListResponse(count=len(receipts), data=receipts)
 

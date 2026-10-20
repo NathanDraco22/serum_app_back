@@ -1,3 +1,4 @@
+from serum.serum_config import serumCtx
 from serum.repos.v1.cash_transactions import (
     CashTransactionInDb,
     CashTransactionsDataSource,
@@ -17,8 +18,13 @@ class CashTransactionsController:
         self.cash_transactions_repo = cash_transactions_repo
 
     async def get_all_cash_transactions(
-        self, query_params: CashTransactionFilterParams
+        self, query_params: CashTransactionFilterParams | None = None
     ) -> ListResponse[CashTransactionInDb]:
+        if query_params is None:
+            query_params = CashTransactionFilterParams()
+        if query_params.branchId is None and serumCtx.get().branchId:
+            query_params.branchId = serumCtx.get().branchId
+
         transactions = await self.cash_transactions_repo.get_all_cash_transactions(
             query_params
         )

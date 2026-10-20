@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from serum.serum_config import serumCtx
 from serum.core.lab_tests import LabTestsManager
 from serum.repos.v1.lab_test_accounts import (
     CreateLabTestAccount,
@@ -25,22 +26,25 @@ class LabTestsController:
     async def get_all_lab_tests(
         self, branchId: str | None = None
     ) -> ListResponse[LabTestInDb]:
-        lab_tests = await self.lab_tests_repo.get_all_lab_tests(branchId=branchId)
+        effective_branch = branchId or serumCtx.get().branchId or None
+        lab_tests = await self.lab_tests_repo.get_all_lab_tests(branchId=effective_branch)
         return ListResponse(count=len(lab_tests), data=lab_tests)
 
     async def search_lab_test_by_text(
         self, text_query: str, branchId: str | None = None
     ) -> ListResponse[LabTestInDb]:
+        effective_branch = branchId or serumCtx.get().branchId or None
         lab_tests = await self.lab_tests_repo.search_lab_test_by_text(
-            text_query, branchId=branchId
+            text_query, branchId=effective_branch
         )
         return ListResponse(count=len(lab_tests), data=lab_tests)
 
     async def get_lab_test_by_id(
         self, lab_test_id: str, branchId: str | None = None
     ) -> LabTestInDb:
+        effective_branch = branchId or serumCtx.get().branchId or None
         lab_test = await self.lab_tests_repo.get_lab_test_by_id(
-            lab_test_id, branchId=branchId
+            lab_test_id, branchId=effective_branch
         )
         if lab_test is None:
             raise HTTPException(

@@ -2,6 +2,7 @@ from .base_filter_params import BaseFilterParams
 
 
 class CashTransactionFilterParams(BaseFilterParams):
+    branchId: str | None = None
     shiftId: str | None = None
     registerId: str | None = None
     flowType: str | None = None
