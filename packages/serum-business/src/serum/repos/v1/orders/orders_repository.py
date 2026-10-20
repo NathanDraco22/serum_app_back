@@ -33,6 +33,7 @@ class OrdersRepository:
             patient_doc = await PatientsCollection.get_instance().fetch_patient_by_id(
                 create_order.patientId
             )
+
             if patient_doc:
                 order_dict["patientInfo"] = PatientInfo(
                     name=patient_doc.get("name") or "",
@@ -48,6 +49,7 @@ class OrdersRepository:
             doctor_doc = await DoctorsCollection.get_instance().fetch_doctor_by_id(
                 create_order.doctorId
             )
+
             if doctor_doc:
                 order_dict["doctorInfo"] = DoctorInfo(
                     name=doctor_doc.get("name") or "",
@@ -76,10 +78,14 @@ class OrdersRepository:
                 }
 
         # Calcular totalPrice automáticamente si items tiene elementos y no se envió o es 0
-        if order_dict.get("items") and order_dict.get("totalPrice", 0) <= 0:
-            order_dict["totalPrice"] = sum(
-                item.get("salePriceApplied", 0) for item in order_dict["items"]
-            )
+        items_total = sum(item.get("salePriceApplied", 0) for item in order_dict.get("items", []))
+        services_total = sum(service.get("price", 0) for service in order_dict.get("services", []))
+        if (items_total > 0 or services_total > 0) and order_dict.get("totalPrice", 0) <= 0:
+            order_dict["totalPrice"] = items_total + services_total
+
+
+
+
 
         order_id = await CounterManager().next_order_number()
         new_order = OrderInDb(

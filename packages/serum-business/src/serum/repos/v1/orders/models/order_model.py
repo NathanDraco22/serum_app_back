@@ -34,6 +34,12 @@ class OrderItem(BaseModel):
     priceLevel: int = 1
 
 
+class OrderService(BaseModel):
+    id: str | None = None
+    name: str
+    price: int = 0
+
+
 class OrderApproval(BaseModel):
     requiresApproval: bool = False
     isApproved: bool = False
@@ -55,6 +61,7 @@ class BaseOrder(BaseModel):
     doctorInfo: DoctorInfo | None = None
     quotationId: str | None = None
     items: list[OrderItem] = []
+    services: list[OrderService] = []
     totalPrice: int = 0
     paidAmount: int = 0
     status: OrderStatus = "pending"
@@ -75,6 +82,7 @@ class UpdateOrder(BaseModel):
     doctorInfo: DoctorInfo | None = None
     quotationId: str | None = None
     items: list[OrderItem] | None = None
+    services: list[OrderService] | None = None
     totalPrice: int | None = None
     paidAmount: int | None = None
     status: str | None = None

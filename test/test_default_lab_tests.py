@@ -14,6 +14,7 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
 
     # 1. Iniciar servicios del sistema
     await init_services()
+    await create_default_lab_tests()
 
     lab_tests_repo = LabTestsRepository.get_instance()
     accounts_repo = LabTestAccountsRepository.get_instance()
@@ -38,7 +39,9 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
         # Lote 3: Coprología y Serología
         "COL-HEC", "CONS-HEC", "MUC-HEC", "PH-HEC", "PROT-HEC", "HB-HEC",
         "PAR-HEC", "COG-HEC", "LEV-HEC", "FLOR-BAC", "PLA-ALIM", "EGH",
-        "HP-HEC", "PMN-NEUT", "MN-EOS", "AZUC-RED", "TW-HEC"
+        "HP-HEC", "PMN-NEUT", "MN-EOS", "AZUC-RED", "TW-HEC",
+        # Lote 4: Química clínica (Perfil Lipídico)
+        "COL-T", "TRIG", "HDL", "LDL", "VLDL", "RIESG-COR", "PERF-LIP"
     ]
 
     for code in expected_codes:
@@ -94,6 +97,15 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
         "COL-HEC", "CONS-HEC", "MUC-HEC", "PMN-NEUT", "MN-EOS", "AZUC-RED"
     ]
     assert set(pack_tw.childTestIds) == {tests_by_code[c].id for c in expected_tw_codes}
+
+    # 3.6 Perfil Lipídico
+    pack_lip = tests_by_code["PERF-LIP"]
+    assert pack_lip.isPack is True
+    assert len(pack_lip.childTestIds) == 6
+    expected_lip_codes = [
+        "COL-T", "TRIG", "HDL", "LDL", "VLDL", "RIESG-COR"
+    ]
+    assert set(pack_lip.childTestIds) == {tests_by_code[c].id for c in expected_lip_codes}
 
     # 4. Validar existencia de cuentas comerciales para ORIGIN_BRANCH
     for code in expected_codes:

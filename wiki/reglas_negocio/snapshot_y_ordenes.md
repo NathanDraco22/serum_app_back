@@ -140,3 +140,25 @@ Cuando el usuario que utiliza el sistema ya inició sesión con una cuenta con `
 | **`403 Forbidden`** | Nivel insuficiente | El usuario que intenta autorizar tiene `accessLevel <= 3`. |
 | **`404 Not Found`** | Orden inexistente | No existe una orden con el `order_id` especificado. |
 
+---
+
+## 5. Servicios Adicionales en la Orden (`OrderService`)
+
+Además de las pruebas clínicas y perfiles/packs comercializados, los laboratorios clínicos frecuentemente prestan servicios auxiliares o complementarios durante la atención (por ejemplo: *"Servicio a Domicilio"*, *"Toma Especial de Muestra"*, recargos por traslado o urgencias).
+
+### A. Estructura del Modelo (`OrderService`)
+Cada orden contiene un arreglo `services: list[OrderService]`:
+```python
+class OrderService(BaseModel):
+    id: str | None = None   # Identificador opcional para UI/cliente
+    name: str               # Nombre libre del servicio
+    price: int = 0          # Monto en centavos (ej. 10000 = C$ 100.00)
+```
+
+### B. Consolidación Financiera y Autocalculado
+Al registrarse la orden (`OrdersRepository.create_order`):
+1. Si `totalPrice` no se especifica o es `<= 0`, el backend calcula automáticamente el monto consolidando los ítems de catálogo y los servicios adicionales:
+   $$\text{totalPrice} = \sum(\text{items.salePriceApplied}) + \sum(\text{services.price})$$
+2. **Exención de Bloqueo por Precio**: Los servicios adicionales son rubros libres sin catálogo predeterminado; por ende, **no intervienen en la validación de discrepancia de auditoría** (`has_modified_price`), la cual opera exclusivamente sobre `OrderItem` cuando `originalPrice > 0`.
+
+

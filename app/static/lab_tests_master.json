@@ -1634,5 +1634,178 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null
+  },
+  {
+    "name": "Colesterol Total",
+    "code": "COL-T",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 120.0,
+        "maxValue": 200.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Triglicéridos",
+    "code": "TRIG",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 36.0,
+        "maxValue": 165.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Colesterol HDL",
+    "code": "HDL",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 35.0,
+        "maxValue": 100.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Colesterol LDL",
+    "code": "LDL",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 50.0,
+        "maxValue": 160.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Colesterol VLDL",
+    "code": "VLDL",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 5.0,
+        "maxValue": 45.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Riesgo Coronario",
+    "code": "RIESG-COR",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 3.0,
+        "maxValue": 3.6
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Perfil Lipídico",
+    "code": "PERF-LIP",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "COL-T",
+      "TRIG",
+      "HDL",
+      "LDL",
+      "VLDL",
+      "RIESG-COR"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
   }
 ]
