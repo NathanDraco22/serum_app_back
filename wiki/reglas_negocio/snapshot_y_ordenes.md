@@ -161,4 +161,28 @@ Al registrarse la orden (`OrdersRepository.create_order`):
    $$\text{totalPrice} = \sum(\text{items.salePriceApplied}) + \sum(\text{services.price})$$
 2. **Exención de Bloqueo por Precio**: Los servicios adicionales son rubros libres sin catálogo predeterminado; por ende, **no intervienen en la validación de discrepancia de auditoría** (`has_modified_price`), la cual opera exclusivamente sobre `OrderItem` cuando `originalPrice > 0`.
 
+---
+
+## 6. Observaciones y Notas Clínicas de la Orden (`notes` / `description`)
+
+Para registrar observaciones médicas, incidencias físicas de las muestras (ej. *"Muestra ligeramente hemolizada"*, *"Suero lipémico"*, *"Paciente en ayunas de 12 horas"*) o comentarios diagnósticos emitidos por el bioanalista, el modelo de orden incorpora el campo `notes`:
+
+### A. Estructura y Compatibilidad
+```python
+class BaseOrder(BaseModel):
+    ...
+    notes: str | None = Field(
+        default=None, validation_alias=AliasChoices("notes", "description")
+    )
+```
+- Acepta bidireccionalmente el identificador `notes` o `description`.
+- Se propaga a `CreateOrder` y `UpdateOrder` para permitir su modificación durante la captura de resultados o en ventanilla.
+
+### B. Despliegue en Informes Clínicos
+Cuando una orden tiene registrado el campo `notes`:
+1. **Informe PDF de Resultados (`SingleClinicalOrderTemplate`)**: Se renderiza una sección destacada titulada **"OBSERVACIONES / NOTAS CLÍNICAS"** previa al descargo legal de responsabilidad y la firma del responsable técnico.
+2. **Visor de Resultados (`ClinicalOrderViewer`)**: La previsualización digital refleja fielmente el bloque de observaciones.
+3. **Listado de Órdenes (`OrdersList`)**: Se despliega un badge y vista previa para que el personal visualice la observación sin necesidad de abrir el diálogo.
+
+
 

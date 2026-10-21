@@ -1,5 +1,5 @@
 from typing import Literal
-from pydantic import BaseModel
+from pydantic import AliasChoices, BaseModel, Field
 
 from serum.repos.v1._shared_models import IncludedTest
 from serum.repos.v1.common.models.user_info import UserInfo
@@ -68,6 +68,13 @@ class BaseOrder(BaseModel):
     results: list[OrderTestResult] = []
     isBlocked: bool = False
     approval: OrderApproval | None = None
+    notes: str | None = Field(
+        default=None, validation_alias=AliasChoices("notes", "description")
+    )
+
+    @property
+    def description(self) -> str | None:
+        return self.notes
 
 
 class CreateOrder(BaseOrder):
@@ -89,6 +96,13 @@ class UpdateOrder(BaseModel):
     results: list[OrderTestResult] | None = None
     isBlocked: bool | None = None
     approval: OrderApproval | None = None
+    notes: str | None = Field(
+        default=None, validation_alias=AliasChoices("notes", "description")
+    )
+
+    @property
+    def description(self) -> str | None:
+        return self.notes
 
 
 class OrderInDb(BaseOrder):
