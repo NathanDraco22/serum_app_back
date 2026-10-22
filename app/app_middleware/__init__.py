@@ -4,6 +4,7 @@ from .depends import (
     get_current_api_key,
     get_current_user,
     multi_tenant_middleware,
+    require_root_user,
 )
 
 __all__ = [
@@ -12,4 +13,5 @@ __all__ = [
     "get_current_user",
     "get_current_api_key",
     "multi_tenant_middleware",
+    "require_root_user",
 ]

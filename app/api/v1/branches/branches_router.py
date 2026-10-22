@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
+from app_middleware.depends import require_root_user
 from serum.repos.v1.branches import BranchInDb, CreateBranch, UpdateBranch
 from responses.v1 import ListResponse
 
@@ -8,7 +9,7 @@ from .branches_controller import branches_controller
 branches_router = APIRouter(tags=["branchesV1"])
 
 
-@branches_router.post("")
+@branches_router.post("", dependencies=[Depends(require_root_user)])
 async def create_branch(body: CreateBranch) -> BranchInDb:
     return await branches_controller.create_branch(body)
 

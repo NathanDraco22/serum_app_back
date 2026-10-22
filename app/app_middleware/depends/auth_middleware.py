@@ -1,6 +1,10 @@
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 
+from serum.core.default_values.create_root_user import (
+    ROOT_USER_ID,
+    ROOT_USERNAME,
+)
 from serum.core.security import TokenManager
 from serum.repos.v1.api_keys import ApiKeyInDb, ApiKeysRepository
 from serum.repos.v1.users import UserInDb, UsersRepository
@@ -86,3 +90,28 @@ def get_current_user(req: Request) -> UserInDb | None:
 def get_current_api_key(req: Request) -> ApiKeyInDb | None:
     """Helper para obtener el API Key autenticado desde el estado del request."""
     return getattr(req.state, "api_key", None)
+
+
+async def require_root_user(req: Request) -> UserInDb:
+    """Verifica que el usuario solicitante esté autenticado y sea el usuario root.
+
+    Si no está autenticado o no es root (por ROOT_USER_ID, isInternal o ROOT_USERNAME),
+    rechaza la solicitud con HTTP 403 Forbidden.
+    """
+    await auth_middleware(req)
+    user: UserInDb | None = getattr(req.state, "user", None)
+    if (
+        user is None
+        or (
+            user.id != ROOT_USER_ID
+            and not user.isInternal
+            and user.username.lower() != ROOT_USERNAME.lower()
+            and user.username.lower() != "root"
+        )
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Solo el usuario root puede crear sucursales",
+        )
+    return user
+
