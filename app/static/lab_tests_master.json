@@ -1807,5 +1807,512 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null
+  },
+  {
+    "name": "Aspecto Seminal",
+    "code": "ASP-SEM",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Viscoso opalescente",
+      "Opalescente",
+      "Turbio",
+      "Límpido"
+    ],
+    "expectedQualitativeValue": "Viscoso opalescente"
+  },
+  {
+    "name": "Color Seminal",
+    "code": "COL-SEM",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Blanco grisáceo",
+      "Blanco amarillento",
+      "Amarillento",
+      "Rojizo"
+    ],
+    "expectedQualitativeValue": "Blanco grisáceo"
+  },
+  {
+    "name": "Volumen de la Eyaculación",
+    "code": "VOL-EYAC",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "cc",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 1.5,
+        "maxValue": 5.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Recuento de Espermatozoides",
+    "code": "REC-ESPERM",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "millones/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 15.0,
+        "maxValue": 250.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Porcentaje de Formas Móviles",
+    "code": "PORC-MOV",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 40.0,
+        "maxValue": 100.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Porcentaje de Formas Inmóviles",
+    "code": "PORC-INMOV",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 6570,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 60.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Pus (Semen)",
+    "code": "PUS-SEM",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escaso",
+      "Moderado",
+      "Abundante"
+    ],
+    "expectedQualitativeValue": "No se observó"
+  },
+  {
+    "name": "Sangre (Semen)",
+    "code": "SANG-SEM",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No se observó",
+      "Escaso",
+      "Moderado",
+      "Abundante"
+    ],
+    "expectedQualitativeValue": "No se observó"
+  },
+  {
+    "name": "Anormalidades Morfológicas (Semen)",
+    "code": "ANORM-MORF",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": "No se observaron anormalidades significativas"
+  },
+  {
+    "name": "Espermatograma",
+    "code": "ESP",
+    "commercialCategory": "Microbiología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "ASP-SEM",
+      "COL-SEM",
+      "VOL-EYAC",
+      "REC-ESPERM",
+      "PORC-MOV",
+      "PORC-INMOV",
+      "PUS-SEM",
+      "SANG-SEM",
+      "ANORM-MORF"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Sodio Sérico (Na+)",
+    "code": "NA",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mEq/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 135.0,
+        "maxValue": 145.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Potasio Sérico (K+)",
+    "code": "K",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mEq/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 3.5,
+        "maxValue": 5.1
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Cloro Sérico (Cl-)",
+    "code": "CL",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mEq/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 98.0,
+        "maxValue": 107.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Calcio Total (Ca++)",
+    "code": "CA",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 8.5,
+        "maxValue": 10.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Fósforo Inorgánico (P)",
+    "code": "P",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 2.5,
+        "maxValue": 4.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Magnesio Sérico (Mg++)",
+    "code": "MG",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 1.7,
+        "maxValue": 2.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Grupo Sanguíneo y Factor Rh",
+    "code": "ABO-RH",
+    "commercialCategory": "Inmunohematología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "O Positivo",
+      "O Negativo",
+      "A Positivo",
+      "A Negativo",
+      "B Positivo",
+      "B Negativo",
+      "AB Positivo",
+      "AB Negativo"
+    ],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "VDRL / RPR (Serología Sífilis)",
+    "code": "VDRL",
+    "commercialCategory": "Serología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No reactivo"
+  },
+  {
+    "name": "VIH 1 y 2 (Tamizaje)",
+    "code": "VIH",
+    "commercialCategory": "Serología",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No reactivo"
+  },
+  {
+    "name": "Perfil de Electrolitos Séricos",
+    "code": "PERF-ELEC",
+    "commercialCategory": "Electrolitos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "NA",
+      "K",
+      "CL",
+      "CA",
+      "P",
+      "MG"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Perfil Pediátrico",
+    "code": "PERF-PED",
+    "commercialCategory": "Rutina Pediátrica",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "BHC",
+      "EGO",
+      "EGH",
+      "GLU",
+      "ABO-RH"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
+  },
+  {
+    "name": "Perfil Prenatal",
+    "code": "PERF-PRENAT",
+    "commercialCategory": "Pruebas Especiales",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "BHC",
+      "EGO",
+      "GLU",
+      "ABO-RH",
+      "VDRL",
+      "VIH"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null
   }
 ]
