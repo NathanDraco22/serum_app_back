@@ -219,3 +219,8 @@ async def test_order_blocking_and_approval_flow():
 
     verify_deleted = await orders_repo.get_order_by_id(blocked_order_2.id)
     assert verify_deleted is None
+
+    # 9. Consultar órdenes del paciente a través del nuevo endpoint/método
+    patient_orders = await orders_controller.get_orders_by_patient_id(patient.id)
+    assert patient_orders.count >= 1
+    assert any(o.id == order.id for o in patient_orders.data)

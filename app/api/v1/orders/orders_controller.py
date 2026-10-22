@@ -41,6 +41,22 @@ class OrdersController:
         orders = await self.orders_repo.get_all_orders(query_params)
         return ListResponse(count=len(orders), data=orders)
 
+    async def get_orders_by_patient_id(
+        self,
+        patient_id: str,
+        branch_id: str | None = None,
+        all_branches: bool = True,
+    ) -> ListResponse[OrderInDb]:
+        query_params = OrderFilterParams(patientId=patient_id)
+        if not all_branches:
+            if branch_id:
+                query_params.branchId = branch_id
+            elif serumCtx.get().branchId:
+                query_params.branchId = serumCtx.get().branchId
+
+        orders = await self.orders_repo.get_all_orders(query_params)
+        return ListResponse(count=len(orders), data=orders)
+
     async def get_order_by_id(self, order_id: str) -> OrderInDb:
         order = await self.orders_repo.get_order_by_id(order_id)
         if order is None:

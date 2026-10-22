@@ -22,6 +22,19 @@ async def get_all_orders(
     return await orders_controller.get_all_orders(query_params)
 
 
+@orders_router.get("/patient/{patient_id}")
+async def get_orders_by_patient_id(
+    patient_id: str,
+    branch_id: str | None = None,
+    all_branches: bool = True,
+) -> ListResponse[OrderInDb]:
+    return await orders_controller.get_orders_by_patient_id(
+        patient_id=patient_id,
+        branch_id=branch_id,
+        all_branches=all_branches,
+    )
+
+
 @orders_router.get("/{order_id}")
 async def get_order_by_id(order_id: str) -> OrderInDb:
     return await orders_controller.get_order_by_id(order_id)
