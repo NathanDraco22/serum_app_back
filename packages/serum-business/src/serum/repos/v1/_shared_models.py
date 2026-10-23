@@ -19,3 +19,4 @@ class IncludedTest(BaseModel):
     referenceValues: list[ReferenceValue] = []
     qualitativeOptions: list[str] = []
     expectedQualitativeValue: str | None = None
+    referenceText: str = ""

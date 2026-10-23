@@ -2045,7 +2045,7 @@
     "childTestCodes": [],
     "childTestIds": [],
     "dataType": "numeric",
-    "unitOfMeasure": "mEq/L",
+    "unitOfMeasure": "mg/dL",
     "referenceValues": [
       {
         "patientType": "general",
@@ -2070,7 +2070,7 @@
     "childTestCodes": [],
     "childTestIds": [],
     "dataType": "numeric",
-    "unitOfMeasure": "mEq/L",
+    "unitOfMeasure": "mg/dL",
     "referenceValues": [
       {
         "patientType": "general",
@@ -2095,7 +2095,7 @@
     "childTestCodes": [],
     "childTestIds": [],
     "dataType": "numeric",
-    "unitOfMeasure": "mEq/L",
+    "unitOfMeasure": "mg/dL",
     "referenceValues": [
       {
         "patientType": "general",
@@ -2314,5 +2314,31 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null
+  },
+  {
+    "name": "Glicohemoglobina A1c (HbA1c)",
+    "code": "HBA1C",
+    "commercialCategory": "Química Sanguínea",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 4.0,
+        "maxValue": 5.6
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "- Menor de 5.6%: Nivel no diabético\n- 5.7 - 6.4%: Nivel prediabético\n- Mayor de 6.5%: Diagnosticado diabético\n- NOTA: 4.5 - 8.4%: Metabolismo normal O Diabético Controlado\n- (Mayor de 8.5%: Diabético mal controlado o Metabolismo desequilibrado)"
   }
 ]

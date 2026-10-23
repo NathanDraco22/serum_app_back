@@ -19,6 +19,7 @@ class BaseLabTest(BaseModel):
     referenceValues: list[ReferenceValue] = []
     qualitativeOptions: list[str] = []
     expectedQualitativeValue: str | None = None
+    referenceText: str = ""
 
 
 class CreateLabTest(BaseLabTest):
@@ -43,6 +44,7 @@ class UpdateLabTest(BaseModel):
     referenceValues: list[ReferenceValue] | None = None
     qualitativeOptions: list[str] | None = None
     expectedQualitativeValue: str | None = None
+    referenceText: str | None = None
 
 
 class LabTestInDb(BaseLabTest):
