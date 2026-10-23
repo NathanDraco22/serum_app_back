@@ -2052,8 +2052,8 @@
         "gender": "both",
         "minAgeDays": 0,
         "maxAgeDays": 43800,
-        "minValue": 135.0,
-        "maxValue": 145.0
+        "minValue": 310.0,
+        "maxValue": 333.0
       }
     ],
     "qualitativeOptions": [],
@@ -2077,8 +2077,8 @@
         "gender": "both",
         "minAgeDays": 0,
         "maxAgeDays": 43800,
-        "minValue": 3.5,
-        "maxValue": 5.1
+        "minValue": 13.7,
+        "maxValue": 19.5
       }
     ],
     "qualitativeOptions": [],
@@ -2102,8 +2102,8 @@
         "gender": "both",
         "minAgeDays": 0,
         "maxAgeDays": 43800,
-        "minValue": 98.0,
-        "maxValue": 107.0
+        "minValue": 340.0,
+        "maxValue": 376.0
       }
     ],
     "qualitativeOptions": [],
@@ -2128,7 +2128,7 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 8.5,
-        "maxValue": 10.5
+        "maxValue": 10.2
       }
     ],
     "qualitativeOptions": [],
@@ -2178,7 +2178,7 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 1.7,
-        "maxValue": 2.5
+        "maxValue": 2.2
       }
     ],
     "qualitativeOptions": [],
