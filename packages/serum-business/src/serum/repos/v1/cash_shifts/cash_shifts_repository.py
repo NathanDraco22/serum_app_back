@@ -234,11 +234,35 @@ class CashShiftsRepository:
         now = TimeTools.get_now_in_milliseconds()
         total_cash_in_drawer = shift.initialBalance + shift.cashBalance
 
+        # Consolidar transferencias bancarias por banco emisor
+        bank_transfers: dict[str, int] = {}
+        try:
+            from serum.services.mongo_collections.v1 import ReceiptsCollection
+            receipts_col = ReceiptsCollection.get_instance()._collection
+            cursor = receipts_col.find(
+                {
+                    "shiftId": shift_id,
+                    "paymentMethod": "transfer",
+                    "isDeleted": {"$ne": True},
+                },
+                {"bank": 1, "amount": 1},
+            )
+            transfer_docs = await cursor.to_list(length=None)
+            await cursor.close()
+            for doc in transfer_docs:
+                b_name = (doc.get("bank") or "Otros").strip()
+                if not b_name:
+                    b_name = "Otros"
+                bank_transfers[b_name] = bank_transfers.get(b_name, 0) + int(doc.get("amount", 0))
+        except Exception:
+            pass
+
         update_dict: dict[str, Any] = {
             "status": "CLOSED",
             "closedAt": now,
             "declaredCash": close_data.declaredCash,
             "difference": diff,
+            "bankTransfers": bank_transfers,
             "updatedAt": now,
         }
         if close_data.notes:

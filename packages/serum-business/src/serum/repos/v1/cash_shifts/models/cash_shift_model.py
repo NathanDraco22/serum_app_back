@@ -31,6 +31,7 @@ class CashShiftInDb(BaseCashShift):
     cashBalance: int = 0
     cardBalance: int = 0
     transferBalance: int = 0
+    bankTransfers: dict[str, int] = {}
     totalBalance: int = 0
     declaredCash: int | None = None
     difference: int | None = None
