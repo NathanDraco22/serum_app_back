@@ -11,6 +11,8 @@ class OrderPayRequest(BaseModel):
     registerId: str | None = None
     paymentMethod: Literal["cash", "card", "transfer"]
     performedBy: UserInfo
+    referenceNumber: str | None = None
+    bank: str | None = None
 
 
 class OrderApproveRequest(BaseModel):

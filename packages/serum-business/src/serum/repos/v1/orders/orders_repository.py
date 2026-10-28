@@ -60,28 +60,53 @@ class OrdersRepository:
                 ).model_dump()
 
 
-        # Validar si algún ítem tiene precio modificado respecto a su precio 1 de catálogo
+        # Validar si algún ítem tiene precio modificado respecto a su precio 1 de catálogo o si tiene descuentos
         has_modified_price = any(
             item.originalPrice > 0 and item.salePriceApplied != item.originalPrice
             for item in create_order.items
         )
-        if has_modified_price:
+        has_discounts = len(create_order.discounts) > 0
+
+        if has_modified_price or has_discounts:
             approval = order_dict.get("approval")
             if not approval or not approval.get("isApproved"):
                 order_dict["isBlocked"] = True
+                default_reason = (
+                    "Descuento aplicado a la orden"
+                    if has_discounts and not has_modified_price
+                    else "Precio modificado arbitrariamente"
+                )
                 order_dict["approval"] = {
                     "requiresApproval": True,
                     "isApproved": False,
                     "approvedBy": None,
                     "approvedAt": None,
-                    "reason": (approval.get("reason") if approval else None) or "Precio modificado arbitrariamente",
+                    "reason": (approval.get("reason") if approval else None) or default_reason,
                 }
 
-        # Calcular totalPrice automáticamente si items tiene elementos y no se envió o es 0
+        # Calcular totalPrice automáticamente considerando items, services y discounts
         items_total = sum(item.get("salePriceApplied", 0) for item in order_dict.get("items", []))
         services_total = sum(service.get("price", 0) for service in order_dict.get("services", []))
-        if (items_total > 0 or services_total > 0) and order_dict.get("totalPrice", 0) <= 0:
-            order_dict["totalPrice"] = items_total + services_total
+        gross_subtotal = items_total + services_total
+
+        discounts_total = 0
+        processed_discounts = []
+        for discount in order_dict.get("discounts", []):
+            dtype = discount.get("type", "percentage")
+            dval = float(discount.get("value", 0))
+            d_applied = discount.get("appliedAmount", 0)
+            if d_applied <= 0:
+                if dtype == "percentage":
+                    d_applied = int(round((gross_subtotal * dval) / 100))
+                else:
+                    d_applied = int(round(dval))
+            discounts_total += d_applied
+            discount["appliedAmount"] = d_applied
+            processed_discounts.append(discount)
+        order_dict["discounts"] = processed_discounts
+
+        if (gross_subtotal > 0 or discounts_total > 0) and order_dict.get("totalPrice", 0) <= 0:
+            order_dict["totalPrice"] = max(0, gross_subtotal - discounts_total)
 
 
 

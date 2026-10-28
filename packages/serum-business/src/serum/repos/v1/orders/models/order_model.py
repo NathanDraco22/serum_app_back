@@ -40,6 +40,14 @@ class OrderService(BaseModel):
     price: int = 0
 
 
+class OrderDiscount(BaseModel):
+    id: str | None = None
+    description: str
+    type: Literal["percentage", "amount"] = "percentage"
+    value: float = 0.0
+    appliedAmount: int = 0
+
+
 class OrderApproval(BaseModel):
     requiresApproval: bool = False
     isApproved: bool = False
@@ -62,6 +70,7 @@ class BaseOrder(BaseModel):
     quotationId: str | None = None
     items: list[OrderItem] = []
     services: list[OrderService] = []
+    discounts: list[OrderDiscount] = []
     totalPrice: int = 0
     paidAmount: int = 0
     status: OrderStatus = "pending"
@@ -90,6 +99,7 @@ class UpdateOrder(BaseModel):
     quotationId: str | None = None
     items: list[OrderItem] | None = None
     services: list[OrderService] | None = None
+    discounts: list[OrderDiscount] | None = None
     totalPrice: int | None = None
     paidAmount: int | None = None
     status: str | None = None

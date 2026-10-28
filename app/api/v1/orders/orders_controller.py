@@ -74,6 +74,8 @@ class OrdersController:
             registerId=body.registerId,
             paymentMethod=body.paymentMethod,
             performedBy=body.performedBy,
+            referenceNumber=body.referenceNumber,
+            bank=body.bank,
         )
         return await self.order_payment_manager.pay_order(pay_intent)
 

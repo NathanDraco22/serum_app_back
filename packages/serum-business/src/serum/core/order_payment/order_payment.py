@@ -9,3 +9,5 @@ class OrderPayIntent(BaseModel):
     registerId: str | None = None
     paymentMethod: str
     performedBy: UserInfo
+    referenceNumber: str | None = None
+    bank: str | None = None

@@ -14,6 +14,8 @@ class BaseReceipt(BaseModel):
     concept: str = "Pago / Abono de orden"
     performedBy: UserInfo
     patientName: str | None = None
+    referenceNumber: str | None = None
+    bank: str | None = None
 
 
 class CreateReceipt(BaseReceipt):

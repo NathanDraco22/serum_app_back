@@ -163,6 +163,8 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                     concept=receipt_concept,
                     performedBy=pay_intent.performedBy,
                     patientName=patient_name,
+                    referenceNumber=pay_intent.referenceNumber,
+                    bank=pay_intent.bank,
                     createdAt=now,
                     updatedAt=None,
                     isDeleted=False,
@@ -172,6 +174,16 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                 )
 
                 # 5. Registrar Transacción en Kardex
+                tx_concept = f"Pago de orden #{order.id} (Recibo #{receipt_number})"
+                if pay_intent.paymentMethod == "transfer":
+                    transfer_details = []
+                    if pay_intent.bank:
+                        transfer_details.append(f"Banco: {pay_intent.bank}")
+                    if pay_intent.referenceNumber:
+                        transfer_details.append(f"Ref: {pay_intent.referenceNumber}")
+                    if transfer_details:
+                        tx_concept += f" [{' - '.join(transfer_details)}]"
+
                 transaction = CashTransactionInDb(
                     id=UuidTool.generate_uuid(),
                     shiftId=pay_intent.shiftId,
@@ -182,7 +194,7 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                     paymentMethod=pay_intent.paymentMethod,
                     amount=pay_intent.amount,
                     resultingBalance=resulting_balance,
-                    concept=f"Pago de orden #{order.id} (Recibo #{receipt_number})",
+                    concept=tx_concept,
                     referenceId=pay_intent.orderId,
                     performedBy=pay_intent.performedBy,
                     createdAt=now,
