@@ -1,6 +1,12 @@
 from pydantic import BaseModel
 
 
+class BranchBioanalyst(BaseModel):
+    name: str
+    title: str
+    code: str
+
+
 class BaseBranch(BaseModel):
     name: str
     address: str
@@ -10,6 +16,7 @@ class BaseBranch(BaseModel):
     logoUrl: str | None = None
     imageUrl: str | None = None
     isoLogoUrl: str | None = None
+    bioanalyst: BranchBioanalyst | None = None
 
 
 class CreateBranch(BaseBranch):
@@ -25,6 +32,7 @@ class UpdateBranch(BaseModel):
     logoUrl: str | None = None
     imageUrl: str | None = None
     isoLogoUrl: str | None = None
+    bioanalyst: BranchBioanalyst | None = None
 
 
 class BranchInDb(BaseBranch):
