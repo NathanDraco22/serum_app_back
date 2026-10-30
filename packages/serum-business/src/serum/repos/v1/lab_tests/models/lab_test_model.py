@@ -8,6 +8,7 @@ class BaseLabTest(BaseModel):
     name: str
     code: str | None = None
     commercialCategory: str = ""
+    subclassification: str = ""
     salePrice: int = 0
     salePrice2: int = 0
     currency: str = "USD"
@@ -20,6 +21,7 @@ class BaseLabTest(BaseModel):
     qualitativeOptions: list[str] = []
     expectedQualitativeValue: str | None = None
     referenceText: str = ""
+    isProfileParameter: bool = False
 
 
 class CreateLabTest(BaseLabTest):
@@ -32,6 +34,7 @@ class UpdateLabTest(BaseModel):
     name: str | None = None
     code: str | None = None
     commercialCategory: str | None = None
+    subclassification: str | None = None
     salePrice: int | None = None
     salePrice2: int | None = None
     costPrice: int | None = None
@@ -45,6 +48,7 @@ class UpdateLabTest(BaseModel):
     qualitativeOptions: list[str] | None = None
     expectedQualitativeValue: str | None = None
     referenceText: str | None = None
+    isProfileParameter: bool | None = None
 
 
 class LabTestInDb(BaseLabTest):

@@ -14,6 +14,7 @@ class IncludedTest(BaseModel):
     labTestId: str
     parameterName: str
     medicalClassification: str = ""
+    subclassification: str = ""
     dataType: str
     unitOfMeasure: str = ""
     referenceValues: list[ReferenceValue] = []
