@@ -18,7 +18,9 @@ El catálogo de estudios médicos se administra a través de una entidad unifica
 Representa un análisis clínico específico (ej. *Glucosa*, *Colesterol Total*, *Hemoglobina*, *Prueba de Embarazo*).
 - **Precio individual (`salePrice`)**: Entero en centavos (Nivel 1 / Regular).
 - **Precio preferencial (`salePrice2`)**: Entero en centavos (Nivel 2 / Convenio o especial).
-- **Categoría comercial (`commercialCategory`)**: Clasificación analítica (ej. *Química Clínica*, *Hematología*).
+- **Categoría comercial (`commercialCategory`)**: Clasificación analítica o especialidad médica (ej. *Química Sanguínea*, *Hematología*, *Uroanálisis*).
+- **Subclasificación (`subclassification: str`)**: Serie analítica o subconjunto clínico (ej. *Serie Roja*, *Serie Blanca*, *Físico-Químico*, etc.). Estructura la agrupación visual de parámetros en reportes PDF y visores.
+- **Parámetro de Perfil (`isProfileParameter: bool`)**: Flag booleano (`false` por defecto). Identifica si la prueba fue dada de alta como parámetro interno de un perfil (ej. en un Examen General de Orina: Color, Aspecto, pH). Se oculta de las búsquedas comerciales de venta rápida para evitar ruido visual, pero se expande con normalidad en las órdenes médicas.
 - **Tipo de dato (`dataType`)**:
   - `numeric`: Medición cuantitativa con unidad de medida (`mg/dL`, `g/dL`, etc.) y rangos demográficos (`referenceValues`).
   - `boolean` / `qualitative`: Resultado dicotómico o de opciones cerradas (ej. `["Negativo", "Positivo"]`, `["No Reactivo", "Reactivo"]`).

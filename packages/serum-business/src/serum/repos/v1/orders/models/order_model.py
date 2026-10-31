@@ -59,6 +59,7 @@ class OrderApproval(BaseModel):
 class OrderTestResult(IncludedTest):
     resultValue: str | None = None
     alertFlag: str | None = None
+    showInPrint: bool = True
 
 
 class BaseOrder(BaseModel):
