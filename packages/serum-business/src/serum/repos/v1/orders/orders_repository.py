@@ -43,6 +43,7 @@ class OrdersRepository:
                     address=patient_doc.get("address") or "",
                     cardId=patient_doc.get("cardId"),
                     email=patient_doc.get("email"),
+                    age=patient_doc.get("age"),
                 ).model_dump()
 
         if create_order.doctorId and create_order.doctorInfo is None:

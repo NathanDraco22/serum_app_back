@@ -15,6 +15,7 @@ class PatientInfo(BaseModel):
     address: str = ""
     cardId: str | None = None
     email: str | None = None
+    age: int | None = None
 
 
 class DoctorInfo(BaseModel):
