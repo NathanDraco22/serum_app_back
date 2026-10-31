@@ -21,7 +21,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": false
   },
   {
     "name": "Creatinina",
@@ -45,7 +47,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Renal",
+    "isProfileParameter": false
   },
   {
     "name": "Aspartato Aminotransferasa (ASAT/TGO)",
@@ -69,7 +73,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Alanina Aminotransferasa (ALT/TGP)",
@@ -93,7 +99,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Gamma Glutamil Transferasa (GGT)",
@@ -117,7 +125,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Bilirrubina Total",
@@ -141,7 +151,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Bilirrubina Directa",
@@ -165,7 +177,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Bilirrubina Indirecta",
@@ -189,7 +203,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Fosfatasa Alcalina",
@@ -213,7 +229,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Proteínas Totales",
@@ -237,12 +255,14 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Proteínas Totales y Fraccionadas",
+    "isProfileParameter": false
   },
   {
     "name": "TSH (Hormona Estimulante de la Tiroides)",
     "code": "TSH",
-    "commercialCategory": "Pruebas Especiales",
+    "commercialCategory": "Endocrinología / Hormonas",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -261,12 +281,14 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Tiroideo",
+    "isProfileParameter": false
   },
   {
     "name": "T4 Libre",
     "code": "T4L",
-    "commercialCategory": "Pruebas Especiales",
+    "commercialCategory": "Endocrinología / Hormonas",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -285,12 +307,14 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Tiroideo",
+    "isProfileParameter": false
   },
   {
     "name": "T3 Total",
     "code": "T3",
-    "commercialCategory": "Pruebas Especiales",
+    "commercialCategory": "Endocrinología / Hormonas",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -309,12 +333,14 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Tiroideo",
+    "isProfileParameter": false
   },
   {
     "name": "Insulina en Ayunas (AM)",
     "code": "INS",
-    "commercialCategory": "Pruebas Especiales",
+    "commercialCategory": "Endocrinología / Hormonas",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -333,7 +359,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Otras Hormonas",
+    "isProfileParameter": false
   },
   {
     "name": "Perfil Hepático Completo",
@@ -358,7 +386,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Función Hepática",
+    "isProfileParameter": false
   },
   {
     "name": "Eritrocitos",
@@ -383,7 +413,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Roja",
+    "isProfileParameter": true
   },
   {
     "name": "Hemoglobina",
@@ -408,7 +440,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Roja",
+    "isProfileParameter": false
   },
   {
     "name": "Hematocrito",
@@ -433,7 +467,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Roja",
+    "isProfileParameter": false
   },
   {
     "name": "VCM (Volumen Corpuscular Medio)",
@@ -458,7 +494,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Roja",
+    "isProfileParameter": true
   },
   {
     "name": "HCM (Hemoglobina Corpuscular Media)",
@@ -483,7 +521,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Roja",
+    "isProfileParameter": true
   },
   {
     "name": "CHCM (Concentración de Hemoglobina Corpuscular Media)",
@@ -508,7 +548,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Roja",
+    "isProfileParameter": true
   },
   {
     "name": "Leucocitos",
@@ -533,7 +575,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": false
   },
   {
     "name": "Plaquetas",
@@ -558,7 +602,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "isProfileParameter": false
   },
   {
     "name": "Segmentados",
@@ -583,7 +629,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Linfocitos",
@@ -608,7 +656,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Eosinófilos",
@@ -633,7 +683,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Monocitos",
@@ -658,7 +710,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Bandas",
@@ -683,7 +737,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Basófilos",
@@ -708,7 +764,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Linfocitos Atípicos",
@@ -733,7 +791,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Serie Blanca",
+    "isProfileParameter": true
   },
   {
     "name": "Biometría Hemática Completa",
@@ -765,7 +825,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Color (Orina)",
@@ -787,7 +849,9 @@
       "Rojizo",
       "Incoloro"
     ],
-    "expectedQualitativeValue": "Amarillo"
+    "expectedQualitativeValue": "Amarillo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Aspecto (Orina)",
@@ -807,7 +871,9 @@
       "Ligero Turbio",
       "Turbio"
     ],
-    "expectedQualitativeValue": "Límpido"
+    "expectedQualitativeValue": "Límpido",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Sedimento (Orina)",
@@ -828,7 +894,9 @@
       "Moderado",
       "Abundante"
     ],
-    "expectedQualitativeValue": "Escaso"
+    "expectedQualitativeValue": "Escaso",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Densidad (Orina)",
@@ -853,7 +921,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "pH (Orina)",
@@ -878,7 +948,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Leucocitos (Orina)",
@@ -900,7 +972,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Glucosa (Orina)",
@@ -922,7 +996,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Proteínas (Orina)",
@@ -944,7 +1020,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Cuerpos Cetónicos",
@@ -966,7 +1044,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Bilirrubina (Orina)",
@@ -987,7 +1067,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Sangre Oculta (Orina)",
@@ -1009,7 +1091,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Nitritos",
@@ -1028,7 +1112,9 @@
       "Negativo",
       "Positivo"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Urobilinógeno",
@@ -1050,7 +1136,9 @@
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Normal"
+    "expectedQualitativeValue": "Normal",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Células Epiteliales",
@@ -1071,7 +1159,9 @@
       "Moderadas",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "Escasas"
+    "expectedQualitativeValue": "Escasas",
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Leucocitos Libres",
@@ -1087,7 +1177,9 @@
     "unitOfMeasure": "x Campos",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Leucocitos Agrupados",
@@ -1103,7 +1195,9 @@
     "unitOfMeasure": "x Campos",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Eritrocitos (Sedimento Urinario)",
@@ -1119,7 +1213,9 @@
     "unitOfMeasure": "x Campos",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Cristales",
@@ -1140,7 +1236,9 @@
       "Moderados",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "No se observó"
+    "expectedQualitativeValue": "No se observó",
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Cilindros",
@@ -1161,7 +1259,9 @@
       "Granulosos",
       "Leucocitarios"
     ],
-    "expectedQualitativeValue": "No se observó"
+    "expectedQualitativeValue": "No se observó",
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Bacterias",
@@ -1182,7 +1282,9 @@
       "Moderadas",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "Escasas"
+    "expectedQualitativeValue": "Escasas",
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Hilos Mucosos",
@@ -1203,7 +1305,9 @@
       "Moderados",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "No se observó"
+    "expectedQualitativeValue": "No se observó",
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Estearasa Leucocitaria",
@@ -1222,7 +1326,9 @@
       "Negativo",
       "Positivo"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Físico-Químico",
+    "isProfileParameter": true
   },
   {
     "name": "Levaduras",
@@ -1243,7 +1349,9 @@
       "Moderadas",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "No se observó"
+    "expectedQualitativeValue": "No se observó",
+    "subclassification": "Sedimento Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Examen General de Orina",
@@ -1283,7 +1391,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Color (Heces)",
@@ -1306,7 +1416,9 @@
       "Negro",
       "Acólico"
     ],
-    "expectedQualitativeValue": "Café"
+    "expectedQualitativeValue": "Café",
+    "subclassification": "Examen Macroscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Consistencia (Heces)",
@@ -1328,7 +1440,9 @@
       "Semilíquida",
       "Líquida"
     ],
-    "expectedQualitativeValue": "Blanda"
+    "expectedQualitativeValue": "Blanda",
+    "subclassification": "Examen Macroscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Mucosidad (Heces)",
@@ -1349,7 +1463,9 @@
       "Moderado moco",
       "Abundante moco"
     ],
-    "expectedQualitativeValue": "No se observó moco"
+    "expectedQualitativeValue": "No se observó moco",
+    "subclassification": "Examen Macroscópico",
+    "isProfileParameter": true
   },
   {
     "name": "pH (Heces)",
@@ -1374,7 +1490,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Macroscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Proteínas (Heces)",
@@ -1393,7 +1511,9 @@
       "Negativo",
       "Positivo"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Macroscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Hemoglobina (Heces)",
@@ -1412,7 +1532,9 @@
       "Negativo",
       "Positivo"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Sangre Oculta",
+    "isProfileParameter": false
   },
   {
     "name": "Parásitos (Heces)",
@@ -1428,7 +1550,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": "No se observaron parásitos"
+    "expectedQualitativeValue": "No se observaron parásitos",
+    "subclassification": "Parasitología",
+    "isProfileParameter": true
   },
   {
     "name": "Cuerpos Ovales Grasos",
@@ -1449,7 +1573,9 @@
       "Moderados",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "No se observaron"
+    "expectedQualitativeValue": "No se observaron",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Levaduras Gemantes (Heces)",
@@ -1470,7 +1596,9 @@
       "Moderadas",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "No se observaron"
+    "expectedQualitativeValue": "No se observaron",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Flora Bacteriana",
@@ -1491,7 +1619,9 @@
       "Aumentada x campos",
       "Disminuida x campos"
     ],
-    "expectedQualitativeValue": "Normal x campos"
+    "expectedQualitativeValue": "Normal x campos",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Placas de Alimentos",
@@ -1512,7 +1642,9 @@
       "Moderadas",
       "Abundantes"
     ],
-    "expectedQualitativeValue": "No se observaron"
+    "expectedQualitativeValue": "No se observaron",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Examen General De Heces (EGH)",
@@ -1540,12 +1672,14 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Antígeno H. Pylori en Heces",
     "code": "HP-HEC",
-    "commercialCategory": "Serología",
+    "commercialCategory": "Inmunología",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -1559,7 +1693,9 @@
       "Negativo",
       "Positivo"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Marcadores Infecciosos",
+    "isProfileParameter": false
   },
   {
     "name": "Polimorfonucleares Neutrófilos",
@@ -1575,7 +1711,9 @@
     "unitOfMeasure": "%",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Mononucleares Eosinófilos",
@@ -1591,7 +1729,9 @@
     "unitOfMeasure": "%",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Azúcares Reductores",
@@ -1610,7 +1750,9 @@
       "Negativo",
       "Positivo"
     ],
-    "expectedQualitativeValue": "Negativo"
+    "expectedQualitativeValue": "Negativo",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": false
   },
   {
     "name": "Tinción de Wright en Heces",
@@ -1633,7 +1775,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Colesterol Total",
@@ -1658,7 +1802,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": false
   },
   {
     "name": "Triglicéridos",
@@ -1683,7 +1829,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": false
   },
   {
     "name": "Colesterol HDL",
@@ -1708,7 +1856,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": false
   },
   {
     "name": "Colesterol LDL",
@@ -1733,7 +1883,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": false
   },
   {
     "name": "Colesterol VLDL",
@@ -1758,7 +1910,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": true
   },
   {
     "name": "Riesgo Coronario",
@@ -1783,7 +1937,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": true
   },
   {
     "name": "Perfil Lipídico",
@@ -1806,7 +1962,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Perfil Lipídico",
+    "isProfileParameter": false
   },
   {
     "name": "Aspecto Seminal",
@@ -1827,7 +1985,9 @@
       "Turbio",
       "Límpido"
     ],
-    "expectedQualitativeValue": "Viscoso opalescente"
+    "expectedQualitativeValue": "Viscoso opalescente",
+    "subclassification": "Exudados",
+    "isProfileParameter": true
   },
   {
     "name": "Color Seminal",
@@ -1848,7 +2008,9 @@
       "Amarillento",
       "Rojizo"
     ],
-    "expectedQualitativeValue": "Blanco grisáceo"
+    "expectedQualitativeValue": "Blanco grisáceo",
+    "subclassification": "Exudados",
+    "isProfileParameter": true
   },
   {
     "name": "Volumen de la Eyaculación",
@@ -1873,7 +2035,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Exudados",
+    "isProfileParameter": true
   },
   {
     "name": "Recuento de Espermatozoides",
@@ -1898,7 +2062,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Porcentaje de Formas Móviles",
@@ -1923,7 +2089,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Porcentaje de Formas Inmóviles",
@@ -1948,7 +2116,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Pus (Semen)",
@@ -1969,7 +2139,9 @@
       "Moderado",
       "Abundante"
     ],
-    "expectedQualitativeValue": "No se observó"
+    "expectedQualitativeValue": "No se observó",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Sangre (Semen)",
@@ -1990,7 +2162,9 @@
       "Moderado",
       "Abundante"
     ],
-    "expectedQualitativeValue": "No se observó"
+    "expectedQualitativeValue": "No se observó",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Anormalidades Morfológicas (Semen)",
@@ -2006,7 +2180,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": "No se observaron anormalidades significativas"
+    "expectedQualitativeValue": "No se observaron anormalidades significativas",
+    "subclassification": "Examen Microscópico",
+    "isProfileParameter": true
   },
   {
     "name": "Espermatograma",
@@ -2032,7 +2208,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Sodio Sérico (Na+)",
@@ -2057,7 +2235,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Potasio Sérico (K+)",
@@ -2082,7 +2262,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Cloro Sérico (Cl-)",
@@ -2107,7 +2289,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Calcio Total (Ca++)",
@@ -2132,7 +2316,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Fósforo Inorgánico (P)",
@@ -2157,7 +2343,9 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Magnesio Sérico (Mg++)",
@@ -2182,12 +2370,14 @@
       }
     ],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Grupo Sanguíneo y Factor Rh",
     "code": "ABO-RH",
-    "commercialCategory": "Inmunohematología",
+    "commercialCategory": "Inmunología",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -2207,7 +2397,9 @@
       "AB Positivo",
       "AB Negativo"
     ],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "VDRL / RPR (Serología Sífilis)",
@@ -2226,12 +2418,14 @@
       "No reactivo",
       "Reactivo"
     ],
-    "expectedQualitativeValue": "No reactivo"
+    "expectedQualitativeValue": "No reactivo",
+    "subclassification": "Marcadores Infecciosos",
+    "isProfileParameter": false
   },
   {
     "name": "VIH 1 y 2 (Tamizaje)",
     "code": "VIH",
-    "commercialCategory": "Serología",
+    "commercialCategory": "Inmunología",
     "salePrice": 0,
     "salePrice2": 0,
     "currency": "USD",
@@ -2245,7 +2439,9 @@
       "No reactivo",
       "Reactivo"
     ],
-    "expectedQualitativeValue": "No reactivo"
+    "expectedQualitativeValue": "No reactivo",
+    "subclassification": "Marcadores Infecciosos",
+    "isProfileParameter": false
   },
   {
     "name": "Perfil de Electrolitos Séricos",
@@ -2268,7 +2464,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "Electrolitos Séricos",
+    "isProfileParameter": false
   },
   {
     "name": "Perfil Pediátrico",
@@ -2290,7 +2488,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Perfil Prenatal",
@@ -2313,7 +2513,9 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [],
-    "expectedQualitativeValue": null
+    "expectedQualitativeValue": null,
+    "subclassification": "General",
+    "isProfileParameter": false
   },
   {
     "name": "Glicohemoglobina A1c (HbA1c)",
@@ -2339,6 +2541,8 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "- Menor de 5.6%: Nivel no diabético\n- 5.7 - 6.4%: Nivel prediabético\n- Mayor de 6.5%: Diagnosticado diabético\n- NOTA: 4.5 - 8.4%: Metabolismo normal O Diabético Controlado\n- (Mayor de 8.5%: Diabético mal controlado o Metabolismo desequilibrado)"
+    "referenceText": "- Menor de 5.6%: Nivel no diabético\n- 5.7 - 6.4%: Nivel prediabético\n- Mayor de 6.5%: Diagnosticado diabético\n- NOTA: 4.5 - 8.4%: Metabolismo normal O Diabético Controlado\n- (Mayor de 8.5%: Diabético mal controlado o Metabolismo desequilibrado)",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": false
   }
 ]
