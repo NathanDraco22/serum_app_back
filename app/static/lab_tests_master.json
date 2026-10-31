@@ -2544,5 +2544,3586 @@
     "referenceText": "- Menor de 5.6%: Nivel no diabético\n- 5.7 - 6.4%: Nivel prediabético\n- Mayor de 6.5%: Diagnosticado diabético\n- NOTA: 4.5 - 8.4%: Metabolismo normal O Diabético Controlado\n- (Mayor de 8.5%: Diabético mal controlado o Metabolismo desequilibrado)",
     "subclassification": "Carbohidratos / Glucosa",
     "isProfileParameter": false
+  },
+  {
+    "name": "Tiempo de Protrombina (TP / INR)",
+    "code": "TP-INR",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 170,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "segundos",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 11.0,
+        "maxValue": 13.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "INR Normal: 0.8 - 1.2 | INR Terapéutico (Anticoagulación oral): 2.0 - 3.0",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Tiempo de Tromboplastina Parcial (TPT)",
+    "code": "TPT",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 170,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "segundos",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 25.0,
+        "maxValue": 38.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Valores de referencia: 25.0 a 38.0 segundos",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Fibrinógeno",
+    "code": "FIB",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 380,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 200.0,
+        "maxValue": 400.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Valores normales: 200 a 400 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Dímero D Cuantitativo",
+    "code": "DIM-D",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 1800,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µg/mL FEU",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 0.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 0.50 µg/mL FEU (< 500 ng/mL FEU)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Tiempo de Coagulación (Lee-White)",
+    "code": "TC-LEE",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "minutos",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 5.0,
+        "maxValue": 10.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Método de Lee-White: 5 a 10 minutos",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Tiempo de Sangría (Duke)",
+    "code": "TS-DUKE",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "minutos",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 1.0,
+        "maxValue": 4.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Método de Duke: 1.0 a 4.0 minutos",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticoagulante Lúpico",
+    "code": "ALUP",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 3700,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo Débil",
+      "Positivo Moderado",
+      "Positivo Fuerte"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Ratio dRVVT normalizado < 1.20)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Plasminógeno",
+    "code": "PLAS",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 350,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 75.0,
+        "maxValue": 140.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "75.0 a 140.0 % de actividad",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Eritrosedimentación (VSG)",
+    "code": "VSG",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Roja",
+    "salePrice": 250,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mm/h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 15.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 20.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 0 a 15 mm/h | Mujeres: 0 a 20 mm/h | Niños: 0 a 10 mm/h",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Recuento de Reticulocitos",
+    "code": "RETIC",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Roja",
+    "salePrice": 150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.5,
+        "maxValue": 2.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "0.5 a 2.5 % (Absoluto: 25,000 a 100,000 /µL)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Extendido de Sangre Periférica",
+    "code": "EXT-PER",
+    "commercialCategory": "Hematología",
+    "subclassification": "Frotis Sanguíneo",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Morfología eritrocitaria, leucocitaria y plaquetaria normales. Sin células inmaduras.",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba de Células Falciformes (Drepanocitos)",
+    "code": "DREP",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Roja",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Inductor con metabisulfito de sodio al 2%)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Gota Gruesa (Malaria)",
+    "code": "MAL-GG",
+    "commercialCategory": "Hematología",
+    "subclassification": "Frotis Sanguíneo",
+    "salePrice": 150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo a Plasmodium vivax",
+      "Positivo a Plasmodium falciparum"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (No se observan hemoparásitos en 100 campos)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Eosinófilos en Moco Nasal",
+    "code": "EOS-NAS",
+    "commercialCategory": "Hematología",
+    "subclassification": "Frotis Sanguíneo",
+    "salePrice": 100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 5.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: 0 a 5 % | Sugestivo de rinitis alérgica: > 10 %",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Eosinófilos Absolutos en Sangre",
+    "code": "EOS-SANG",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Blanca",
+    "salePrice": 100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "/µL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 50.0,
+        "maxValue": 500.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "50 a 500 eosinófilos /µL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba de Coombs Directa (TAD)",
+    "code": "COOMBS-D",
+    "commercialCategory": "Inmunología",
+    "subclassification": "General",
+    "salePrice": 300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo 1+",
+      "Positivo 2+",
+      "Positivo 3+",
+      "Positivo 4+"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Ausencia de aglutinación)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba de Coombs Indirecta (TAI)",
+    "code": "COOMBS-I",
+    "commercialCategory": "Inmunología",
+    "subclassification": "General",
+    "salePrice": 300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo 1+",
+      "Positivo 2+",
+      "Positivo 3+",
+      "Positivo 4+"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Ausencia de anticuerpos irregulares)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Ácido Úrico",
+    "code": "AC-URIC",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 3.5,
+        "maxValue": 7.2
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 2.6,
+        "maxValue": 6.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 3.5 a 7.2 mg/dL | Mujeres: 2.6 a 6.0 mg/dL | Niños: 2.0 a 5.5 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Nitrógeno Ureico en Sangre (BUN)",
+    "code": "BUN",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 250,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 7.0,
+        "maxValue": 20.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "BUN: 7.0 a 20.0 mg/dL (Urea = BUN x 2.14: 15.0 a 45.0 mg/dL)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Albúmina",
+    "code": "ALB",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Proteínas Totales y Fraccionadas",
+    "salePrice": 150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "g/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 3.5,
+        "maxValue": 5.2
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "3.5 a 5.2 g/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Amilasa Sérica",
+    "code": "AMY",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 28.0,
+        "maxValue": 100.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "28.0 a 100.0 U/L",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Lipasa Sérica",
+    "code": "LIP",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 13.0,
+        "maxValue": 60.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "13.0 a 60.0 U/L",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Lactato Deshidrogenasa (LDH)",
+    "code": "LDH",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 250,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 140.0,
+        "maxValue": 280.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "140.0 a 280.0 U/L",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Creatina Kinasa Total (CPK)",
+    "code": "CPK-TOT",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 800,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 39.0,
+        "maxValue": 308.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 26.0,
+        "maxValue": 192.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 39 a 308 U/L | Mujeres: 26 a 192 U/L",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Creatina Kinasa Fracción MB (CK-MB)",
+    "code": "CPK-MB",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 800,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 25.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "0.0 a 25.0 U/L (< 5% del total de CPK)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hierro Sérico",
+    "code": "FE-SER",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "General",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 65.0,
+        "maxValue": 175.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 50.0,
+        "maxValue": 170.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 65 a 175 µg/dL | Mujeres: 50 a 170 µg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Ferritina Sérica",
+    "code": "FERR",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "General",
+    "salePrice": 780,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 30.0,
+        "maxValue": 400.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 15.0,
+        "maxValue": 150.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 30 a 400 ng/mL | Mujeres: 15 a 150 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Colinesterasa Sérica",
+    "code": "COLIN",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Hepática",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 4000.0,
+        "maxValue": 12000.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "4,000 a 12,000 U/L",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Troponina T Cuantitativa",
+    "code": "TROP-T",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 900,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 0.014
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 0.014 ng/mL (< 14 ng/L alta sensibilidad)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Troponina T (Casete Rápido)",
+    "code": "TROP-CAS",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (< 0.1 ng/mL)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "NT-proBNP (Péptido Natriurético)",
+    "code": "PRO-BNP",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Enzimas Cardíacas / Pancreáticas",
+    "salePrice": 2820,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 27375,
+        "minValue": 0.0,
+        "maxValue": 125.0
+      },
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 27376,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 450.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "< 75 años: < 125 pg/mL | >= 75 años: < 450 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Glucosa Postprandial (2 Horas)",
+    "code": "GLU-PP",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Carbohidratos / Glucosa",
+    "salePrice": 100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 70.0,
+        "maxValue": 140.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 140 mg/dL | Intolerancia a glucosa: 140 a 199 mg/dL | Diabetes: >= 200 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Curva de Tolerancia a la Glucosa (75g)",
+    "code": "PTGO",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Carbohidratos / Glucosa",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Basal (Ayunas): < 100 mg/dL | 1 Hora: < 180 mg/dL | 2 Horas: < 140 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Alfa-1 Antitripsina",
+    "code": "A1AT",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Proteínas Totales y Fraccionadas",
+    "salePrice": 2100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 90.0,
+        "maxValue": 200.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "90.0 a 200.0 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Perfil Renal",
+    "code": "PERF-REN",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 1300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "CREA",
+      "BUN",
+      "AC-URIC",
+      "NA",
+      "K",
+      "CL",
+      "EGO"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Evaluación integral de la función renal y equilibrio hidroelectrolítico",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Perfil Tiroideo Completo",
+    "code": "PERF-TIR",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 1950,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "TSH",
+      "T4L",
+      "T3",
+      "T4-TOT",
+      "T3-LIB"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Panel tiroideo quintuple: TSH, T4 Libre, T3 Total, T4 Total y T3 Libre",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Perfil Reumático",
+    "code": "PERF-REUM",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "FR",
+      "PCR",
+      "ASLO",
+      "AC-URIC",
+      "VSG"
+    ],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Perfil reumatológico básico: FR, PCR, ASLO, Ácido Úrico y VSG",
+    "isProfileParameter": false
+  },
+  {
+    "name": "T4 Total (Tiroxina)",
+    "code": "T4-TOT",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 4.5,
+        "maxValue": 12.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "4.5 a 12.0 µg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "T3 Libre (Triyodotironina Libre)",
+    "code": "T3-LIB",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 950,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 2.3,
+        "maxValue": 4.2
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "2.3 a 4.2 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hormona Folículo Estimulante (FSH)",
+    "code": "FSH",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 700,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mUI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 1.5,
+        "maxValue": 12.4
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 3.5,
+        "maxValue": 12.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 1.5 - 12.4 | Mujeres: Folicular 3.5 - 12.5; Pico 4.7 - 21.5; Lútea 1.7 - 7.7; Postmenopausia 25.8 - 134.8 mUI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hormona Luteinizante (LH)",
+    "code": "LH",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 700,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mUI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 1.7,
+        "maxValue": 8.6
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 2.4,
+        "maxValue": 12.6
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 1.7 - 8.6 | Mujeres: Folicular 2.4 - 12.6; Pico 14.0 - 95.6; Lútea 1.0 - 11.4; Postmenopausia 7.7 - 58.5 mUI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Progesterona",
+    "code": "PRG",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.2,
+        "maxValue": 24.0
+      },
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 0.2
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: < 0.20 | Mujeres: Folicular < 0.89; Pico lúteo 1.8 - 24.0; Postmenopausia < 0.20 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Testosterona Total",
+    "code": "TEST-TOT",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 1400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 300.0,
+        "maxValue": 1000.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 15.0,
+        "maxValue": 70.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 300 a 1,000 ng/dL | Mujeres: 15 a 70 ng/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Testosterona Libre",
+    "code": "TEST-LIB",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 1800,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 9.0,
+        "maxValue": 30.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.3,
+        "maxValue": 2.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 9.0 a 30.0 pg/mL | Mujeres: 0.3 a 2.0 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prolactina",
+    "code": "PRL",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 4.0,
+        "maxValue": 15.2
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 4.8,
+        "maxValue": 23.3
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 4.0 - 15.2 ng/mL | Mujeres no embarazadas: 4.8 - 23.3 ng/mL | Embarazadas: 34 - 386 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Estradiol (E2)",
+    "code": "ESTR",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 10.0,
+        "maxValue": 40.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 20.0,
+        "maxValue": 450.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 10 - 40 | Mujeres: Folicular 20 - 160; Pico 150 - 450; Lútea 40 - 220; Postmenopausia < 30 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hormona del Crecimiento (HGH)",
+    "code": "HGH",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 5300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.05,
+        "maxValue": 8.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Adultos en reposo: 0.05 a 8.0 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Insulina Postprandial (2 Horas)",
+    "code": "INS-PP",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 1500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µUI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 16.0,
+        "maxValue": 60.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "16.0 a 60.0 µUI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cortisol Matutino (AM)",
+    "code": "CORT-AM",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 6.0,
+        "maxValue": 23.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Muestra tomada a las 8:00 AM: 6.0 a 23.0 µg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cortisol Vespertino (PM)",
+    "code": "CORT-PM",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "µg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 3.0,
+        "maxValue": 12.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Muestra tomada a las 4:00 PM: 3.0 a 12.0 µg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Calcitonina",
+    "code": "CALCIT",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 9100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 8.4
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 5.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: < 8.4 pg/mL | Mujeres: < 5.0 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "17-OH Progesterona",
+    "code": "17OH-PRG",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 2600,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.5,
+        "maxValue": 2.5
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.2,
+        "maxValue": 4.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 0.5 - 2.5 | Mujeres: Folicular 0.2 - 1.3; Lútea 1.0 - 4.5 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Parathormona Intacta (PTH)",
+    "code": "PTH",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 1400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 15.0,
+        "maxValue": 65.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "15.0 a 65.0 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Androstenediona",
+    "code": "ANDROST",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 4200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.6,
+        "maxValue": 3.1
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "0.6 a 3.1 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Péptido C",
+    "code": "PEPT-C",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 2200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.9,
+        "maxValue": 4.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "0.9 a 4.0 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpos Anti-Receptor de TSH (TRAb)",
+    "code": "TRAB",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 4700,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "UI/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 1.75
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Negativo: < 1.75 UI/L | Positivo: >= 1.75 UI/L",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hormona Adrenocorticotropa (ACTH)",
+    "code": "ACTH",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Otras Hormonas",
+    "salePrice": 2300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 7.2,
+        "maxValue": 63.3
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Muestra matutina: 7.2 a 63.3 pg/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Capacidad de Fijación de Tiroxina (T-Uptake)",
+    "code": "T-UPTAKE",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 2600,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "%",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 24.0,
+        "maxValue": 35.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "24.0 a 35.0 %",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpos Anti-Tiroglobulina (Anti-Tg)",
+    "code": "ANTI-TG",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 1600,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "UI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 115.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Negativo: < 115 UI/mL | Positivo: >= 115 UI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpos Anti-Peroxidasa Tiroidea (Anti-TPO)",
+    "code": "ANTI-TPO",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Perfil Tiroideo",
+    "salePrice": 3500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "UI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 34.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Negativo: < 34 UI/mL | Positivo: >= 34 UI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hormona Antimülleriana (AMH)",
+    "code": "AMH",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 4875,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 6570,
+        "maxAgeDays": 16425,
+        "minValue": 1.0,
+        "maxValue": 3.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Reserva fértil normal: 1.0 - 3.5 ng/mL | Baja reserva: < 1.0 ng/mL | SOP: > 3.5 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Beta-HCG Libre",
+    "code": "B-HCG-L",
+    "commercialCategory": "Endocrinología / Hormonas",
+    "subclassification": "Hormonas Reproductivas / Fertilidad",
+    "salePrice": 1500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 0.1
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "No gestantes: < 0.1 ng/mL | Gestantes: Valores estratificados por semana gestacional",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Beta-HCG Cuantitativa",
+    "code": "BHCG-CUAN",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mUI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 5.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres y mujeres no gestantes: < 5.0 mUI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Alfa-Fetoproteína (AFP)",
+    "code": "AFP",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 8.5
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "0.0 a 8.5 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Antígeno Prostático Específico Total (PSA)",
+    "code": "PSA-TOT",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 850,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 4.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres adultos: 0.0 a 4.0 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Antígeno Prostático Específico Libre (PSA Libre)",
+    "code": "PSA-LIB",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 950,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 1.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Relación PSA Libre/Total > 20%: Bajo riesgo de neoplasia prostática",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Antígeno Carcinoembrionario (CEA)",
+    "code": "CEA",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1000,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 3.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "No fumadores: < 3.0 ng/mL | Fumadores: < 5.0 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Marcador Tumoral CA 125",
+    "code": "CA-125",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 35.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 35.0 U/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Marcador Tumoral CA 15-3",
+    "code": "CA-15-3",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 30.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 30.0 U/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Marcador Tumoral CA 19-9",
+    "code": "CA-19-9",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 37.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 37.0 U/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Marcador Tumoral CA 242",
+    "code": "CA-242",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 2800,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 20.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 20.0 U/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Marcador Tumoral CA 72-4",
+    "code": "CA-72-4",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 4200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 6.9
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 6.9 U/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Tiroglobulina",
+    "code": "TG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Tumorales",
+    "salePrice": 1100,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 1.4,
+        "maxValue": 78.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Adultos con tiroides intacta: 1.4 a 78.0 ng/mL | Post-tiroidectomía: < 0.2 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Proteína C Reactiva (PCR Cuantitativa)",
+    "code": "PCR",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 280,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/L",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 6.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 6.0 mg/L (< 0.6 mg/dL)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Antiestreptolisina O (ASLO)",
+    "code": "ASLO",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "UI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 200.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 200 UI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Factor Reumatoide (FR)",
+    "code": "FR",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "UI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 14.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 14.0 UI/mL (Negativo)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpos Anti-Péptido Cíclico Citrulinado (Anti-CCP)",
+    "code": "ANTI-CCP",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "U/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 20.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Negativo: < 20.0 U/mL | Positivo débil: 20 - 39 | Positivo moderado: 40 - 59 | Positivo fuerte: >= 60 U/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpos Antinucleares (ANA Screen)",
+    "code": "ANA-SCR",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1350,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Índice < 1.0)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpos Antinucleares por IFI (Células HEp-2)",
+    "code": "ANA-IFI",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 2150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "Título",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Negativo (Título < 1:80). En caso de positividad, se reporta título y patrón de fluorescencia (Homogéneo, Moteado, Centromérico, Nucleolar, etc.).",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Células LE",
+    "code": "CEL-LE",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Ausencia de fenómeno LE tras lisis celular)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Complemento Sérico C3",
+    "code": "C3",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 90.0,
+        "maxValue": 180.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "90.0 a 180.0 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Complemento Sérico C4",
+    "code": "C4",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 10.0,
+        "maxValue": 40.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "10.0 a 40.0 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Inmunoglobulina A (IgA)",
+    "code": "IGA",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 70.0,
+        "maxValue": 400.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "70.0 a 400.0 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Inmunoglobulina E Total (IgE)",
+    "code": "IGE",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "UI/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 100.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Adultos: < 100.0 UI/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Inmunoglobulina G (IgG)",
+    "code": "IGG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1000,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 700.0,
+        "maxValue": 1600.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "700.0 a 1,600.0 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Inmunoglobulina M (IgM)",
+    "code": "IGM",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Enfermedades Autoinmunes",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 40.0,
+        "maxValue": 230.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "40.0 a 230.0 mg/dL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Dengue NS1 Antígeno (Casete Rápido)",
+    "code": "DENG-NS1",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Dengue Anticuerpos IgM e IgG (Prueba Rápida)",
+    "code": "DENG-IG",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "IgM Positivo",
+      "IgG Positivo",
+      "IgM e IgG Positivos"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Chikungunya Anticuerpos IgM e IgG",
+    "code": "CHIK-IG",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 700,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "IgM Positivo",
+      "IgG Positivo",
+      "IgM e IgG Positivos"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Toxoplasmosis Anticuerpos IgG e IgM",
+    "code": "TOXO-IG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 850,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgG Reactivo (Infección pasada)",
+      "IgM Reactivo (Infección aguda)",
+      "IgG e IgM Reactivos"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo (Índice < 0.90)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Citomegalovirus (CMV) Anticuerpos IgG e IgM",
+    "code": "CMV-IG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 900,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgG Reactivo",
+      "IgM Reactivo",
+      "IgG e IgM Reactivos"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo (Índice < 0.90)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Epstein-Barr Virus Anticuerpos IgG e IgM",
+    "code": "EBV-IG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 1400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgG Reactivo",
+      "IgM Reactivo",
+      "IgG e IgM Reactivos"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Monotest (Mononucleosis Infecciosa)",
+    "code": "MONOTEST",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Ausencia de anticuerpos heterófilos)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Rubeola Anticuerpos IgG e IgM",
+    "code": "RUB-IG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 1900,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgG Reactivo (Inmunidad)",
+      "IgM Reactivo (Aguda)",
+      "IgG e IgM Reactivos"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Varicela Zoster Anticuerpos",
+    "code": "VARIC-IG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hepatitis A Anticuerpos (IgM / IgG)",
+    "code": "HEP-A-IG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgM Reactivo (Agudo)",
+      "IgG Reactivo (Inmune)"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hepatitis B Antígeno de Superficie (HBsAg)",
+    "code": "HBSAG",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Anticuerpo contra el Antígeno e de Hepatitis B (Anti-HBe)",
+    "code": "ANTI-HBE",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 900,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hepatitis C Anticuerpos (Anti-VHC)",
+    "code": "ANTI-VHC",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Herpes Virus Tipo 1 Anticuerpos IgM e IgG",
+    "code": "HERP-1",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 1400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgG Reactivo",
+      "IgM Reactivo",
+      "IgG e IgM Reactivos"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Herpes Virus Tipo 2 Anticuerpos IgM e IgG",
+    "code": "HERP-2",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 2400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "IgG Reactivo",
+      "IgM Reactivo",
+      "IgG e IgM Reactivos"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Leptospira Anticuerpos IgM e IgG (Prueba Rápida)",
+    "code": "LEPTO-IG",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 800,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "IgM Positivo",
+      "IgG Positivo",
+      "IgM e IgG Positivos"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Helicobacter Pylori en Sangre (Anticuerpos)",
+    "code": "HP-SANG",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Reacciones Febriles (Antígenos Febriles)",
+    "code": "FEB-AG",
+    "commercialCategory": "Serología",
+    "subclassification": "Reacciones Febriles",
+    "salePrice": 350,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "Título",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Tífico O: < 1:80 | Tífico H: < 1:80 | Paratífico A: < 1:80 | Paratífico B: < 1:80 | Brucella abortus: < 1:80 | Proteus OX-19: < 1:80",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Enfermedad de Chagas (Trypanosoma cruzi)",
+    "code": "CHAGAS",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 300,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "No Reactivo",
+      "Reactivo"
+    ],
+    "expectedQualitativeValue": "No Reactivo",
+    "referenceText": "No Reactivo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Chlamydia Trachomatis (Prueba Rápida)",
+    "code": "CHLAM",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Tuberculosis Anticuerpos (Casete)",
+    "code": "TB-CAS",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Procalcitonina (Casete Semicuantitativo)",
+    "code": "PROC-CAS",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "< 0.5 ng/mL (Normal)",
+      "0.5 - 2.0 ng/mL (Riesgo moderado)",
+      "2.0 - 10.0 ng/mL (Sepsis severa)",
+      "> 10.0 ng/mL (Shock séptico)"
+    ],
+    "expectedQualitativeValue": "< 0.5 ng/mL (Normal)",
+    "referenceText": "< 0.5 ng/mL (Bajo riesgo de sepsis severa)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba de Embarazo en Sangre (Cualitativa)",
+    "code": "EMB-SANG",
+    "commercialCategory": "Serología",
+    "subclassification": "Pruebas Rápidas",
+    "salePrice": 220,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Sensibilidad: 20 mUI/mL)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Sangre Oculta en Heces (Casete Inmunoquímico)",
+    "code": "SOH-CAS",
+    "commercialCategory": "Coprología",
+    "subclassification": "Sangre Oculta",
+    "salePrice": 250,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Método inmunocromatográfico específico para hemoglobina humana, no requiere dieta previa)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Urocultivo con Antibiograma",
+    "code": "UROC",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "UFC/mL",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Sin desarrollo bacteriano a las 48 horas de incubación (< 10,000 UFC/mL de flora saprófita)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Coprocultivo",
+    "code": "COPROC",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Desarrollo de flora bacteriana entérica habitual. No se aíslan enteropatógenos (Salmonella, Shigella, Campylobacter ni E. coli enteropatógena).",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hemocultivo (Dos Frascos)",
+    "code": "HEMOC",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Estéril: Sin desarrollo bacteriano ni micótico a los 5 a 7 días de incubación automatizada",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Espermocultivo",
+    "code": "ESPERMOC",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Sin desarrollo de microorganismos patógenos a las 48 horas de incubación",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo Faríngeo",
+    "code": "CULT-FAR",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Desarrollo de flora habitual de orofaringe. Negativo a Streptococcus pyogenes (Grupo A).",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo de Esputo con Gram",
+    "code": "CULT-ESP",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Flora habitual de vías respiratorias superiores. Sin predominio de patógenos.",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo de Líquido Cefalorraquídeo (LCR)",
+    "code": "CULT-LCR",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Estéril a las 72 horas de incubación",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo Ótico",
+    "code": "CULT-OTI",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Sin desarrollo de microorganismos patógenos a las 48 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo Ocular (Conjuntival)",
+    "code": "CULT-OCU",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Sin desarrollo de microorganismos patógenos a las 48 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo Vaginal",
+    "code": "CULT-VAG",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Desarrollo abundante de Lactobacillus sp. (Flora saprófita habitual). Sin crecimiento de patógenos.",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo de Secreción Purulenta",
+    "code": "CULT-SEC",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Sin desarrollo patógeno a las 48 horas de incubación",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Cultivo de Hongos (Micológico)",
+    "code": "CULT-HON",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Cultivos y Antibiogramas",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Sin desarrollo de hongos filamentosos ni levaduriformes tras 21 días de incubación en agar Sabouraud",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Baciloscopía (BAAR en Esputo)",
+    "code": "BAAR",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Tinciones",
+    "salePrice": 400,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo 1+",
+      "Positivo 2+",
+      "Positivo 3+"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (No se observan Bacilos Ácido-Alcohol Resistentes en 100 campos observados bajo inmersión)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Exudado Vaginal (Fresco y Gram)",
+    "code": "EXUD-VAG",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Exudados",
+    "salePrice": 280,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Células guía (Clue cells): Negativo | Trichomonas vaginalis: Negativo | Levaduras: Negativo | Leucocitos: 0-5 por campo | Bacilos Gram positivos tipo Lactobacillus predominantes",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Exudado Vulvar",
+    "code": "EXUD-VUL",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Exudados",
+    "salePrice": 280,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Flora dérmica habitual. Sin presencia de levaduras ni exudado inflamatorio significativo.",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Exudado Uretral",
+    "code": "EXUD-URE",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Exudados",
+    "salePrice": 280,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Examen en fresco y tinción de Gram: Negativo a Diplococos Gram Negativos Intracelulares (Neisseria gonorrhoeae).",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Examen Directo de Hongos (KOH)",
+    "code": "KOH-DIR",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Tinciones",
+    "salePrice": 150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo a blastoconidias",
+      "Positivo a hifas tabicadas",
+      "Positivo a hifas y esporas"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (No se observan hifas, pseudomicelios ni blastoconidias tras digestión con KOH al 10%)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Hisopado de Manos (Control Microbiológico)",
+    "code": "HISOP-MAN",
+    "commercialCategory": "Microbiología",
+    "subclassification": "Exudados",
+    "salePrice": 150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "UFC/mano",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Recuento de mesófilos aerobios dentro de parámetros admisibles. Negativo a coliformes fecales y S. aureus.",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Citoquímico de Líquidos Corporales",
+    "code": "CITOQ-LIQ",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "General",
+    "salePrice": 550,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Examen físico (Aspecto, Color), Químico (Proteínas totales, Glucosa, LDH) y Recuento celular total con diferencial.",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Depuración de Creatinina en 24 Horas",
+    "code": "DEP-CREA",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mL/min",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "male",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 90.0,
+        "maxValue": 139.0
+      },
+      {
+        "patientType": "general",
+        "gender": "female",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 80.0,
+        "maxValue": 125.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Hombres: 90 a 139 mL/min | Mujeres: 80 a 125 mL/min (Ajustado por superficie corporal 1.73 m²)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Proteínas en Orina de 24 Horas",
+    "code": "PROT-24H",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 150.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 150 mg/24 horas (< 0.15 g/24h)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Microalbuminuria en Orina",
+    "code": "MICROALB",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 250,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 30.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normoalbuminuria: < 30 mg/24h | Microalbuminuria: 30 a 300 mg/24h | Macroalbuminuria: > 300 mg/24h",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Ácido Úrico en Orina de 24 Horas",
+    "code": "ACUR-24H",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Función Renal",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 250.0,
+        "maxValue": 750.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "250.0 a 750.0 mg/24 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Calcio en Orina de 24 Horas",
+    "code": "CA-24H",
+    "commercialCategory": "Electrolitos",
+    "subclassification": "Electrolitos en Orina",
+    "salePrice": 5000,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 100.0,
+        "maxValue": 300.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Dieta promedio: 100.0 a 300.0 mg/24 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Fósforo en Orina de 24 Horas",
+    "code": "P-24H",
+    "commercialCategory": "Electrolitos",
+    "subclassification": "Electrolitos en Orina",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 400.0,
+        "maxValue": 1300.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "400.0 a 1,300.0 mg/24 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Sodio en Orina de 24 Horas",
+    "code": "NA-24H",
+    "commercialCategory": "Electrolitos",
+    "subclassification": "Electrolitos en Orina",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mEq/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 40.0,
+        "maxValue": 220.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "40.0 a 220.0 mEq/24 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Potasio en Orina de 24 Horas",
+    "code": "K-24H",
+    "commercialCategory": "Electrolitos",
+    "subclassification": "Electrolitos en Orina",
+    "salePrice": 500,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mEq/24h",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 25.0,
+        "maxValue": 125.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "25.0 a 125.0 mEq/24 horas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba de Embarazo en Orina",
+    "code": "EMB-ORI",
+    "commercialCategory": "Uroanálisis",
+    "subclassification": "Examen Físico-Químico",
+    "salePrice": 150,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo (Sensibilidad: 25 mUI/mL)",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Citología Fecal (Leucocitos Fecales)",
+    "code": "CIT-FEC",
+    "commercialCategory": "Coprología",
+    "subclassification": "Examen Microscópico",
+    "salePrice": 350,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "leucocitos/campo",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Normal: < 5 leucocitos por campo. En caso de positividad se informa predominio: Polimorfonucleares (bacteriana/invasiva) o Mononucleares (viral/no invasiva).",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Parasitológico Seriado de Heces (Tres Muestras)",
+    "code": "SER-HEC",
+    "commercialCategory": "Coprología",
+    "subclassification": "Parasitología",
+    "salePrice": 450,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "text",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Negativo a quistes, trofozoítos y huevos de helmintos en las tres muestras analizadas",
+    "isProfileParameter": false
+  },
+  {
+    "name": "25-Hidroxivitamina D (Vitamina D3)",
+    "code": "VIT-D",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "General",
+    "salePrice": 1470,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "ng/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 30.0,
+        "maxValue": 100.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Deficiencia: < 20 ng/mL | Insuficiencia: 20 a 30 ng/mL | Suficiencia: 30 a 100 ng/mL | Toxicidad: > 100 ng/mL",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Vitamina B12 (Cobalamina)",
+    "code": "VIT-B12",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "General",
+    "salePrice": 1200,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "pg/mL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 200.0,
+        "maxValue": 900.0
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "200.0 a 900.0 pg/mL",
+    "isProfileParameter": false
   }
 ]
