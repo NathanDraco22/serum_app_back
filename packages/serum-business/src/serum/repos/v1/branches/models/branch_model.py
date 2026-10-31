@@ -5,6 +5,7 @@ class BranchBioanalyst(BaseModel):
     name: str
     title: str
     code: str
+    sealUrl: str | None = None
 
 
 class BaseBranch(BaseModel):

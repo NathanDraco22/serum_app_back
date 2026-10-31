@@ -51,7 +51,9 @@ def test_branch_bioanalyst_model():
             name="Lic. Carlos Martinez",
             title="BIOANALISTA CLINICO",
             code="Codigo MINSA 99112",
+            sealUrl="https://cdn.example.com/seals/carlos.png",
         )
     )
     assert update_dto.bioanalyst is not None
     assert update_dto.bioanalyst.name == "Lic. Carlos Martinez"
+    assert update_dto.bioanalyst.sealUrl == "https://cdn.example.com/seals/carlos.png"
