@@ -1,11 +1,22 @@
 from pydantic import BaseModel
 
+from serum.repos.v1.common.models.user_info import UserInfo
 
-class BranchBioanalyst(BaseModel):
+
+class BioanalystInfo(BaseModel):
     name: str
     title: str
     code: str
     sealUrl: str | None = None
+
+
+# Alias retrocompatible
+BranchBioanalyst = BioanalystInfo
+
+
+class AuxBioanalyst(BaseModel):
+    user: UserInfo
+    bioanalyst: BioanalystInfo
 
 
 class BaseBranch(BaseModel):
@@ -17,7 +28,8 @@ class BaseBranch(BaseModel):
     logoUrl: str | None = None
     imageUrl: str | None = None
     isoLogoUrl: str | None = None
-    bioanalyst: BranchBioanalyst | None = None
+    bioanalyst: BioanalystInfo | None = None
+    auxBio: list[AuxBioanalyst] = []
 
 
 class CreateBranch(BaseBranch):
@@ -33,7 +45,8 @@ class UpdateBranch(BaseModel):
     logoUrl: str | None = None
     imageUrl: str | None = None
     isoLogoUrl: str | None = None
-    bioanalyst: BranchBioanalyst | None = None
+    bioanalyst: BioanalystInfo | None = None
+    auxBio: list[AuxBioanalyst] | None = None
 
 
 class BranchInDb(BaseBranch):
