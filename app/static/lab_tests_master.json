@@ -1130,13 +1130,13 @@
     "unitOfMeasure": "",
     "referenceValues": [],
     "qualitativeOptions": [
-      "Normal",
       "Negativo",
+      "Normal",
       "+",
       "++",
       "+++"
     ],
-    "expectedQualitativeValue": "Normal",
+    "expectedQualitativeValue": "Negativo",
     "subclassification": "Examen Físico-Químico",
     "isProfileParameter": true
   },
