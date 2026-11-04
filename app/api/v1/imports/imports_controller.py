@@ -1,7 +1,12 @@
 from fastapi import HTTPException, status
-from pydantic import BaseModel, ConfigDict
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
-from serum.core.default_values import ImportCatalogResult, create_default_lab_tests
+from serum.core.default_values import (
+    ImportCatalogResult,
+    UpdateImportResult,
+    create_default_lab_tests,
+    update_default_lab_tests,
+)
 from serum.repos.v1.branches import BranchesRepository
 from serum.repos.v1.lab_test_accounts import (
     CreateLabTestAccount,
@@ -10,6 +15,19 @@ from serum.repos.v1.lab_test_accounts import (
     UpdateLabTestAccountCommercial,
 )
 from serum.repos.v1.lab_tests import LabTestsRepository
+
+
+class UpdateImportRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    overridePrice: bool = Field(
+        default=False,
+        validation_alias=AliasChoices("overridePrice", "override_price"),
+    )
+    updateLabTest: bool = Field(
+        default=True,
+        validation_alias=AliasChoices("updateLabTest", "update_lab_test"),
+    )
 
 
 class ImportBranchPricesRequest(BaseModel):
@@ -41,6 +59,26 @@ class ImportsController:
         """Activa o re-ejecuta la importación del catálogo por defecto para el tenant actual."""
         result = await create_default_lab_tests()
         return result
+
+    async def update_catalog(
+        self, request: UpdateImportRequest
+    ) -> UpdateImportResult:
+        """Actualiza y sincroniza las pruebas clínicas desde el catálogo maestro estático."""
+        if not request.updateLabTest:
+            return UpdateImportResult(
+                success=True,
+                message="No se seleccionó la actualización de pruebas de laboratorio (updateLabTest=False).",
+                totalProcessed=0,
+                updatedTestsCount=0,
+                createdTestsCount=0,
+                updatedAccountsCount=0,
+                createdAccountsCount=0,
+                skippedPricesCount=0,
+            )
+
+        return await update_default_lab_tests(
+            override_price=request.overridePrice
+        )
 
     async def import_branch_prices(
         self, request: ImportBranchPricesRequest

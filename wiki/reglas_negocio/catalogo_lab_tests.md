@@ -60,3 +60,19 @@ Las pruebas y packs médicos pertenecen a un catálogo clínico maestro (`lab_te
 - **Resolución Contextual en el POS**:
   - Los endpoints de consulta `GET /lab_tests?branch_id=...` y `GET /lab_tests/search/...` ejecutan un pipeline de agregación con `$lookup` hacia `lab_test_accounts`, proyectando el precio correspondiente a la sucursal activa en tiempo de ejecución.
 
+---
+
+## 4. Sincronización y Actualización Incremental (`POST /api/v1/imports/update-catalog`)
+
+Cuando se aplican mejoras, correcciones o adiciones en el catálogo estático maestro (`app/static/lab_tests_master.json`), se cuenta con el endpoint de actualización incremental para sincronizar la base de datos sin destruir colecciones ni borrar tarifas personalizadas:
+
+- **Request `UpdateImportRequest`**:
+  - `overridePrice: bool = False`: Si es `False` (comportamiento predeterminado y recomendado), **preserva intactos los precios existentes** (`salePrice`, `salePrice2`, `costPrice`) configurados por el usuario/laboratorio, actualizando únicamente nombres, categorías, subclasificaciones, opciones cualitativas, valores de referencia demográficos y relaciones hijas de packs. Si es `True`, sobreescribe también los precios con las tarifas del JSON maestro.
+  - `updateLabTest: bool = True`: Activa la sincronización del catálogo clínico de pruebas de laboratorio.
+- **Rutas Disponibles**:
+  - `POST /api/v1/imports/update-catalog`
+  - `POST /api/v1/imports/sync-catalog` (alias)
+- **Comportamiento ante Novedades**:
+  - Pruebas o perfiles nuevos que no existían en la base de datos son creados limpiamente con sus respectivas cuentas comerciales (`LabTestAccount`).
+  - Los packs actualizan dinámicamente sus `childTestIds` mapeando en caliente los `childTestCodes` estáticos contra los identificadores de la base de datos.
+

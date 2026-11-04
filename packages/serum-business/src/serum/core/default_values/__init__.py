@@ -14,6 +14,7 @@ from .create_default_roles import (
 )
 from .create_default_app_settings import create_default_app_settings
 from .create_default_lab_tests import ImportCatalogResult, create_default_lab_tests
+from .update_default_lab_tests import UpdateImportResult, update_default_lab_tests
 from .create_root_user import ROOT_PASSWORD_PLAIN, ROOT_USER_ID, ROOT_USERNAME, create_root_user
 
 __all__ = [
@@ -34,6 +35,8 @@ __all__ = [
     "create_root_user",
     "create_default_lab_tests",
     "ImportCatalogResult",
+    "update_default_lab_tests",
+    "UpdateImportResult",
     "create_default_app_settings",
 ]
 

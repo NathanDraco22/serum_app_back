@@ -21,3 +21,4 @@ class IncludedTest(BaseModel):
     qualitativeOptions: list[str] = []
     expectedQualitativeValue: str | None = None
     referenceText: str = ""
+    parentExamName: str | None = None

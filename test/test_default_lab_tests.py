@@ -34,7 +34,7 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
         # Lote 2: Uroanálisis (EGO)
         "COL-ORI", "ASP-ORI", "SED-ORI", "DEN-ORI", "PH-ORI", "LEU-ORI",
         "GLU-ORI", "PROT-ORI", "CET-ORI", "BIL-ORI", "SANG-ORI", "NIT-ORI",
-        "URO-ORI", "CEL-EPI", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
+        "URO-ORI", "CEL-EPI", "CEL-REN", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
         "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI", "EGO",
         # Lote 3: Coprología y Serología
         "COL-HEC", "CONS-HEC", "MUC-HEC", "PH-HEC", "PROT-HEC", "HB-HEC",
@@ -70,11 +70,11 @@ async def test_create_default_lab_tests_from_static_and_idempotency():
     # 3.3 Examen General de Orina
     pack_ego = tests_by_code["EGO"]
     assert pack_ego.isPack is True
-    assert len(pack_ego.childTestIds) == 23
+    assert len(pack_ego.childTestIds) == 24
     expected_ego_codes = [
         "COL-ORI", "ASP-ORI", "SED-ORI", "DEN-ORI", "PH-ORI", "LEU-ORI",
         "GLU-ORI", "PROT-ORI", "CET-ORI", "BIL-ORI", "SANG-ORI", "NIT-ORI",
-        "URO-ORI", "CEL-EPI", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
+        "URO-ORI", "CEL-EPI", "CEL-REN", "LEU-LIB", "LEU-AGR", "ERI-SED", "CRIS-ORI",
         "CIL-ORI", "BAC-ORI", "HIL-MUC", "EST-LEU", "LEV-ORI"
     ]
     assert set(pack_ego.childTestIds) == {tests_by_code[c].id for c in expected_ego_codes}
