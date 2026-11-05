@@ -16,12 +16,28 @@ class CashShiftsController:
         self.cash_shifts_repo = cash_shifts_repo
 
     async def open_shift(self, body: CreateCashShift) -> CashShiftInDb:
+        # Validación: Un usuario solo puede tener un único turno abierto a nivel global en todo el sistema
+        global_active = await self.cash_shifts_repo.get_current_shift(
+            body.userId, branch_id=None
+        )
+        if global_active is not None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"El usuario ya cuenta con un turno abierto activo (#{global_active.id}) en la sucursal '{global_active.branchName or global_active.branchId}'.",
+            )
         return await self.cash_shifts_repo.open_shift(body)
 
     async def get_current_shift(
-        self, user_id: str, branch_id: str | None = None
+        self,
+        user_id: str,
+        branch_id: str | None = None,
+        ignore_branch: bool = False,
     ) -> CashShiftInDb | None:
-        effective_branch = branch_id or serumCtx.get().branchId or None
+        effective_branch = (
+            None
+            if ignore_branch
+            else (branch_id or serumCtx.get().branchId or None)
+        )
         return await self.cash_shifts_repo.get_current_shift(
             user_id, branch_id=effective_branch
         )

@@ -23,9 +23,10 @@ async def open_cash_shift(body: CreateCashShift) -> CashShiftInDb:
 async def get_current_cash_shift(
     user_id: str = Query(...),
     branch_id: str | None = Query(None),
+    ignore_branch: bool = Query(False),
 ) -> CashShiftInDb | None:
     return await cash_shifts_controller.get_current_shift(
-        user_id, branch_id=branch_id
+        user_id, branch_id=branch_id, ignore_branch=ignore_branch
     )
 
 
