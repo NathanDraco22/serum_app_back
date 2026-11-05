@@ -1940,7 +1940,8 @@
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
     "subclassification": "Perfil Lipídico",
-    "isProfileParameter": true
+    "isProfileParameter": true,
+    "referenceText": "Bajo Riesgo: 3.0 - 3.6 %\nModerado Riesgo: 3.7 - 4.6 %\nAlto Riesgo: 4.7 - 5.6 %"
   },
   {
     "name": "Perfil Lipídico",
@@ -2570,7 +2571,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "INR Normal: 0.8 - 1.2 | INR Terapéutico (Anticoagulación oral): 2.0 - 3.0",
+    "referenceText": "INR Normal: 0.8 - 1.2\nINR Terapéutico (Anticoagulación oral): 2.0 - 3.0",
     "isProfileParameter": false
   },
   {
@@ -2790,7 +2791,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 0 a 15 mm/h | Mujeres: 0 a 20 mm/h | Niños: 0 a 10 mm/h",
+    "referenceText": "Hombres: 0 a 15 mm/h\nMujeres: 0 a 20 mm/h\nNiños: 0 a 10 mm/h",
     "isProfileParameter": false
   },
   {
@@ -2905,7 +2906,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Normal: 0 a 5 % | Sugestivo de rinitis alérgica: > 10 %",
+    "referenceText": "Normal: 0 a 5 %\nSugestivo de rinitis alérgica: > 10 %",
     "isProfileParameter": false
   },
   {
@@ -3015,7 +3016,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 3.5 a 7.2 mg/dL | Mujeres: 2.6 a 6.0 mg/dL | Niños: 2.0 a 5.5 mg/dL",
+    "referenceText": "Hombres: 3.5 a 7.2 mg/dL\nMujeres: 2.6 a 6.0 mg/dL\nNiños: 2.0 a 5.5 mg/dL",
     "isProfileParameter": false
   },
   {
@@ -3185,7 +3186,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 39 a 308 U/L | Mujeres: 26 a 192 U/L",
+    "referenceText": "Hombres: 39 a 308 U/L\nMujeres: 26 a 192 U/L",
     "isProfileParameter": false
   },
   {
@@ -3247,7 +3248,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 65 a 175 µg/dL | Mujeres: 50 a 170 µg/dL",
+    "referenceText": "Hombres: 65 a 175 µg/dL\nMujeres: 50 a 170 µg/dL",
     "isProfileParameter": false
   },
   {
@@ -3282,7 +3283,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 30 a 400 ng/mL | Mujeres: 15 a 150 ng/mL",
+    "referenceText": "Hombres: 30 a 400 ng/mL\nMujeres: 15 a 150 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -3392,7 +3393,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "< 75 años: < 125 pg/mL | >= 75 años: < 450 pg/mL",
+    "referenceText": "< 75 años: < 125 pg/mL\n>= 75 años: < 450 pg/mL",
     "isProfileParameter": false
   },
   {
@@ -3419,7 +3420,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Normal: < 140 mg/dL | Intolerancia a glucosa: 140 a 199 mg/dL | Diabetes: >= 200 mg/dL",
+    "referenceText": "Normal: < 140 mg/dL\nIntolerancia a glucosa: 140 a 199 mg/dL\nDiabetes: >= 200 mg/dL",
     "isProfileParameter": false
   },
   {
@@ -3437,7 +3438,7 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Basal (Ayunas): < 100 mg/dL | 1 Hora: < 180 mg/dL | 2 Horas: < 140 mg/dL",
+    "referenceText": "Basal (Ayunas): < 100 mg/dL\n1 Hora: < 180 mg/dL\n2 Horas: < 140 mg/dL",
     "isProfileParameter": false
   },
   {
@@ -3630,7 +3631,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 1.5 - 12.4 | Mujeres: Folicular 3.5 - 12.5; Pico 4.7 - 21.5; Lútea 1.7 - 7.7; Postmenopausia 25.8 - 134.8 mUI/mL",
+    "referenceText": "Hombres: 1.5 - 12.4\nMujeres: Folicular 3.5 - 12.5; Pico 4.7 - 21.5; Lútea 1.7 - 7.7; Postmenopausia 25.8 - 134.8 mUI/mL",
     "isProfileParameter": false
   },
   {
@@ -3665,7 +3666,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 1.7 - 8.6 | Mujeres: Folicular 2.4 - 12.6; Pico 14.0 - 95.6; Lútea 1.0 - 11.4; Postmenopausia 7.7 - 58.5 mUI/mL",
+    "referenceText": "Hombres: 1.7 - 8.6\nMujeres: Folicular 2.4 - 12.6; Pico 14.0 - 95.6; Lútea 1.0 - 11.4; Postmenopausia 7.7 - 58.5 mUI/mL",
     "isProfileParameter": false
   },
   {
@@ -3700,7 +3701,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: < 0.20 | Mujeres: Folicular < 0.89; Pico lúteo 1.8 - 24.0; Postmenopausia < 0.20 ng/mL",
+    "referenceText": "Hombres: < 0.20\nMujeres: Folicular < 0.89; Pico lúteo 1.8 - 24.0; Postmenopausia < 0.20 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -3735,7 +3736,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 300 a 1,000 ng/dL | Mujeres: 15 a 70 ng/dL",
+    "referenceText": "Hombres: 300 a 1,000 ng/dL\nMujeres: 15 a 70 ng/dL",
     "isProfileParameter": false
   },
   {
@@ -3770,7 +3771,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 9.0 a 30.0 pg/mL | Mujeres: 0.3 a 2.0 pg/mL",
+    "referenceText": "Hombres: 9.0 a 30.0 pg/mL\nMujeres: 0.3 a 2.0 pg/mL",
     "isProfileParameter": false
   },
   {
@@ -3805,7 +3806,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 4.0 - 15.2 ng/mL | Mujeres no embarazadas: 4.8 - 23.3 ng/mL | Embarazadas: 34 - 386 ng/mL",
+    "referenceText": "Hombres: 4.0 - 15.2 ng/mL\nMujeres no embarazadas: 4.8 - 23.3 ng/mL\nEmbarazadas: 34 - 386 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -3840,7 +3841,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 10 - 40 | Mujeres: Folicular 20 - 160; Pico 150 - 450; Lútea 40 - 220; Postmenopausia < 30 pg/mL",
+    "referenceText": "Hombres: 10 - 40\nMujeres: Folicular 20 - 160; Pico 150 - 450; Lútea 40 - 220; Postmenopausia < 30 pg/mL",
     "isProfileParameter": false
   },
   {
@@ -3983,7 +3984,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: < 8.4 pg/mL | Mujeres: < 5.0 pg/mL",
+    "referenceText": "Hombres: < 8.4 pg/mL\nMujeres: < 5.0 pg/mL",
     "isProfileParameter": false
   },
   {
@@ -4018,7 +4019,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 0.5 - 2.5 | Mujeres: Folicular 0.2 - 1.3; Lútea 1.0 - 4.5 ng/mL",
+    "referenceText": "Hombres: 0.5 - 2.5\nMujeres: Folicular 0.2 - 1.3; Lútea 1.0 - 4.5 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -4126,7 +4127,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Negativo: < 1.75 UI/L | Positivo: >= 1.75 UI/L",
+    "referenceText": "Negativo: < 1.75 UI/L\nPositivo: >= 1.75 UI/L",
     "isProfileParameter": false
   },
   {
@@ -4207,7 +4208,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Negativo: < 115 UI/mL | Positivo: >= 115 UI/mL",
+    "referenceText": "Negativo: < 115 UI/mL\nPositivo: >= 115 UI/mL",
     "isProfileParameter": false
   },
   {
@@ -4234,7 +4235,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Negativo: < 34 UI/mL | Positivo: >= 34 UI/mL",
+    "referenceText": "Negativo: < 34 UI/mL\nPositivo: >= 34 UI/mL",
     "isProfileParameter": false
   },
   {
@@ -4261,7 +4262,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Reserva fértil normal: 1.0 - 3.5 ng/mL | Baja reserva: < 1.0 ng/mL | SOP: > 3.5 ng/mL",
+    "referenceText": "Reserva fértil normal: 1.0 - 3.5 ng/mL\nBaja reserva: < 1.0 ng/mL\nSOP: > 3.5 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -4288,7 +4289,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "No gestantes: < 0.1 ng/mL | Gestantes: Valores estratificados por semana gestacional",
+    "referenceText": "No gestantes: < 0.1 ng/mL\nGestantes: Valores estratificados por semana gestacional",
     "isProfileParameter": false
   },
   {
@@ -4423,7 +4424,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "No fumadores: < 3.0 ng/mL | Fumadores: < 5.0 ng/mL",
+    "referenceText": "No fumadores: < 3.0 ng/mL\nFumadores: < 5.0 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -4585,7 +4586,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Adultos con tiroides intacta: 1.4 a 78.0 ng/mL | Post-tiroidectomía: < 0.2 ng/mL",
+    "referenceText": "Adultos con tiroides intacta: 1.4 a 78.0 ng/mL\nPost-tiroidectomía: < 0.2 ng/mL",
     "isProfileParameter": false
   },
   {
@@ -4861,7 +4862,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Negativo: < 20.0 U/mL | Positivo débil: 20 - 39 | Positivo moderado: 40 - 59 | Positivo fuerte: >= 60 U/mL",
+    "referenceText": "Negativo: < 20.0 U/mL\nPositivo débil: 20 - 39\nPositivo moderado: 40 - 59\nPositivo fuerte: >= 60 U/mL",
     "isProfileParameter": false
   },
   {
@@ -5477,7 +5478,7 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Tífico O: < 1:80 | Tífico H: < 1:80 | Paratífico A: < 1:80 | Paratífico B: < 1:80 | Brucella abortus: < 1:80 | Proteus OX-19: < 1:80",
+    "referenceText": "Tífico O: < 1:80\nTífico H: < 1:80\nParatífico A: < 1:80\nParatífico B: < 1:80\nBrucella abortus: < 1:80\nProteus OX-19: < 1:80",
     "isProfileParameter": false
   },
   {
@@ -5862,7 +5863,7 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Células guía (Clue cells): Negativo | Trichomonas vaginalis: Negativo | Levaduras: Negativo | Leucocitos: 0-5 por campo | Bacilos Gram positivos tipo Lactobacillus predominantes",
+    "referenceText": "Células guía (Clue cells): Negativo\nTrichomonas vaginalis: Negativo\nLevaduras: Negativo\nLeucocitos: 0-5 por campo\nBacilos Gram positivos tipo Lactobacillus predominantes",
     "isProfileParameter": false
   },
   {
@@ -5992,7 +5993,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Hombres: 90 a 139 mL/min | Mujeres: 80 a 125 mL/min (Ajustado por superficie corporal 1.73 m²)",
+    "referenceText": "Hombres: 90 a 139 mL/min\nMujeres: 80 a 125 mL/min (Ajustado por superficie corporal 1.73 m²)",
     "isProfileParameter": false
   },
   {
@@ -6046,7 +6047,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Normoalbuminuria: < 30 mg/24h | Microalbuminuria: 30 a 300 mg/24h | Macroalbuminuria: > 300 mg/24h",
+    "referenceText": "Normoalbuminuria: < 30 mg/24h\nMicroalbuminuria: 30 a 300 mg/24h\nMacroalbuminuria: > 300 mg/24h",
     "isProfileParameter": false
   },
   {
@@ -6265,7 +6266,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Deficiencia: < 20 ng/mL | Insuficiencia: 20 a 30 ng/mL | Suficiencia: 30 a 100 ng/mL | Toxicidad: > 100 ng/mL",
+    "referenceText": "Deficiencia: < 20 ng/mL\nInsuficiencia: 20 a 30 ng/mL\nSuficiencia: 30 a 100 ng/mL\nToxicidad: > 100 ng/mL",
     "isProfileParameter": false
   },
   {

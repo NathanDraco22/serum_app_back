@@ -94,3 +94,18 @@ Para registrar entradas y salidas extraordinarias de efectivo o fondos en el tur
    - Marca el movimiento con borrado lógico (`isDeleted = True`, `updatedAt = now`).
    - Registra un contra-asiento compensatorio inmutable en `CashTransactions` con prefijo `[Anulación de ingreso libre]` o `[Anulación de egreso libre]`.
 
+---
+
+## 6. Control de Turno Único Global y Concurrencia Multi-Sucursal
+
+Bajo la premisa *"La Persona es la Caja"*, un custodio físico solo puede encontrarse y operar en un único punto a la vez:
+
+1. **Unicidad Global de Turno Abierto**:
+   - Al invocar `POST /cash-shifts/open`, el controlador valida en la base de datos completa que el `userId` no cuente ya con un turno en estado `"OPEN"`, **sin importar en qué sucursal se haya registrado**.
+   - Si el usuario ya tiene un turno abierto en la sucursal matriz o en cualquier otra sede, la solicitud es rechazada inmediatamente con error `HTTP 400 Bad Request` indicando el folio del turno y la sucursal previa.
+2. **Consulta Transversal de Turno Activo (`ignore_branch`)**:
+   - En entornos multi-sucursal donde el cliente HTTP inyecta la cabecera `X-Branch-Id`, el endpoint `GET /cash-shifts/current` admite el parámetro booleano opcional `ignore_branch=True`.
+   - Cuando `ignore_branch=True`, el backend omite el contexto tenant de la cabecera y recupera el documento del turno abierto del usuario en la sucursal real donde fue originado, permitiendo que el cliente conozca si existe una discrepancia de sedes (`branch mismatch`).
+3. **Consistencia Contable de Operaciones**:
+   - Cada cobro de orden médica (`process_order_payment`) y cada movimiento libre (`process_cash_movement`) estampa en el recibo y en el Kardex inmutable la `branchId` correspondiente al turno que recibió o egresó los fondos, evitando que transacciones físicas de una gaveta queden contablemente descolocadas.
+
