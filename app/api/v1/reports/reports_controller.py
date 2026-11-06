@@ -41,7 +41,7 @@ class ReportsController:
         end_date: int,
         branch_id: str | None = None,
         source: str = "orders",
-        limit: int = 10,
+        limit: int = 300,
     ) -> LabTestsVolumeReportResponse:
         return await ReportsManager.get_lab_tests_volume_report(
             start_date=start_date,

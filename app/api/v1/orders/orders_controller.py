@@ -98,8 +98,20 @@ class OrdersController:
                 detail="Una orden bloqueada solo puede ser aprobada a través del endpoint /approve",
             )
 
-        # Si se modifican items, re-evaluar precios y bloqueo si la orden no está previamente aprobada
+        # Si se modifican items, validar que no tenga pagos registrados ni esté completada
         if body.items is not None:
+
+            if order.paidAmount > 0:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="No se pueden modificar los exámenes de una orden con pagos registrados",
+                )
+            if order.status == "completed":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="No se pueden modificar los exámenes de una orden completada",
+                )
+
             has_modified_price = any(
                 item.originalPrice > 0 and item.salePriceApplied != item.originalPrice
                 for item in body.items

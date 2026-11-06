@@ -71,6 +71,8 @@ async def generate_top_doctors_report(
             )
         )
 
+    slice_limit = None if limit <= 0 else limit
+
     for b_id, d_list in branch_doctors.items():
         sorted_docs = sorted(
             d_list, key=lambda x: (x.totalOrders, x.totalRevenue), reverse=True
@@ -79,7 +81,7 @@ async def generate_top_doctors_report(
             TopDoctorsBranchReport(
                 branchId=b_id,
                 branchName=branches_map.get(b_id, f"Sucursal {b_id}"),
-                doctors=sorted_docs[:limit],
+                doctors=sorted_docs[:slice_limit],
             )
         )
 
@@ -92,7 +94,7 @@ async def generate_top_doctors_report(
     summary = TopDoctorsSummary(
         totalOrders=total_orders_global,
         totalRevenue=total_revenue_global,
-        topDoctors=sorted_global[:limit],
+        topDoctors=sorted_global[:slice_limit],
     )
 
     return TopDoctorsReportResponse(

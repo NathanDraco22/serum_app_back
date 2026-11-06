@@ -37,7 +37,7 @@ async def get_top_doctors_report(
     end_date: int = Query(..., description="Timestamp de fin en milisegundos"),
     branch_id: str | None = Query(None, description="ID opcional de sucursal"),
     limit: int = Query(
-        10, ge=1, le=100, description="Cantidad máxima de médicos a listar"
+        10, ge=0, le=1000, description="Cantidad máxima de médicos a listar (0 para sin límite)"
     ),
 ) -> TopDoctorsReportResponse:
     """Reporte de médicos referentes: Cantidad de órdenes y facturación generada.
@@ -62,7 +62,7 @@ async def get_lab_tests_volume_report(
         description="Origen de datos: 'orders' para exámenes realizados o 'quotations' para cotizaciones",
     ),
     limit: int = Query(
-        10, ge=1, le=100, description="Cantidad máxima de pruebas a listar"
+        300, ge=0, le=1000, description="Cantidad máxima de pruebas a listar (0 para sin límite)"
     ),
 ) -> LabTestsVolumeReportResponse:
     """Reporte de demanda de exámenes: Pruebas y paquetes más solicitados o cotizados."""

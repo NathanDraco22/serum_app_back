@@ -17,7 +17,7 @@ async def generate_lab_tests_volume_report(
     end_date: int,
     branch_id: str | None = None,
     source: str = "orders",
-    limit: int = 10,
+    limit: int = 300,
 ) -> LabTestsVolumeReportResponse:
     branches_map = await get_branches_map()
 
@@ -82,6 +82,8 @@ async def generate_lab_tests_volume_report(
             )
         )
 
+    slice_limit = None if limit <= 0 else limit
+
     for b_id, t_list in branch_tests.items():
         sorted_tests = sorted(
             t_list,
@@ -92,7 +94,7 @@ async def generate_lab_tests_volume_report(
             LabTestsVolumeBranchReport(
                 branchId=b_id,
                 branchName=branches_map.get(b_id, f"Sucursal {b_id}"),
-                tests=sorted_tests[:limit],
+                tests=sorted_tests[:slice_limit],
             )
         )
 
@@ -105,7 +107,7 @@ async def generate_lab_tests_volume_report(
     summary = LabTestsVolumeSummary(
         totalTestsCount=total_tests_global,
         totalRevenue=total_revenue_global,
-        topTests=sorted_global[:limit],
+        topTests=sorted_global[:slice_limit],
     )
 
     return LabTestsVolumeReportResponse(
