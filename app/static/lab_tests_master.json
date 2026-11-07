@@ -6373,5 +6373,142 @@
     "expectedQualitativeValue": null,
     "subclassification": "Sedimento Microscópico",
     "isProfileParameter": true
+  },
+  {
+    "name": "Prueba Rápida Antígenos SARS-CoV-2",
+    "code": "AG-SARS",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba Rápida Antígeno Influenza A+B",
+    "code": "AG-FLU",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "A: Positivo B: Negativo",
+      "A: Negativo B: Positivo",
+      "A: Positivo B: Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba Rápida Adenovirus",
+    "code": "AG-ADENO",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba Rápida Antígeno Virus Sincitial (RSV)",
+    "code": "AG-RSV",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Prueba Rápida Antígeno M. pneumoniae (M. Neomonia)",
+    "code": "AG-MPNEU",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo",
+    "isProfileParameter": false
+  },
+  {
+    "name": "Panel Respiratorio",
+    "code": "PANEL-RESP",
+    "commercialCategory": "Inmunología",
+    "subclassification": "Marcadores Infecciosos",
+    "salePrice": 130000,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "AG-SARS",
+      "AG-FLU",
+      "AG-ADENO",
+      "AG-RSV",
+      "AG-MPNEU"
+    ],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Panel viral y bacteriano respiratorio por inmunocromatografía rápida",
+    "isProfileParameter": false
   }
 ]

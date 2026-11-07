@@ -30,6 +30,7 @@ class BaseBranch(BaseModel):
     isoLogoUrl: str | None = None
     bioanalyst: BioanalystInfo | None = None
     auxBio: list[AuxBioanalyst] = []
+    autoCalculateFormulas: bool = True
 
 
 class CreateBranch(BaseBranch):
@@ -47,6 +48,7 @@ class UpdateBranch(BaseModel):
     isoLogoUrl: str | None = None
     bioanalyst: BioanalystInfo | None = None
     auxBio: list[AuxBioanalyst] | None = None
+    autoCalculateFormulas: bool | None = None
 
 
 class BranchInDb(BaseBranch):
