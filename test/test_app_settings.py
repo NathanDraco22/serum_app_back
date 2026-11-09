@@ -33,6 +33,7 @@ async def test_app_settings_lifecycle_and_endpoints():
     assert current.useCost is False
     assert current.usePrice2 is False
     assert current.allowEditPrice is False
+    assert current.currency == "NIO"
     assert current.createdAt > 0
 
     # 4. Validar que AppSettingsTool en memoria tiene los mismos valores
@@ -42,6 +43,7 @@ async def test_app_settings_lifecycle_and_endpoints():
     assert tool_settings.useCost is False
     assert tool_settings.usePrice2 is False
     assert tool_settings.allowEditPrice is False
+    assert tool_settings.currency == "NIO"
 
     # 5. Probar endpoints REST con AsyncClient
     transport = ASGITransport(app=app)
@@ -57,12 +59,14 @@ async def test_app_settings_lifecycle_and_endpoints():
         assert data["useCost"] is False
         assert data["usePrice2"] is False
         assert data["allowEditPrice"] is False
+        assert data["currency"] == "NIO"
 
         # PATCH /api/v1/app-settings/Default
         patch_body = {
             "useCost": True,
             "usePrice2": True,
             "allowEditPrice": True,
+            "currency": "USD",
         }
         res_patch = await ac.patch("/api/v1/app-settings/Default", json=patch_body)
         assert res_patch.status_code == 200
@@ -70,6 +74,7 @@ async def test_app_settings_lifecycle_and_endpoints():
         assert patched["useCost"] is True
         assert patched["usePrice2"] is True
         assert patched["allowEditPrice"] is True
+        assert patched["currency"] == "USD"
         assert patched["updatedAt"] is not None
 
         # Verificar que el caché en AppSettingsTool se refrescó
@@ -77,14 +82,28 @@ async def test_app_settings_lifecycle_and_endpoints():
         assert cached_after_patch.useCost is True
         assert cached_after_patch.usePrice2 is True
         assert cached_after_patch.allowEditPrice is True
+        assert cached_after_patch.currency == "USD"
 
-        # Restablecer a False y verificar
+        # Rechazar una moneda fuera del catálogo soportado
+        res_invalid = await ac.patch(
+            "/api/v1/app-settings/Default",
+            json={"currency": "BTC"},
+        )
+        assert res_invalid.status_code == 422
+
+        # Restablecer a False/NIO y verificar
         res_reset = await ac.patch(
             "/api/v1/app-settings/Default",
-            json={"useCost": False, "usePrice2": False, "allowEditPrice": False},
+            json={
+                "useCost": False,
+                "usePrice2": False,
+                "allowEditPrice": False,
+                "currency": "NIO",
+            },
         )
         assert res_reset.status_code == 200
         reset_data = res_reset.json()
         assert reset_data["useCost"] is False
         assert reset_data["usePrice2"] is False
         assert reset_data["allowEditPrice"] is False
+        assert reset_data["currency"] == "NIO"

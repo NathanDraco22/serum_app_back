@@ -129,7 +129,7 @@ El aprovisionamiento se ejecuta en orden estratégico para que las cuentas de ac
 2. **Roles del Sistema**: Inicializa los roles por defecto (`Admin` y `Operador`).
 3. **Usuario Root y Propietario (`Admin`)**: Crea de inmediato la cuenta del propietario con nivel de acceso máximo (`accessLevel: 5`) asignada a la sucursal principal para permitir inicio de sesión sin demoras.
 4. **Caja Registradora Principal**: Crea la caja física inicial (`isDefault: True`, `cashBalance: 0`, `isOpen: False`).
-5. **Configuraciones de Aplicación (`AppSettings`)**: Crea la configuración singleton del laboratorio (`useCost`, `usePrice2`, `allowEditPrice`).
+5. **Configuraciones de Aplicación (`AppSettings`)**: Crea la configuración singleton del laboratorio (`useCost`, `usePrice2`, `allowEditPrice`, `currency="NIO"`).
 6. **Índices de Colección en Paralelo (`MongoService.create_tenant_indexes`)**:
    - `CountersCollection`, `DoctorsCollection`, `PatientsCollection`, `LabTestsCollection`, `LabTestAccountsCollection`, `ApiKeysCollection` e índices analíticos de reportes ejecutados concurrentemente con `asyncio.gather`.
 7. **Catálogo de Pruebas Clínicas (Desacoplado 100% bajo demanda)**:

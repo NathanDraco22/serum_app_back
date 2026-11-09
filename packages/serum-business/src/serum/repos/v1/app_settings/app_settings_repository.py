@@ -69,7 +69,7 @@ class AppSettingsRepository:
     async def update_app_setting_by_id(
         self, app_setting_id: str, app_setting: UpdateAppSetting
     ) -> AppSettingInDb | None:
-        update_data = app_setting.model_dump(exclude_unset=True)
+        update_data = app_setting.model_dump(exclude_unset=True, exclude_none=True)
         if not update_data:
             return await self.get_app_setting_by_id(app_setting_id)
 

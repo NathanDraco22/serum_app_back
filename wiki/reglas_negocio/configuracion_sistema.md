@@ -1,8 +1,8 @@
 ---
 type: doc
 title: Reglas de Negocio — Configuración Global del Sistema (AppSettings)
-description: Reglas operativas y comerciales del módulo AppSettings, valores por defecto en False, inicialización en lifespan y sincronización en memoria.
-tags: [app_settings, configuration, business_rules, onion, lifespan]
+description: Reglas operativas y comerciales del módulo AppSettings, valores por defecto, moneda global, inicialización en lifespan y sincronización en memoria.
+tags: [app_settings, configuration, currency, business_rules, onion, lifespan]
 timestamp: 2026-10-16T18:00:00Z
 ---
 
@@ -31,7 +31,7 @@ flowchart TD
 
 ## 2. Parámetros Operativos del Sistema
 
-Por requerimiento de seguridad operativa, **todos los parámetros nacen desactivados (`False`) por defecto**:
+Por requerimiento de seguridad operativa, **todos los parámetros booleanos nacen desactivados (`False`) por defecto**. La moneda nace en `NIO`:
 
 | Parámetro | Tipo | Valor por Defecto | Descripción |
 | :--- | :--- | :--- | :--- |
@@ -39,6 +39,7 @@ Por requerimiento de seguridad operativa, **todos los parámetros nacen desactiv
 | `useCost` | `bool` | `False` | **Usar Costo:** Activa o desactiva la captura, visualización y cálculo de costos (`costPrice`) de reactivos e insumos en el catálogo clínico (`LabTest` / `LabTestAccount`). |
 | `usePrice2` | `bool` | `False` | **Usar Precio 2:** Habilita la lista secundaria de precios (`salePrice2`) para convenios, aseguradoras y médicos referentes en el catálogo, cotizaciones y órdenes médicas. |
 | `allowEditPrice` | `bool` | `False` | **Permitir Editar Precios:** Autoriza a los operadores de recepción y caja a editar manualmente el precio unitario final al formular órdenes o cotizaciones en el mostrador. |
+| `currency` | `CurrencyCode` | `"NIO"` | **Moneda global de presentación:** símbolo usado en pantalla, tickets, PDFs y reportes. Catálogo: `NIO`, `USD`, `HNL`, `GTQ`, `CRC`, `COP`, `MXN`, `EUR`. No convierte montos históricos. |
 | `createdAt` | `int` | Unix ms | Marca temporal de creación en milisegundos. |
 | `updatedAt` | `int \| None` | `None` | Marca temporal de última modificación en milisegundos. |
 
@@ -48,7 +49,8 @@ Por requerimiento de seguridad operativa, **todos los parámetros nacen desactiv
 
 - **Función:** `create_default_app_settings()` en `app/core/default_values/create_default_app_settings.py`.
 - **Ejecución:** En `app/core/services_initializer.py`, durante el arranque del servidor (`lifespan` en `app_lifespan.py`).
-- **Idempotencia:** Si la colección `AppSettings` no contiene el registro `"Default"`, se inicializa atómicamente con los valores en `False` mediante un `$setOnInsert` (`upsert=True`) en MongoDB.
+- **Idempotencia:** Si la colección `AppSettings` no contiene el registro `"Default"`, se inicializa atómicamente con los valores en `False` y `currency="NIO"` mediante un `$setOnInsert` (`upsert=True`) en MongoDB.
+- **Documentos previos:** los registros existentes sin el campo `currency` se leen con el default `"NIO"` de Pydantic; el campo se materializa en el siguiente `PATCH`.
 - **Calentamiento de Memoria:** Inmediatamente después de inicializar la base de datos, se ejecuta `AppSettingsTool().refresh_current_app_settings()` para pre-cargar la configuración activa en RAM.
 
 ---
@@ -72,7 +74,7 @@ Router: `app/api/v1/app_settings/app_settings_router.py`
 | `GET` | `/api/v1/app-settings` | `ListResponse[AppSettingInDb]` | Lista todas las configuraciones registradas. |
 | `GET` | `/api/v1/app-settings/{id}` | `AppSettingInDb` | Consulta la configuración por identificador (ej. `"Default"`). |
 | `POST` | `/api/v1/app-settings` | `AppSettingInDb` | Crea un nuevo registro de configuración a partir de `CreateAppSetting`. |
-| `PATCH` | `/api/v1/app-settings/{id}` | `AppSettingInDb` | Actualiza parcialmente campos (`useCost`, `usePrice2`, `allowEditPrice`), sella `updatedAt` y refresca el caché de `AppSettingsTool`. |
+| `PATCH` | `/api/v1/app-settings/{id}` | `AppSettingInDb` | Actualiza parcialmente campos (`useCost`, `usePrice2`, `allowEditPrice`, `currency`), sella `updatedAt` y refresca el caché de `AppSettingsTool`. |
 | `DELETE` | `/api/v1/app-settings/{id}` | `AppSettingInDb` | Elimina la configuración por `id` y refresca el caché. |
 
 ---
@@ -86,4 +88,11 @@ Router: `app/api/v1/app_settings/app_settings_router.py`
   final useCost = context.watch<AppSettingsCubit>().useCost;
   final usePrice2 = context.watch<AppSettingsCubit>().usePrice2;
   final allowEditPrice = context.watch<AppSettingsCubit>().allowEditPrice;
+  final currency = context.watch<AppSettingsCubit>().currency;
   ```
+- **Moneda global:** `AppSettingsCubit` registra un `CurrencyResolver` en `NumberFormatter`
+  (`configureCurrencyResolver(() => currency)`). Todos los formatters puros de
+  `serum_business`, los PDFs y `serum_mobile` leen la moneda vigente sin setters.
+  El selector está en **Administración ➔ Configuración del sistema** y advierte que
+  el cambio es solo de presentación: no convierte montos históricos.
+  Ver [Formatter Global con Resolver Inyectado](/wiki/convenciones/global-formatter-resolver.md).

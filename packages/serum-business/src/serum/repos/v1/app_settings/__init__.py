@@ -4,6 +4,7 @@ from .models.app_setting_model import (
     AppSettingInDb,
     BaseAppSetting,
     CreateAppSetting,
+    CurrencyCode,
     UpdateAppSetting,
 )
 
@@ -14,4 +15,5 @@ __all__ = [
     "CreateAppSetting",
     "UpdateAppSetting",
     "AppSettingInDb",
+    "CurrencyCode",
 ]

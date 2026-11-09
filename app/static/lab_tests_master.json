@@ -2548,30 +2548,25 @@
     "isProfileParameter": false
   },
   {
-    "name": "Tiempo de Protrombina (TP / INR)",
+    "name": "INR + TP",
     "code": "TP-INR",
     "commercialCategory": "Hematología",
     "subclassification": "Serie Plaquetaria / Coagulación",
     "salePrice": 17000,
     "salePrice2": 0,
     "currency": "USD",
-    "isPack": false,
-    "childTestIds": [],
-    "dataType": "numeric",
-    "unitOfMeasure": "segundos",
-    "referenceValues": [
-      {
-        "patientType": "general",
-        "gender": "both",
-        "minAgeDays": 0,
-        "maxAgeDays": 43800,
-        "minValue": 11.0,
-        "maxValue": 13.5
-      }
+    "isPack": true,
+    "childTestCodes": [
+      "TP",
+      "INR"
     ],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "INR Normal: 0.8 - 1.2\nINR Terapéutico (Anticoagulación oral): 2.0 - 3.0",
+    "referenceText": "Pruebas de Coagulación: Tiempo de Protrombina (TP) e INR",
     "isProfileParameter": false
   },
   {
@@ -6510,5 +6505,61 @@
     "expectedQualitativeValue": null,
     "referenceText": "Panel viral y bacteriano respiratorio por inmunocromatografía rápida",
     "isProfileParameter": false
+  },
+  {
+    "name": "Tiempo de Protrombina (TP)",
+    "code": "TP",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "Segundos",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 11.1,
+        "maxValue": 14.3
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Valores de referencia: 11.1 a 14.3 Segundos",
+    "isProfileParameter": true
+  },
+  {
+    "name": "INR",
+    "code": "INR",
+    "commercialCategory": "Hematología",
+    "subclassification": "Serie Plaquetaria / Coagulación",
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.9,
+        "maxValue": 1.3
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Paciente sanos: 0.9 - 1.3\nPaciente con tratamiento: 2.0 - 3.0",
+    "isProfileParameter": true
   }
 ]
