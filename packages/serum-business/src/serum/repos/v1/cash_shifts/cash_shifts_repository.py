@@ -1,4 +1,7 @@
+import asyncio
 from typing import Any
+
+from pymongo.errors import OperationFailure
 
 from serum.core.counter_manager import CounterManager
 from serum.tools.time_tools import TimeTools
@@ -10,7 +13,11 @@ from serum.core.exceptions import (
 )
 from serum.repos.v1.cash_transactions import CashTransactionInDb
 from serum.repos.v1.common.models.user_info import UserInfo
-from serum.services.mongo_collections.v1 import CashTransactionsCollection
+from serum.services.mongo_collections.v1 import (
+    CashTransactionsCollection,
+    ReceiptsCollection,
+)
+from serum.services.mongo_service import MongoService
 from serum.tools.uuid_tool import UuidTool
 
 from .data.cash_shifts_datasource import CashShiftsDataSource
@@ -219,85 +226,114 @@ class CashShiftsRepository:
         close_data: CloseCashShift,
         user_id: str | None = None,
     ) -> CashShiftInDb:
-        result = await self.cash_shifts_ds.get_cash_shift_by_id(shift_id)
-        if result is None:
-            raise CashShiftNotFound()
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                return await self._close_shift_transaction(
+                    shift_id, close_data, user_id
+                )
+            except OperationFailure as exc:
+                if exc.code == 112 and attempt < max_retries - 1:
+                    await asyncio.sleep(0.2)
+                    continue
+                raise
 
-        shift = CashShiftInDb.model_validate(result)
-        if user_id is not None and shift.userId != user_id:
-            raise CashShiftNotFound()
+        raise RuntimeError("No se pudo cerrar el turno por conflictos concurrentes")
 
-        if shift.status != "OPEN":
-            raise CashShiftAlreadyClosed()
+    async def _close_shift_transaction(
+        self,
+        shift_id: str,
+        close_data: CloseCashShift,
+        user_id: str | None,
+    ) -> CashShiftInDb:
+        mongo_client = MongoService().client
 
-        diff = close_data.declaredCash - (shift.initialBalance + shift.cashBalance)
-        now = TimeTools.get_now_in_milliseconds()
-        total_cash_in_drawer = shift.initialBalance + shift.cashBalance
+        async with mongo_client.start_session() as session:
+            async with await session.start_transaction():
+                async with session.bind(end_session=False):
+                    result = await self.cash_shifts_ds.get_cash_shift_by_id(
+                        shift_id, session=session
+                    )
+                    if result is None:
+                        raise CashShiftNotFound()
 
-        # Consolidar transferencias bancarias por banco emisor
-        bank_transfers: dict[str, int] = {}
-        try:
-            from serum.services.mongo_collections.v1 import ReceiptsCollection
-            receipts_col = ReceiptsCollection.get_instance()._collection
-            cursor = receipts_col.find(
-                {
-                    "shiftId": shift_id,
-                    "paymentMethod": "transfer",
-                    "isDeleted": {"$ne": True},
-                },
-                {"bank": 1, "amount": 1},
-            )
-            transfer_docs = await cursor.to_list(length=None)
-            await cursor.close()
-            for doc in transfer_docs:
-                b_name = (doc.get("bank") or "Otros").strip()
-                if not b_name:
-                    b_name = "Otros"
-                bank_transfers[b_name] = bank_transfers.get(b_name, 0) + int(doc.get("amount", 0))
-        except Exception:
-            pass
+                    shift = CashShiftInDb.model_validate(result)
+                    if user_id is not None and shift.userId != user_id:
+                        raise CashShiftNotFound()
 
-        update_dict: dict[str, Any] = {
-            "status": "CLOSED",
-            "closedAt": now,
-            "declaredCash": close_data.declaredCash,
-            "difference": diff,
-            "bankTransfers": bank_transfers,
-            "updatedAt": now,
-        }
-        if close_data.notes:
-            update_dict["notes"] = close_data.notes
+                    if shift.status != "OPEN":
+                        raise CashShiftAlreadyClosed()
 
-        updated = await self.cash_shifts_ds.update_cash_shift_by_id(
-            shift_id, update_dict
-        )
-        if updated is None:
-            raise CashShiftNotFound()
+                    diff = close_data.declaredCash - (
+                        shift.initialBalance + shift.cashBalance
+                    )
+                    now = TimeTools.get_now_in_milliseconds()
+                    total_cash_in_drawer = shift.initialBalance + shift.cashBalance
 
-        # Registrar transacción de cierre y arqueo en el Kardex
-        closing_tx = CashTransactionInDb(
-            id=UuidTool.generate_uuid(),
-            shiftId=shift_id,
-            registerId=None,
-            branchId=shift.branchId,
-            flowType="out",
-            subType="closing",
-            paymentMethod="cash",
-            amount=total_cash_in_drawer,
-            resultingBalance=0,
-            concept="Cierre y arqueo de turno",
-            referenceId=shift_id,
-            performedBy=UserInfo(
-                id=shift.userId,
-                name=shift.userName or "Usuario",
-            ),
-            createdAt=now,
-            updatedAt=None,
-            isDeleted=False,
-        )
-        await CashTransactionsCollection.get_instance().create_cash_transaction(
-            closing_tx.model_dump()
-        )
+                    # Consolidar transferencias bancarias por banco emisor
+                    bank_transfers: dict[str, int] = {}
+                    receipts_col = ReceiptsCollection.get_instance()._collection
+                    cursor = receipts_col.find(
+                        {
+                            "shiftId": shift_id,
+                            "paymentMethod": "transfer",
+                            "isDeleted": {"$ne": True},
+                        },
+                        {"bank": 1, "amount": 1},
+                        session=session,
+                    )
+                    transfer_docs = await cursor.to_list(length=None)
+                    await cursor.close()
+                    for doc in transfer_docs:
+                        bank_name = (doc.get("bank") or "Otros").strip()
+                        if not bank_name:
+                            bank_name = "Otros"
+                        bank_transfers[bank_name] = (
+                            bank_transfers.get(bank_name, 0)
+                            + int(doc.get("amount", 0))
+                        )
+
+                    update_dict: dict[str, Any] = {
+                        "status": "CLOSED",
+                        "closedAt": now,
+                        "declaredCash": close_data.declaredCash,
+                        "difference": diff,
+                        "bankTransfers": bank_transfers,
+                        "updatedAt": now,
+                    }
+                    if close_data.notes:
+                        update_dict["notes"] = close_data.notes
+
+                    updated = await self.cash_shifts_ds.close_cash_shift_atomic(
+                        shift_id, update_dict, session=session
+                    )
+                    if updated is None:
+                        raise CashShiftAlreadyClosed()
+
+                    # Registrar transacción de cierre y arqueo en el Kardex
+                    closing_tx = CashTransactionInDb(
+                        id=UuidTool.generate_uuid(),
+                        shiftId=shift_id,
+                        registerId=None,
+                        branchId=shift.branchId,
+                        flowType="out",
+                        subType="closing",
+                        paymentMethod="cash",
+                        amount=total_cash_in_drawer,
+                        resultingBalance=0,
+                        concept="Cierre y arqueo de turno",
+                        referenceId=shift_id,
+                        performedBy=UserInfo(
+                            id=shift.userId,
+                            name=shift.userName or "Usuario",
+                        ),
+                        createdAt=now,
+                        updatedAt=None,
+                        isDeleted=False,
+                    )
+                    await CashTransactionsCollection.get_instance().create_cash_transaction(
+                        closing_tx.model_dump(), session=session
+                    )
 
         await self._enrich_shifts([updated])
         return CashShiftInDb.model_validate(updated)

@@ -84,11 +84,9 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                         pay_intent.amount,
                         session=session,
                     )
-                    resulting_balance = (
-                        updated_shift.get("totalBalance", 0)
-                        if updated_shift
-                        else 0
-                    )
+                    if updated_shift is None:
+                        raise CashShiftNotOpen()
+                    resulting_balance = updated_shift.get("totalBalance", 0)
                 elif pay_intent.registerId:
                     register_data = await registers_col.fetch_cash_register_by_id(
                         pay_intent.registerId, session=session
@@ -105,11 +103,9 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                         pay_intent.amount,
                         session=session,
                     )
-                    resulting_balance = (
-                        updated_register.get("totalBalance", 0)
-                        if updated_register
-                        else 0
-                    )
+                    if updated_register is None:
+                        raise CashRegisterNotOpen()
+                    resulting_balance = updated_register.get("totalBalance", 0)
                 else:
                     raise CashShiftNotFound()
 

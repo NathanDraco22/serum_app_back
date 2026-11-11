@@ -114,3 +114,17 @@ class CashShiftsCollection(BaseMongoCollection):
             return_document=ReturnDocument.AFTER,
         )
         return result
+
+    async def close_cash_shift_atomic(
+        self,
+        shift_id: str,
+        closing_data: dict[str, Any],
+        session: Any = None,
+    ) -> dict[str, Any] | None:
+        collection = self._collection
+        return await collection.find_one_and_update(
+            {"id": shift_id, "status": "OPEN", "isDeleted": {"$ne": True}},
+            {"$set": closing_data},
+            session=session,
+            return_document=ReturnDocument.AFTER,
+        )

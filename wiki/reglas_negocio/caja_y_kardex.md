@@ -26,6 +26,7 @@ El módulo financiero garantiza la trazabilidad absoluta del flujo de dinero y l
    - El sistema calcula la diferencia automáticamente:
      $$\text{difference} = \text{declaredCash} - (\text{initialBalance} + \text{cashBalance})$$
    - El turno se sella con estado `"CLOSED"` y preserva el histórico completo de arqueos para auditoría gerencial sin modificar el documento del usuario.
+   - El cierre se ejecuta en una transacción atómica junto con el asiento de kardex. Si un cobro concurrente modifica el turno, el cierre reintenta y recalcula el arqueo con el saldo actualizado.
 
 ---
 

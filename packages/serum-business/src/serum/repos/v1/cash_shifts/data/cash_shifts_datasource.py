@@ -17,10 +17,10 @@ class CashShiftsDataSource:
         return await collection.fetch_all_cash_shifts(filter_dict)
 
     async def get_cash_shift_by_id(
-        self, cash_shift_id: str
+        self, cash_shift_id: str, session: Any = None
     ) -> dict[str, Any] | None:
         collection = CashShiftsCollection.get_instance()
-        return await collection.fetch_cash_shift_by_id(cash_shift_id)
+        return await collection.fetch_cash_shift_by_id(cash_shift_id, session=session)
 
     async def get_active_shift_by_user(
         self, user_id: str, branch_id: str | None = None
@@ -45,3 +45,14 @@ class CashShiftsDataSource:
     ) -> dict[str, Any] | None:
         collection = CashShiftsCollection.get_instance()
         return await collection.add_to_balance(shift_id, payment_method, amount)
+
+    async def close_cash_shift_atomic(
+        self,
+        shift_id: str,
+        closing_data: dict[str, Any],
+        session: Any = None,
+    ) -> dict[str, Any] | None:
+        collection = CashShiftsCollection.get_instance()
+        return await collection.close_cash_shift_atomic(
+            shift_id, closing_data, session=session
+        )
