@@ -22,6 +22,7 @@ class AuxBioanalyst(BaseModel):
 class BaseBranch(BaseModel):
     name: str
     address: str
+    city: str = ""
     phone: str
     email: str | None = None
     facebook: str | None = None
@@ -40,6 +41,7 @@ class CreateBranch(BaseBranch):
 class UpdateBranch(BaseModel):
     name: str | None = None
     address: str | None = None
+    city: str | None = None
     phone: str | None = None
     email: str | None = None
     facebook: str | None = None

@@ -11,14 +11,14 @@ from serum.repos.v1.common.models.user_info import UserInfo
 
 def test_branch_bioanalyst_model():
     # 1. Crear sucursal sin bioanalista (retrocompatibilidad)
-    branch_data = {
-        "name": "Sucursal Matriz",
-        "address": "Calle Central #123",
-        "phone": "555-0101",
-    }
-    create_dto = CreateBranch(**branch_data)
+    create_dto = CreateBranch(
+        name="Sucursal Matriz",
+        address="Calle Central #123",
+        phone="555-0101",
+    )
     assert create_dto.bioanalyst is None
     assert create_dto.auxBio == []
+    assert create_dto.city == ""
 
     branch_db = BranchInDb(
         id="branch-001",
@@ -50,7 +50,9 @@ def test_branch_bioanalyst_model():
     )
 
     create_with_bio = CreateBranch(
-        **branch_data,
+        name="Sucursal Matriz",
+        address="Calle Central #123",
+        phone="555-0101",
         bioanalyst=bioanalyst,
         auxBio=[aux_bio],
     )
@@ -84,3 +86,46 @@ def test_branch_bioanalyst_model():
     assert update_dto.bioanalyst.sealUrl == "https://cdn.example.com/seals/carlos.png"
     assert update_dto.auxBio is not None
     assert len(update_dto.auxBio) == 1
+
+
+def test_branch_city_model():
+    # 1. Ciudad por defecto vacía en creación
+    create_dto = CreateBranch(
+        name="Sucursal Matagalpa",
+        address="Calle Central #10",
+        phone="555-0202",
+    )
+    assert create_dto.city == ""
+
+    # 2. Persistencia y serialización de la ciudad
+    create_with_city = CreateBranch(
+        name="Sucursal Estelí",
+        address="Avenida Norte #20",
+        city="Estelí",
+        phone="555-0303",
+    )
+    assert create_with_city.city == "Estelí"
+
+    branch_db = BranchInDb(
+        id="branch-city-001",
+        createdAt=1700000000000,
+        **create_with_city.model_dump(),
+    )
+    assert branch_db.city == "Estelí"
+
+    # 3. Retrocompatibilidad con documentos antiguos sin city
+    legacy_branch = BranchInDb.model_validate(
+        {
+            "id": "branch-legacy-001",
+            "name": "Sucursal Antigua",
+            "address": "Calle Antigua #1",
+            "phone": "555-0404",
+            "createdAt": 1700000000000,
+        }
+    )
+    assert legacy_branch.city == ""
+
+    # 4. Actualización opcional de la ciudad
+    assert UpdateBranch().city is None
+    update_dto = UpdateBranch(city="Matagalpa")
+    assert update_dto.model_dump(exclude_unset=True) == {"city": "Matagalpa"}

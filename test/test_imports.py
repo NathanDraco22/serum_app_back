@@ -311,6 +311,7 @@ async def test_import_branch_prices_endpoint():
             b_test_1_after = await lab_tests_repo.get_lab_test_by_id(
                 test_1.id, branchId=branch_b.id
             )
+            assert b_test_1_after is not None
             assert b_test_1_after.salePrice == 1500
         finally:
             serumCtx.reset(ctx_token_check)

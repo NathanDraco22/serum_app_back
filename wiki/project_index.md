@@ -3,7 +3,7 @@ type: index
 title: Backend — Mapa del Proyecto (Project Index)
 description: Mapa maestro y exhaustivo de la arquitectura, módulos, endpoints, capas Onion y modelos del servidor FastAPI.
 tags: [backend, architecture, fastapi, index, map, onion]
-timestamp: 2026-09-28T18:30:00Z
+timestamp: 2026-11-10T12:00:00Z
 ---
 
 # 🗺️ Project Index — Backend (Serum App LIS)
@@ -78,7 +78,7 @@ serum_app_back/
 | Módulo / Entidad | Router & Controller (`app/api/v1/`) | Repositorio & DataSource (`serum.repos.v1`) | Colección MongoDB (`serum.services.mongo_collections.v1`) | Reglas de Negocio Clave |
 | :--- | :--- | :--- | :--- | :--- |
 | **Auths** | `auths/` | Autenticación, JWT, hashing | `users_collection.py` | JWT HS256, session (8h), refresh (30d), `/check-user`. Ver [Autenticación y Roles](reglas_negocio/autenticacion_y_roles.md). |
-| **Branches** | `branches/` | `branches/` | `branches_collection.py` | Sedes físicas del laboratorio que segmentan cajas, usuarios y flujo de dinero. Incluye configuración del bioanalista representante (`BranchBioanalyst: name, title, code, sealUrl`) y sello físico digital para reportes clínicos. |
+| **Branches** | `branches/` | `branches/` | `branches_collection.py` | Sedes físicas del laboratorio que segmentan cajas, usuarios y flujo de dinero. Incluye `city` (Ciudad/Localidad, por defecto `""`) para identificar la sede geográficamente, configuración del bioanalista representante (`BranchBioanalyst: name, title, code, sealUrl`) y sello físico digital para reportes clínicos. |
 | **Roles** | `roles/` | `roles/` | `roles_collection.py` | Catálogo de roles con niveles jerárquicos (1 al 5). Admin=5, Operador=3. |
 | **Users** | `users/` | `users/` | `users_collection.py` | Control de personal con `role` y `accessLevel: int` vinculados a sucursales. |
 | **Patients** | `patients/` | `patients/` | `patients_collection.py` | Expediente demográfico maestro. Requiere `originBranch: str` para trazabilidad de creación. Requisito obligatorio para generar orden médica. |
