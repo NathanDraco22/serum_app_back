@@ -51,7 +51,7 @@ El módulo financiero garantiza la trazabilidad absoluta del flujo de dinero y l
 | **`closing`** | `"out"` | Disminuye (a cero) | Retiro total para el arqueo de cierre. |
 | **`income`** | `"in"` | Aumenta | Entradas extraordinarias (ej. fondo adicional). Requiere `concept`. |
 | **`withdrawal`** | `"out"` | Disminuye | Salidas de dinero (ej. gastos menores autorizados). Requiere `concept`. |
-| **`payment`** | `"in"` | Aumenta | Cobro asociado a una orden médica (`referenceId = order_id`). |
+| **`payment`** | `"in"` | Aumenta | Cobro asociado a una orden médica (`referenceId = order_id`). El pago solo actualiza `paidAmount`; el estado clínico de la orden no se modifica. |
 
 ---
 

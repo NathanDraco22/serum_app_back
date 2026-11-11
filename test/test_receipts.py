@@ -123,7 +123,6 @@ async def test_receipts_system_and_flow():
     )
     updated_order = await process_order_payment(pay_intent)
     assert updated_order.paidAmount == 15000
-    assert updated_order.status == "partiallyPaid"
 
     # Verify that a receipt was automatically created for this order
     order_receipts = await receipts_repo.get_all_receipts(
@@ -148,7 +147,6 @@ async def test_receipts_system_and_flow():
     )
     completed_order = await process_order_payment(pay_intent_final)
     assert completed_order.paidAmount == 30000
-    assert completed_order.status in ("paid", "completed")
 
     # Verify second receipt was created
     order_receipts_updated = await receipts_repo.get_all_receipts(

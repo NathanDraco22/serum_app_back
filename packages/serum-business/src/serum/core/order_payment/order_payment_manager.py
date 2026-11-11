@@ -19,7 +19,7 @@ class OrderPaymentManager:
             raise OrderNotFound()
         if order.isBlocked:
             raise OrderIsBlocked()
-        if order.status not in ("pending", "partiallyPaid", "completed") or (
+        if order.status == "cancelled" or (
             order.totalPrice > 0 and order.paidAmount >= order.totalPrice
         ):
             raise OrderAlreadyPaid()

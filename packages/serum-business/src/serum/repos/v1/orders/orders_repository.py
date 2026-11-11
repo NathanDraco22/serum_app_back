@@ -1,4 +1,5 @@
 from serum.core.counter_manager import CounterManager
+from serum.repos.v1.common.models.user_info import UserInfo
 from serum.services.mongo_collections.v1 import DoctorsCollection, PatientsCollection
 from serum.tools.time_tools import TimeTools
 
@@ -13,6 +14,7 @@ from .models.order_model import (
     PatientInfo,
     UpdateOrder,
 )
+from .order_totals import calculate_order_totals, order_items_have_modified_price
 
 
 class OrdersRepository:
@@ -62,10 +64,7 @@ class OrdersRepository:
 
 
         # Validar si algún ítem tiene precio modificado respecto a su precio 1 de catálogo o si tiene descuentos
-        has_modified_price = any(
-            item.originalPrice > 0 and item.salePriceApplied != item.originalPrice
-            for item in create_order.items
-        )
+        has_modified_price = order_items_have_modified_price(create_order.items)
         has_discounts = len(create_order.discounts) > 0
 
         if has_modified_price or has_discounts:
@@ -85,29 +84,19 @@ class OrdersRepository:
                     "reason": (approval.get("reason") if approval else None) or default_reason,
                 }
 
-        # Calcular totalPrice automáticamente considerando items, services y discounts
-        items_total = sum(item.get("salePriceApplied", 0) for item in order_dict.get("items", []))
-        services_total = sum(service.get("price", 0) for service in order_dict.get("services", []))
-        gross_subtotal = items_total + services_total
-
-        discounts_total = 0
-        processed_discounts = []
-        for discount in order_dict.get("discounts", []):
-            dtype = discount.get("type", "percentage")
-            dval = float(discount.get("value", 0))
-            d_applied = discount.get("appliedAmount", 0)
-            if d_applied <= 0:
-                if dtype == "percentage":
-                    d_applied = int(round((gross_subtotal * dval) / 100))
-                else:
-                    d_applied = int(round(dval))
-            discounts_total += d_applied
-            discount["appliedAmount"] = d_applied
-            processed_discounts.append(discount)
+        # Calcular totalPrice en el servidor considerando items, services y discounts.
+        # El total enviado por el cliente se ignora para que sea la única fuente de verdad.
+        total_price, processed_discounts = calculate_order_totals(
+            order_dict.get("items", []),
+            order_dict.get("services", []),
+            order_dict.get("discounts", []),
+        )
         order_dict["discounts"] = processed_discounts
+        order_dict["totalPrice"] = total_price
 
-        if (gross_subtotal > 0 or discounts_total > 0) and order_dict.get("totalPrice", 0) <= 0:
-            order_dict["totalPrice"] = max(0, gross_subtotal - discounts_total)
+        # Una orden nueva nunca nace pagada: el cobro solo se registra por el flujo de pagos.
+        order_dict["paidAmount"] = 0
+        order_dict["status"] = "pending"
 
 
 
@@ -151,6 +140,30 @@ class OrdersRepository:
 
     async def delete_order_by_id(self, order_id: str) -> OrderInDb | None:
         result = await self.orders_ds.delete_order_by_id(order_id)
+        if result is None:
+            return None
+        return OrderInDb.model_validate(result)
+
+    async def cancel_order_by_id(
+        self,
+        order_id: str,
+        cancelled_by: UserInfo | None = None,
+        reason: str | None = None,
+    ) -> OrderInDb | None:
+        now = TimeTools.get_now_in_milliseconds()
+        cancellation_data: dict = {
+            "status": "cancelled",
+            "isDeleted": True,
+            "updatedAt": now,
+            "cancelledAt": now,
+            "cancellationReason": reason,
+        }
+        if cancelled_by is not None:
+            cancellation_data["cancelledBy"] = cancelled_by.model_dump()
+
+        result = await self.orders_ds.cancel_order_by_id(
+            order_id, cancellation_data
+        )
         if result is None:
             return None
         return OrderInDb.model_validate(result)

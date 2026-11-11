@@ -28,3 +28,9 @@ class OrdersDataSource:
     async def delete_order_by_id(self, order_id: str) -> dict[str, Any] | None:
         collection = OrdersCollection.get_instance()
         return await collection.delete_order_by_id(order_id)
+
+    async def cancel_order_by_id(
+        self, order_id: str, cancellation_data: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        collection = OrdersCollection.get_instance()
+        return await collection.cancel_order_by_id(order_id, cancellation_data)

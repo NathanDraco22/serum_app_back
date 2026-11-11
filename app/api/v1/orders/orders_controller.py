@@ -1,11 +1,19 @@
 from fastapi import HTTPException, Request, status
 from serum.serum_config import serumCtx
 
-from serum.core.exceptions import OrderCannotBeDeleted, OrderIsBlocked
+from serum.core.exceptions import (
+    OrderCannotBeDeleted,
+    OrderHasClinicalResults,
+    OrderHasPayments,
+    OrderIsBlocked,
+)
 from serum.core.order_payment.order_payment import OrderPayIntent
 from serum.core.order_payment.order_payment_manager import OrderPaymentManager
 from serum.core.security import SysPasswordHasher, TokenManager
-from serum.repos.v1.common.filter_params import OrderFilterParams
+from serum.repos.v1.common.filter_params import (
+    OrderFilterParams,
+    ReceiptFilterParams,
+)
 from serum.repos.v1.common.models.user_info import UserInfo
 from serum.repos.v1.orders import (
     CreateOrder,
@@ -14,10 +22,16 @@ from serum.repos.v1.orders import (
     OrdersRepository,
     UpdateOrder,
 )
+from serum.repos.v1.orders.order_totals import (
+    calculate_order_totals,
+    order_items_have_modified_price,
+)
+from serum.repos.v1.receipts import ReceiptsRepository
 from serum.repos.v1.users import UsersRepository
 from responses.v1 import ListResponse
 from serum.tools.time_tools import TimeTools
 
+from .orders_presenter import with_legacy_status
 from .orders_schemas import OrderApproveRequest, OrderPayRequest
 
 
@@ -26,9 +40,26 @@ class OrdersController:
         self.orders_repo = orders_repo
         self.order_payment_manager = OrderPaymentManager()
         self.users_repo = UsersRepository.get_instance()
+        self.receipts_repo = ReceiptsRepository.get_instance()
+
+    @staticmethod
+    def _resolve_actor(req: Request | None) -> tuple[UserInfo | None, int]:
+        if req is None:
+            return None, 0
+
+        user = getattr(req.state, "user", None)
+        if user is not None:
+            return UserInfo(id=user.id, name=user.name), user.accessLevel
+
+        api_key = getattr(req.state, "api_key", None)
+        if api_key is not None:
+            return UserInfo(id=api_key.id, name=api_key.name), 0
+
+        return None, 0
 
     async def create_order(self, body: CreateOrder) -> OrderInDb:
-        return await self.orders_repo.create_order(body)
+        order = await self.orders_repo.create_order(body)
+        return with_legacy_status(order)
 
     async def get_all_orders(
         self, query_params: OrderFilterParams | None = None
@@ -39,6 +70,7 @@ class OrdersController:
             query_params.branchId = serumCtx.get().branchId
 
         orders = await self.orders_repo.get_all_orders(query_params)
+        orders = [with_legacy_status(order) for order in orders]
         return ListResponse(count=len(orders), data=orders)
 
     async def get_orders_by_patient_id(
@@ -55,6 +87,7 @@ class OrdersController:
                 query_params.branchId = serumCtx.get().branchId
 
         orders = await self.orders_repo.get_all_orders(query_params)
+        orders = [with_legacy_status(order) for order in orders]
         return ListResponse(count=len(orders), data=orders)
 
     async def get_order_by_id(self, order_id: str) -> OrderInDb:
@@ -64,7 +97,7 @@ class OrdersController:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found",
             )
-        return order
+        return with_legacy_status(order)
 
     async def pay_order(self, order_id: str, body: OrderPayRequest) -> OrderInDb:
         pay_intent = OrderPayIntent(
@@ -77,68 +110,157 @@ class OrdersController:
             referenceNumber=body.referenceNumber,
             bank=body.bank,
         )
-        return await self.order_payment_manager.pay_order(pay_intent)
+        order = await self.order_payment_manager.pay_order(pay_intent)
+        return with_legacy_status(order)
 
-    async def update_order_by_id(self, order_id: str, body: UpdateOrder) -> OrderInDb:
+    async def update_order_by_id(
+        self,
+        order_id: str,
+        body: UpdateOrder,
+        req: Request | None = None,
+    ) -> OrderInDb:
         order = await self.orders_repo.get_order_by_id(order_id)
         if order is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found",
             )
+
+        if order.status == "cancelled":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No se puede modificar una orden cancelada",
+            )
+
         # No permitir capturar ni alterar resultados si la orden se encuentra bloqueada
         if order.isBlocked and body.results is not None:
             raise OrderIsBlocked()
 
-        # Proteger contra desbloqueo arbitrario a través de PATCH genérico
-        update_dict = body.model_dump(exclude_unset=True)
-        if order.isBlocked and update_dict.get("isBlocked") is False:
+        financial_change = (
+            body.items is not None
+            or body.services is not None
+            or body.discounts is not None
+        )
+
+        if financial_change and order.paidAmount > 0:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Una orden bloqueada solo puede ser aprobada a través del endpoint /approve",
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No se pueden modificar los valores financieros de una orden con pagos registrados",
+            )
+        if financial_change and order.status == "completed":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="No se pueden modificar los exámenes de una orden completada",
             )
 
-        # Si se modifican items, validar que no tenga pagos registrados ni esté completada
-        if body.items is not None:
+        # El cliente puede seguir enviando campos financieros por compatibilidad,
+        # pero el servidor los descarta y los recalcula.
+        sanitized = body.model_dump(exclude_unset=True, exclude_none=True)
+        sanitized.pop("paidAmount", None)
+        sanitized.pop("totalPrice", None)
+        sanitized.pop("branchId", None)
+        sanitized.pop("isBlocked", None)
+        sanitized.pop("approval", None)
+        incoming_status = sanitized.pop("status", None)
 
-            if order.paidAmount > 0:
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="No se pueden modificar los exámenes de una orden con pagos registrados",
-                )
-            if order.status == "completed":
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail="No se pueden modificar los exámenes de una orden completada",
-                )
+        actor, access_level = self._resolve_actor(req)
 
-            has_modified_price = any(
-                item.originalPrice > 0 and item.salePriceApplied != item.originalPrice
-                for item in body.items
+        effective_items = body.items if body.items is not None else order.items
+        effective_services = (
+            body.services if body.services is not None else order.services
+        )
+        effective_discounts = (
+            body.discounts if body.discounts is not None else order.discounts
+        )
+
+        effective_total = order.totalPrice
+
+        if financial_change:
+            effective_total, processed_discounts = calculate_order_totals(
+                effective_items,
+                effective_services,
+                effective_discounts,
             )
-            if has_modified_price:
-                current_approval = order.approval
-                if not current_approval or not current_approval.isApproved:
-                    body.isBlocked = True
-            # Recalcular totalPrice si no vino en el body
-            if body.totalPrice is None:
-                body.totalPrice = sum(item.salePriceApplied for item in body.items)
+            sanitized["totalPrice"] = effective_total
+            sanitized["discounts"] = processed_discounts
 
-        # Auto-transición a completed si se capturan todos los resultados y la orden ya está pagada
-        effective_results = body.results if body.results is not None else order.results
-        effective_paid = body.paidAmount if body.paidAmount is not None else order.paidAmount
-        effective_total = body.totalPrice if body.totalPrice is not None else order.totalPrice
-        if body.status is None and effective_results and effective_paid >= effective_total and effective_total > 0:
-            if all(r.resultValue is not None and str(r.resultValue).strip() != "" for r in effective_results):
-                body.status = "completed"
+            has_modified_price = order_items_have_modified_price(effective_items)
+            has_discounts = len(processed_discounts) > 0
 
-        updated_order = await self.orders_repo.update_order_by_id(order_id, body)
+            if has_modified_price or has_discounts:
+                already_approved = (
+                    order.approval is not None and order.approval.isApproved
+                )
+                if already_approved:
+                    pass
+                elif actor is not None and access_level > 3:
+                    sanitized["isBlocked"] = False
+                    sanitized["approval"] = OrderApproval(
+                        requiresApproval=True,
+                        isApproved=True,
+                        approvedBy=actor,
+                        approvedAt=TimeTools.get_now_in_milliseconds(),
+                        reason="Autorizado por supervisor en edición de orden",
+                    ).model_dump()
+                else:
+                    sanitized["isBlocked"] = True
+                    sanitized["approval"] = OrderApproval(
+                        requiresApproval=True,
+                        isApproved=False,
+                        approvedBy=None,
+                        approvedAt=None,
+                        reason="Precio modificado o descuento aplicado en la edición",
+                    ).model_dump()
+
+        # Normalizar el estado clínico. Los estados financieros legacy del body
+        # (paid/partiallyPaid) se ignoran: el estado financiero se calcula al responder.
+        reopen = (
+            order.status == "completed"
+            and incoming_status in ("pending", "paid", "partiallyPaid")
+            and body.results is None
+            and not financial_change
+        )
+
+        if incoming_status == "cancelled":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Use el endpoint de cancelación de órdenes",
+            )
+        if incoming_status == "completed":
+            sanitized["status"] = "completed"
+        elif reopen:
+            sanitized["status"] = "pending"
+        elif incoming_status == "pending":
+            sanitized["status"] = "pending"
+
+        # Auto-transición clínica cuando todos los resultados están capturados
+        # y la orden ya está pagada. No aplica a una reapertura explícita.
+        effective_results = (
+            body.results if body.results is not None else order.results
+        )
+        if (
+            sanitized.get("status") != "pending"
+            and effective_results
+            and effective_total > 0
+            and order.paidAmount >= effective_total
+            and all(
+                result.resultValue is not None
+                and str(result.resultValue).strip() != ""
+                for result in effective_results
+            )
+        ):
+            sanitized["status"] = "completed"
+
+        update_model = UpdateOrder(**sanitized)
+        updated_order = await self.orders_repo.update_order_by_id(
+            order_id, update_model
+        )
         if updated_order is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found",
             )
-        return updated_order
+        return with_legacy_status(updated_order)
 
     async def approve_order(
         self, order_id: str, body: OrderApproveRequest, req: Request
@@ -230,26 +352,48 @@ class OrdersController:
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found",
             )
-        return updated
+        return with_legacy_status(updated)
 
-    async def delete_order_by_id(self, order_id: str) -> OrderInDb:
+    async def delete_order_by_id(
+        self,
+        order_id: str,
+        req: Request | None = None,
+        reason: str | None = None,
+    ) -> OrderInDb:
         order = await self.orders_repo.get_order_by_id(order_id)
         if order is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found",
             )
-        # Una orden bloqueada o pendiente puede eliminarse siempre que no tenga abonos
-        if order.paidAmount > 0 or (order.status != "pending" and not order.isBlocked):
+
+        receipts = await self.receipts_repo.get_all_receipts(
+            ReceiptFilterParams(orderId=order_id)
+        )
+        if order.paidAmount > 0 or receipts:
+            raise OrderHasPayments()
+
+        has_clinical_results = order.status == "completed" or any(
+            (result.resultValue or "").strip() for result in order.results
+        )
+        if has_clinical_results:
+            raise OrderHasClinicalResults()
+
+        # Una orden bloqueada o pendiente puede cancelarse si no tiene cobros
+        # ni resultados clínicos.
+        if order.status != "pending" and not order.isBlocked:
             raise OrderCannotBeDeleted()
 
-        deleted_order = await self.orders_repo.delete_order_by_id(order_id)
-        if deleted_order is None:
+        actor, _ = self._resolve_actor(req)
+        cancelled_order = await self.orders_repo.cancel_order_by_id(
+            order_id, cancelled_by=actor, reason=reason
+        )
+        if cancelled_order is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found",
             )
-        return deleted_order
+        return with_legacy_status(cancelled_order)
 
 
 orders_controller = OrdersController(

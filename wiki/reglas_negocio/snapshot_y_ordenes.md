@@ -3,7 +3,7 @@ type: doc
 title: Reglas de Negocio — Snapshots y Ciclo de Vida de Órdenes
 description: Justificación médica y técnica de los snapshots inmutables en órdenes y captura de resultados clínicos.
 tags: [orders, snapshot, business_rules, results, medical]
-timestamp: 2026-09-28T18:30:00Z
+timestamp: 2026-11-09T12:00:00Z
 ---
 
 # 📋 Snapshots y Ciclo de Vida de Órdenes
@@ -19,23 +19,49 @@ En un laboratorio clínico, la persistencia de datos **no puede depender de rela
 3. **Integridad Financiera**: Los precios del catálogo cambian con el tiempo. El precio efectivamente cobrado (`salePriceApplied`) debe congelarse en la orden para que un arqueo de caja de meses pasados jamás descuadre. Además, se congela el nivel de precio seleccionado (`priceLevel`: 1 para `salePrice` o 2 para `salePrice2`) como metadato de auditoría comercial.
 4. **Alto Desempeño en Horas Pico**: Al almacenar todo en un solo documento MongoDB, se evitan `lookup`/joins complejos, garantizando consultas ultrarrápidas al emitir resultados o reportes.
 
+### Excepción deliberada: actualización de metadatos al editar una orden
+
+Cuando la orden **se modifica** (se agregan o quitan exámenes), los metadatos de las pruebas que permanecen se refrescan desde el catálogo vigente: nombre, rangos de referencia, clasificación, `parentExamName`, tipo de dato y opciones cualitativas. Es el comportamiento esperado, porque la prueba pudo haber cambiado y el bioanalista debe capturar contra la definición actual.
+
+Lo que **no** se debe perder al editar:
+
+- Los valores ya capturados: `resultValue`, `alertFlag` y `showInPrint`.
+- La identidad del paciente de la orden (`patientId` y `patientInfo` deben permanecer coherentes).
+- Los precios históricos y la auditoría de la orden (`salePriceApplied`, `originalPrice`, `priceLevel`, `approval`).
+
+Esta excepción no aplica a órdenes ya completadas o entregadas: su edición de resultados debe seguir restringida.
+
 ---
 
 ## 2. Máquina de Estados de la Orden
 
-Una orden médica transita por los siguientes estados:
+El campo `status` representa el **estado clínico** de la orden:
 
 ```
-[ pending / partiallyPaid ]
-            ↓
-       [ paid ]
-            ↓
-    [ in_process ]  (Bioanalista capturando resultados)
-            ↓
-     [ completed ]  (Resultados ingresados y verificados)
-            ↓
-     [ published ]  (Resultados entregados o disponibles para consulta)
+[ pending ]
+     ↓  (resultados completos y orden pagada)
+[ completed ]  (Resultados ingresados y verificados)
+     ↓
+ [ published ]  (Resultados entregados o disponibles para consulta)
+
+[ cancelled ]  (Cancelación auditada)
 ```
+
+El estado financiero **no se guarda en `status`**. La fuente de verdad es `paidAmount` contra el total de la orden:
+
+$$\text{isFullyPaid} = \text{totalPrice} \le 0 \lor \text{paidAmount} \ge \text{totalPrice}$$
+
+Para compatibilidad con clientes antiguos, la respuesta HTTP calcula un `status` legacy (`paid` / `partiallyPaid` / `pending`) a partir de `paidAmount`, pero la base de datos conserva el estado clínico. El flujo de pago solo actualiza `paidAmount` y nunca escribe `status`.
+
+### Cancelación auditada
+
+`DELETE /orders/{id}` no elimina físicamente. Registra:
+
+- `status = "cancelled"`
+- `isDeleted = true`
+- `cancelledAt`, `cancelledBy` y `cancellationReason`
+
+Solo se permite si la orden no tiene pagos, no tiene recibos activos y no tiene resultados clínicos capturados.
 
 ---
 

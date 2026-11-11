@@ -10,7 +10,7 @@ from serum.core.exceptions import (
     OrderNotFound,
 )
 from serum.repos.v1.cash_transactions import CashTransactionInDb
-from serum.repos.v1.orders import OrderInDb, UpdateOrder
+from serum.repos.v1.orders import OrderInDb
 from serum.repos.v1.receipts import ReceiptInDb
 from serum.services import MongoService
 from serum.services.mongo_collections.v1 import (
@@ -113,25 +113,15 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                 else:
                     raise CashShiftNotFound()
 
-                # 3. Actualizar la orden
+                # 3. Actualizar la orden: el pago solo modifica el monto pagado.
+                # El estado clínico no se toca desde el flujo de cobro.
                 now = TimeTools.get_now_in_milliseconds()
                 new_paid_amount = order.paidAmount + pay_intent.amount
-                has_all_results = len(order.results) > 0 and all(
-                    r.resultValue is not None and str(r.resultValue).strip() != ""
-                    for r in order.results
-                )
 
-                if new_paid_amount >= order.totalPrice:
-                    new_status = "completed" if has_all_results else "paid"
-                else:
-                    new_status = "partiallyPaid"
-
-                update_model = UpdateOrder(
-                    status=new_status,
-                    paidAmount=new_paid_amount,
-                )
-                update_data = update_model.model_dump(exclude_unset=True)
-                update_data["updatedAt"] = now
+                update_data: dict = {
+                    "paidAmount": new_paid_amount,
+                    "updatedAt": now,
+                }
 
                 updated_order_data = await orders_col.update_order_by_id(
                     pay_intent.orderId, update_data, session=session
@@ -145,9 +135,9 @@ async def process_order_payment(pay_intent: OrderPayIntent) -> OrderInDb:
                     order.patientInfo.name if order.patientInfo else None
                 )
                 receipt_concept = (
-                    f"Abono a orden #{order.id}"
-                    if new_status == "partiallyPaid"
-                    else f"Liquidación de orden #{order.id}"
+                    f"Liquidación de orden #{order.id}"
+                    if new_paid_amount >= order.totalPrice
+                    else f"Abono a orden #{order.id}"
                 )
 
                 receipt = ReceiptInDb(

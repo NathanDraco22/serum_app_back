@@ -104,7 +104,7 @@ class UpdateOrder(BaseModel):
     discounts: list[OrderDiscount] | None = None
     totalPrice: int | None = None
     paidAmount: int | None = None
-    status: str | None = None
+    status: OrderStatus | None = None
     results: list[OrderTestResult] | None = None
     isBlocked: bool | None = None
     approval: OrderApproval | None = None
@@ -122,3 +122,6 @@ class OrderInDb(BaseOrder):
     createdAt: int
     updatedAt: int | None = None
     isDeleted: bool = False
+    cancelledAt: int | None = None
+    cancelledBy: UserInfo | None = None
+    cancellationReason: str | None = None

@@ -70,7 +70,7 @@ class OrdersCollection(BaseMongoCollection):
         collection = self._collection
 
         result = await collection.find_one_and_update(
-            {"id": order_id},
+            {"id": order_id, "isDeleted": {"$ne": True}},
             {"$set": order},
             session=session,
             return_document=ReturnDocument.AFTER,
@@ -83,6 +83,17 @@ class OrdersCollection(BaseMongoCollection):
         result = await collection.find_one_and_update(
             {"id": order_id},
             {"$set": {"isDeleted": True}},
+            return_document=ReturnDocument.AFTER,
+        )
+        return result
+
+    async def cancel_order_by_id(
+        self, order_id: str, cancellation_data: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        collection = self._collection
+        result = await collection.find_one_and_update(
+            {"id": order_id, "isDeleted": {"$ne": True}},
+            {"$set": cancellation_data},
             return_document=ReturnDocument.AFTER,
         )
         return result

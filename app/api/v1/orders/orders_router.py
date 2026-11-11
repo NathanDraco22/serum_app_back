@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Query, Request
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.common.filter_params import OrderFilterParams
 from serum.repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
@@ -7,7 +8,10 @@ from responses.v1 import ListResponse
 from .orders_controller import orders_controller
 from .orders_schemas import OrderApproveRequest, OrderPayRequest
 
-orders_router = APIRouter(tags=["ordersV1"])
+orders_router = APIRouter(
+    tags=["ordersV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @orders_router.post("")
@@ -41,13 +45,21 @@ async def get_order_by_id(order_id: str) -> OrderInDb:
 
 
 @orders_router.patch("/{order_id}")
-async def update_order_by_id(order_id: str, body: UpdateOrder) -> OrderInDb:
-    return await orders_controller.update_order_by_id(order_id, body)
+async def update_order_by_id(
+    order_id: str, body: UpdateOrder, req: Request
+) -> OrderInDb:
+    return await orders_controller.update_order_by_id(order_id, body, req)
 
 
 @orders_router.delete("/{order_id}")
-async def delete_order_by_id(order_id: str) -> OrderInDb:
-    return await orders_controller.delete_order_by_id(order_id)
+async def delete_order_by_id(
+    order_id: str,
+    req: Request,
+    reason: str | None = Query(None),
+) -> OrderInDb:
+    return await orders_controller.delete_order_by_id(
+        order_id, req=req, reason=reason
+    )
 
 
 @orders_router.post("/{order_id}/pay")

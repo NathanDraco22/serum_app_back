@@ -15,6 +15,8 @@ from serum.core.exceptions import (
     CashShiftNotOpen,
     CashShiftAlreadyClosed,
     OrderCannotBeDeleted,
+    OrderHasPayments,
+    OrderHasClinicalResults,
     InvalidMovementType,
     InvalidAmount,
     CashMovementNotFound,
@@ -204,6 +206,34 @@ async def handle_order_cannot_be_deleted_exception(request: Request, exc: Except
     )
 
 
+async def handle_order_has_payments_exception(request: Request, exc: Exception):
+    res = exc if isinstance(exc, OrderHasPayments) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "ORDER_HAS_PAYMENTS"},
+    )
+
+
+async def handle_order_has_clinical_results_exception(
+    request: Request, exc: Exception
+):
+    res = exc if isinstance(exc, OrderHasClinicalResults) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "ORDER_HAS_CLINICAL_RESULTS"},
+    )
+
+
 async def handle_invalid_movement_type_exception(request: Request, exc: Exception):
     res = exc if isinstance(exc, InvalidMovementType) else None
     if res is None:
@@ -271,6 +301,8 @@ _exceptions_handlers = {
     CashShiftNotOpen: handle_cash_shift_not_open_exception,
     CashShiftAlreadyClosed: handle_cash_shift_already_closed_exception,
     OrderCannotBeDeleted: handle_order_cannot_be_deleted_exception,
+    OrderHasPayments: handle_order_has_payments_exception,
+    OrderHasClinicalResults: handle_order_has_clinical_results_exception,
     InvalidMovementType: handle_invalid_movement_type_exception,
     InvalidAmount: handle_invalid_amount_exception,
     CashMovementNotFound: handle_cash_movement_not_found_exception,
