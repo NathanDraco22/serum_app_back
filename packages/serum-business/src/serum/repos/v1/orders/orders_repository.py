@@ -11,6 +11,7 @@ from .models.order_model import (
     CreateOrder,
     DoctorInfo,
     OrderInDb,
+    OrderStatusChange,
     PatientInfo,
     UpdateOrder,
 )
@@ -29,7 +30,11 @@ class OrdersRepository:
             cls._instance = cls(OrdersDataSource())
         return cls._instance
 
-    async def create_order(self, create_order: CreateOrder) -> OrderInDb:
+    async def create_order(
+        self,
+        create_order: CreateOrder,
+        actor: UserInfo | None = None,
+    ) -> OrderInDb:
         order_dict = create_order.model_dump()
         if create_order.patientInfo is None:
             patient_doc = await PatientsCollection.get_instance().fetch_patient_by_id(
@@ -95,12 +100,17 @@ class OrdersRepository:
         order_dict["totalPrice"] = total_price
 
         # Una orden nueva nunca nace pagada: el cobro solo se registra por el flujo de pagos.
+        now = TimeTools.get_now_in_milliseconds()
         order_dict["paidAmount"] = 0
         order_dict["status"] = "pending"
-
-
-
-
+        order_dict["statusHistory"] = [
+            OrderStatusChange(
+                status="pending",
+                changedAt=now,
+                changedBy=actor,
+                reason="Orden creada",
+            ).model_dump()
+        ]
 
         order_id = await CounterManager().next_order_number()
         new_order = OrderInDb(
@@ -149,6 +159,7 @@ class OrdersRepository:
         order_id: str,
         cancelled_by: UserInfo | None = None,
         reason: str | None = None,
+        extra_data: dict | None = None,
     ) -> OrderInDb | None:
         now = TimeTools.get_now_in_milliseconds()
         cancellation_data: dict = {
@@ -160,6 +171,8 @@ class OrdersRepository:
         }
         if cancelled_by is not None:
             cancellation_data["cancelledBy"] = cancelled_by.model_dump()
+        if extra_data:
+            cancellation_data.update(extra_data)
 
         result = await self.orders_ds.cancel_order_by_id(
             order_id, cancellation_data

@@ -19,6 +19,7 @@ from serum.repos.v1.orders import (
     CreateOrder,
     OrderApproval,
     OrderInDb,
+    OrderStatusChange,
     OrdersRepository,
     UpdateOrder,
 )
@@ -32,7 +33,7 @@ from responses.v1 import ListResponse
 from serum.tools.time_tools import TimeTools
 
 from .orders_presenter import with_legacy_status
-from .orders_schemas import OrderApproveRequest, OrderPayRequest
+from .orders_schemas import OrderApproveRequest, OrderPayRequest, OrderReopenRequest
 
 
 class OrdersController:
@@ -57,8 +58,100 @@ class OrdersController:
 
         return None, 0
 
-    async def create_order(self, body: CreateOrder) -> OrderInDb:
-        order = await self.orders_repo.create_order(body)
+    @staticmethod
+    def _require_clinical_access(access_level: int) -> None:
+        if access_level < 3:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=(
+                    "Se requiere nivel de acceso 3 o superior para finalizar "
+                    "o reabrir una orden clínica"
+                ),
+            )
+
+    @staticmethod
+    def _append_status_history(
+        order: OrderInDb,
+        status: str,
+        actor: UserInfo | None,
+        changed_at: int,
+        reason: str | None = None,
+    ) -> list[dict]:
+        history = [entry.model_dump() for entry in order.statusHistory]
+        history.append(
+            OrderStatusChange(
+                status=status,
+                changedAt=changed_at,
+                changedBy=actor,
+                reason=reason,
+            ).model_dump()
+        )
+        return history
+
+    @staticmethod
+    def _results_are_complete(results: list) -> bool:
+        return bool(results) and all(
+            result.resultValue is not None
+            and str(result.resultValue).strip() != ""
+            for result in results
+        )
+
+    def _finalize_payload(
+        self,
+        order: OrderInDb,
+        actor: UserInfo | None,
+        now: int,
+        results: list | None = None,
+    ) -> dict:
+        if order.isBlocked:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=(
+                    "La orden está bloqueada por modificación de precio. "
+                    "Requiere autorización antes de finalizarse."
+                ),
+            )
+        effective_results = results if results is not None else order.results
+        if not self._results_are_complete(effective_results):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Todos los resultados deben estar capturados para finalizar la orden",
+            )
+
+        return {
+            "status": "completed",
+            "finalizedAt": now,
+            "finalizedBy": actor,
+            "statusHistory": self._append_status_history(
+                order, "completed", actor, now, "Orden finalizada"
+            ),
+        }
+
+    def _reopen_payload(
+        self,
+        order: OrderInDb,
+        actor: UserInfo | None,
+        now: int,
+        reason: str,
+    ) -> dict:
+        return {
+            "status": "in_review",
+            "finalizedAt": None,
+            "finalizedBy": None,
+            "reopenedAt": now,
+            "reopenedBy": actor,
+            "reopenReason": reason,
+            "revisionCount": order.revisionCount + 1,
+            "statusHistory": self._append_status_history(
+                order, "in_review", actor, now, reason
+            ),
+        }
+
+    async def create_order(
+        self, body: CreateOrder, req: Request | None = None
+    ) -> OrderInDb:
+        actor, _ = self._resolve_actor(req)
+        order = await self.orders_repo.create_order(body, actor=actor)
         return with_legacy_status(order)
 
     async def get_all_orders(
@@ -147,10 +240,13 @@ class OrdersController:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="No se pueden modificar los valores financieros de una orden con pagos registrados",
             )
-        if financial_change and order.status == "completed":
+        if financial_change and order.status in ("completed", "in_review"):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="No se pueden modificar los exámenes de una orden completada",
+                detail=(
+                    "No se pueden modificar los exámenes de una orden "
+                    "completada o en revisión"
+                ),
             )
 
         # El cliente puede seguir enviando campos financieros por compatibilidad,
@@ -161,6 +257,15 @@ class OrdersController:
         sanitized.pop("branchId", None)
         sanitized.pop("isBlocked", None)
         sanitized.pop("approval", None)
+        # La auditoría clínica se reconstruye en el servidor; nunca se acepta
+        # desde el cuerpo del cliente.
+        sanitized.pop("statusHistory", None)
+        sanitized.pop("finalizedAt", None)
+        sanitized.pop("finalizedBy", None)
+        sanitized.pop("reopenedAt", None)
+        sanitized.pop("reopenedBy", None)
+        sanitized.pop("reopenReason", None)
+        sanitized.pop("revisionCount", None)
         incoming_status = sanitized.pop("status", None)
 
         actor, access_level = self._resolve_actor(req)
@@ -213,43 +318,89 @@ class OrdersController:
                     ).model_dump()
 
         # Normalizar el estado clínico. Los estados financieros legacy del body
-        # (paid/partiallyPaid) se ignoran: el estado financiero se calcula al responder.
-        reopen = (
-            order.status == "completed"
-            and incoming_status in ("pending", "paid", "partiallyPaid")
-            and body.results is None
-            and not financial_change
+        # (paid/partiallyPaid) se siguen aceptando por compatibilidad, pero el
+        # estado financiero real se calcula a partir de paidAmount al responder.
+        now = TimeTools.get_now_in_milliseconds()
+        effective_results = (
+            body.results if body.results is not None else order.results
         )
+        all_results_complete = self._results_are_complete(effective_results)
 
         if incoming_status == "cancelled":
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Use el endpoint de cancelación de órdenes",
             )
-        if incoming_status == "completed":
-            sanitized["status"] = "completed"
-        elif reopen:
-            sanitized["status"] = "pending"
-        elif incoming_status == "pending":
-            sanitized["status"] = "pending"
-
-        # Auto-transición clínica cuando todos los resultados están capturados
-        # y la orden ya está pagada. No aplica a una reapertura explícita.
-        effective_results = (
-            body.results if body.results is not None else order.results
-        )
-        if (
-            sanitized.get("status") != "pending"
-            and effective_results
-            and effective_total > 0
-            and order.paidAmount >= effective_total
-            and all(
-                result.resultValue is not None
-                and str(result.resultValue).strip() != ""
-                for result in effective_results
+        if incoming_status == "in_review":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Use el endpoint de reapertura de órdenes",
             )
-        ):
-            sanitized["status"] = "completed"
+
+        target_status = order.status
+        history_reason: str | None = None
+
+        if incoming_status == "completed":
+            self._require_clinical_access(access_level)
+            if order.status != "completed":
+                sanitized.update(
+                    self._finalize_payload(
+                        order,
+                        actor,
+                        now,
+                        results=effective_results,
+                    )
+                )
+                target_status = "completed"
+        elif incoming_status in ("pending", "paid", "partiallyPaid"):
+            if order.status == "completed":
+                self._require_clinical_access(access_level)
+                if not order.results:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail="La orden no tiene resultados clínicos para reabrir",
+                    )
+                sanitized.update(
+                    self._reopen_payload(
+                        order,
+                        actor,
+                        now,
+                        "Reapertura desde cliente anterior",
+                    )
+                )
+                target_status = "in_review"
+            elif order.status == "pending":
+                target_status = "pending"
+            else:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=(
+                        "Use la actualización de resultados para cambiar una "
+                        "orden en revisión"
+                    ),
+                )
+        elif body.results is not None:
+            if order.status == "completed":
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Reabra la orden antes de modificar sus resultados",
+                )
+            if all_results_complete:
+                target_status = "in_review"
+                if order.status != "in_review":
+                    history_reason = "Resultados completados"
+            else:
+                target_status = "pending"
+                if order.status == "in_review":
+                    history_reason = "Resultados incompletos"
+
+        if target_status != order.status:
+            sanitized["status"] = target_status
+            # Las finalizaciones y reaperturas ya insertaron su propio historial.
+            if "statusHistory" not in sanitized:
+                sanitized["statusHistory"] = self._append_status_history(
+                    order, target_status, actor, now, history_reason
+                )
 
         update_model = UpdateOrder(**sanitized)
         updated_order = await self.orders_repo.update_order_by_id(
@@ -261,6 +412,86 @@ class OrdersController:
                 detail="Order not found",
             )
         return with_legacy_status(updated_order)
+
+    async def finalize_order(self, order_id: str, req: Request) -> OrderInDb:
+        order = await self.orders_repo.get_order_by_id(order_id)
+        if order is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Order not found",
+            )
+
+        actor, access_level = self._resolve_actor(req)
+        self._require_clinical_access(access_level)
+
+        if order.status != "in_review":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="La orden no está en revisión",
+            )
+
+        now = TimeTools.get_now_in_milliseconds()
+        update_model = UpdateOrder(
+            **self._finalize_payload(order, actor, now)
+        )
+        updated = await self.orders_repo.update_order_by_id(
+            order_id, update_model
+        )
+        if updated is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Order not found",
+            )
+        return with_legacy_status(updated)
+
+    async def reopen_order(
+        self,
+        order_id: str,
+        body: OrderReopenRequest,
+        req: Request,
+    ) -> OrderInDb:
+        order = await self.orders_repo.get_order_by_id(order_id)
+        if order is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Order not found",
+            )
+
+        actor, access_level = self._resolve_actor(req)
+        self._require_clinical_access(access_level)
+
+        if order.status != "completed":
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Solo se pueden reabrir órdenes finalizadas",
+            )
+
+        if not order.results:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="La orden no tiene resultados clínicos para reabrir",
+            )
+
+        reason = body.reason.strip()
+        if not reason:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="El motivo de reapertura es obligatorio",
+            )
+
+        now = TimeTools.get_now_in_milliseconds()
+        update_model = UpdateOrder(
+            **self._reopen_payload(order, actor, now, reason)
+        )
+        updated = await self.orders_repo.update_order_by_id(
+            order_id, update_model
+        )
+        if updated is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Order not found",
+            )
+        return with_legacy_status(updated)
 
     async def approve_order(
         self, order_id: str, body: OrderApproveRequest, req: Request
@@ -385,8 +616,20 @@ class OrdersController:
             raise OrderCannotBeDeleted()
 
         actor, _ = self._resolve_actor(req)
+        cancellation_data = {
+            "statusHistory": self._append_status_history(
+                order,
+                "cancelled",
+                actor,
+                TimeTools.get_now_in_milliseconds(),
+                reason or "Cancelación de orden",
+            )
+        }
         cancelled_order = await self.orders_repo.cancel_order_by_id(
-            order_id, cancelled_by=actor, reason=reason
+            order_id,
+            cancelled_by=actor,
+            reason=reason,
+            extra_data=cancellation_data,
         )
         if cancelled_order is None:
             raise HTTPException(

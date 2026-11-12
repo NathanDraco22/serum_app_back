@@ -210,6 +210,8 @@ async def create_default_lab_tests(
                         maxAgeDays=rv.maxAgeDays,
                         minValue=rv.minValue,
                         maxValue=rv.maxValue,
+                        useAge=rv.useAge,
+                        useGender=rv.useGender,
                     )
                     for rv in target_test.referenceValues
                 ]

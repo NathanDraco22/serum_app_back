@@ -41,20 +41,25 @@ class UpdateImportResult(BaseModel):
     updatedAccountsCount: int = 0
     createdAccountsCount: int = 0
     skippedPricesCount: int = 0
+    preservedReferenceValuesCount: int = 0
 
 
 async def update_default_lab_tests(
     override_price: bool = False,
+    preserve_reference_values: bool = True,
     json_path: Path | None = None,
 ) -> UpdateImportResult:
     """Actualiza y sincroniza las pruebas y packs clínicos desde el archivo estático maestro.
 
     - Si override_price es False:
       Se actualizan nombres, subclasificaciones, categorías, tipos de datos, unidades de medida,
-      opciones cualitativas, valores de referencia y relaciones de packs (childTestIds),
+      opciones cualitativas y relaciones de packs (childTestIds),
       pero SE PRESERVAN INTACTOS los precios de venta y costo existentes.
     - Si override_price es True:
       Se sobreescriben también los precios en LabTest y en las cuentas comerciales (LabTestAccount).
+    - Si preserve_reference_values es True (recomendado):
+      NO se sobreescriben los referenceValues de las pruebas existentes. Las pruebas nuevas
+      se crean con los valores del maestro.
     - Si el archivo contiene pruebas o packs nuevos que no existían previamente, se dan de alta limpiamente.
     """
     if json_path is None:
@@ -103,6 +108,7 @@ async def update_default_lab_tests(
     updated_accounts_count = 0
     created_accounts_count = 0
     skipped_prices_count = 0
+    preserved_reference_values_count = 0
 
     atomic_items = [item for item in catalog_items if not item.get("isPack", False)]
     pack_items = [item for item in catalog_items if item.get("isPack", False)]
@@ -154,10 +160,13 @@ async def update_default_lab_tests(
             }
 
             if "referenceValues" in item and isinstance(item["referenceValues"], list):
-                norm_refs = _normalize_reference_values(item["referenceValues"])
-                update_data["referenceValues"] = [
-                    ReferenceValue(**rv) for rv in norm_refs
-                ]
+                if preserve_reference_values:
+                    preserved_reference_values_count += 1
+                else:
+                    norm_refs = _normalize_reference_values(item["referenceValues"])
+                    update_data["referenceValues"] = [
+                        ReferenceValue(**rv) for rv in norm_refs
+                    ]
 
             if override_price:
                 new_sale = item.get("salePrice", 0)
@@ -425,4 +434,5 @@ async def update_default_lab_tests(
         updatedAccountsCount=updated_accounts_count,
         createdAccountsCount=created_accounts_count,
         skippedPricesCount=skipped_prices_count,
+        preservedReferenceValuesCount=preserved_reference_values_count,
     )

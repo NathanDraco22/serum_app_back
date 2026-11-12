@@ -28,6 +28,12 @@ class UpdateImportRequest(BaseModel):
         default=True,
         validation_alias=AliasChoices("updateLabTest", "update_lab_test"),
     )
+    preserveReferenceValues: bool = Field(
+        default=True,
+        validation_alias=AliasChoices(
+            "preserveReferenceValues", "preserve_reference_values"
+        ),
+    )
 
 
 class ImportBranchPricesRequest(BaseModel):
@@ -77,7 +83,8 @@ class ImportsController:
             )
 
         return await update_default_lab_tests(
-            override_price=request.overridePrice
+            override_price=request.overridePrice,
+            preserve_reference_values=request.preserveReferenceValues,
         )
 
     async def import_branch_prices(
