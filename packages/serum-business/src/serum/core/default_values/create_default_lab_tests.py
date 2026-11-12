@@ -35,7 +35,6 @@ class ImportCatalogResult(BaseModel):
     totalProcessed: int = 0
 
 
-
 def _normalize_gender(g: str) -> str:
     lower = g.strip().lower()
     if lower in ("f", "female", "femenino"):
@@ -45,7 +44,9 @@ def _normalize_gender(g: str) -> str:
     return "both"
 
 
-def _normalize_reference_values(ref_values: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _normalize_reference_values(
+    ref_values: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     normalized = []
     for rv in ref_values:
         item = dict(rv)
@@ -126,7 +127,7 @@ async def create_default_lab_tests(
     json_path: Path | None = None,
 ) -> ImportCatalogResult:
     """Carga e inicializa el catálogo de LabTests desde el archivo estático si no existen.
-    
+
     Procesa en 2 fases:
     1. Pruebas individuales/atómicas (isPack: False)
     2. Packs/Perfiles (isPack: True), resolviendo childTestCodes -> childTestIds
@@ -146,7 +147,6 @@ async def create_default_lab_tests(
         msg = f"Error al leer {json_path}: {e}"
         logger.error(msg)
         return ImportCatalogResult(success=False, message=msg)
-
 
     lab_tests_repo = LabTestsRepository.get_instance()
     accounts_repo = LabTestAccountsRepository.get_instance()
@@ -188,9 +188,8 @@ async def create_default_lab_tests(
         normalized_name = name.strip().lower()
 
         already_exists = (
-            (code and (code in existing_by_code or code in queued_codes))
-            or (normalized_name in existing_by_name or normalized_name in queued_names)
-        )
+            code and (code in existing_by_code or code in queued_codes)
+        ) or (normalized_name in existing_by_name or normalized_name in queued_names)
         if already_exists:
             already_existing_count += 1
             target_test = (
@@ -225,7 +224,9 @@ async def create_default_lab_tests(
         payload = dict(item)
         payload.pop("childTestCodes", None)
         payload["branchId"] = ORIGIN_BRANCH_ID
-        if "referenceValues" in payload and isinstance(payload["referenceValues"], list):
+        if "referenceValues" in payload and isinstance(
+            payload["referenceValues"], list
+        ):
             payload["referenceValues"] = _normalize_reference_values(
                 payload["referenceValues"]
             )
@@ -275,9 +276,8 @@ async def create_default_lab_tests(
                     )
 
         already_exists = (
-            (code and (code in existing_by_code or code in queued_codes))
-            or (normalized_name in existing_by_name or normalized_name in queued_names)
-        )
+            code and (code in existing_by_code or code in queued_codes)
+        ) or (normalized_name in existing_by_name or normalized_name in queued_names)
 
         existing_pack = None
         if code and code in existing_by_code:
@@ -302,7 +302,11 @@ async def create_default_lab_tests(
                 logger.error(f"Error al parsear pack por defecto '{name}': {e}")
         else:
             already_existing_count += 1
-            if existing_pack is not None and not existing_pack.childTestIds and child_ids:
+            if (
+                existing_pack is not None
+                and not existing_pack.childTestIds
+                and child_ids
+            ):
                 try:
                     await lab_tests_repo.update_lab_test_by_id(
                         existing_pack.id,
@@ -335,4 +339,3 @@ async def create_default_lab_tests(
         alreadyExisting=already_existing_count,
         totalProcessed=len(catalog_items),
     )
-

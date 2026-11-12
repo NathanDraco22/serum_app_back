@@ -5,6 +5,8 @@ from serum.core.default_values import ImportCatalogResult, UpdateImportResult
 from .imports_controller import (
     ImportBranchPricesRequest,
     ImportBranchPricesResult,
+    ReferenceValuesMigrationRequest,
+    ReferenceValuesMigrationResult,
     UpdateImportRequest,
     imports_controller,
 )
@@ -42,6 +44,14 @@ async def sync_catalog_alias(
 ) -> UpdateImportResult:
     """Alias para actualizar y sincronizar el catálogo desde el archivo estático maestro."""
     return await imports_controller.update_catalog(request)
+
+
+@imports_router.post("/reference-values", response_model=ReferenceValuesMigrationResult)
+async def migrate_reference_values(
+    request: ReferenceValuesMigrationRequest,
+) -> ReferenceValuesMigrationResult:
+    """Actualiza únicamente los referenceValues de las pruebas indicadas por code."""
+    return await imports_controller.migrate_reference_values(request)
 
 
 @imports_router.post("/branch-prices", response_model=ImportBranchPricesResult)

@@ -2773,7 +2773,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 15.0
+        "maxValue": 15.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -2781,7 +2784,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 20.0
+        "maxValue": 20.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -2998,7 +3004,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 3.5,
-        "maxValue": 7.2
+        "maxValue": 7.2,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3006,7 +3015,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 2.6,
-        "maxValue": 6.0
+        "maxValue": 6.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3219,7 +3231,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 39.0,
-        "maxValue": 308.0
+        "maxValue": 308.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3227,7 +3242,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 26.0,
-        "maxValue": 192.0
+        "maxValue": 192.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3281,7 +3299,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 65.0,
-        "maxValue": 175.0
+        "maxValue": 175.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3289,7 +3310,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 50.0,
-        "maxValue": 170.0
+        "maxValue": 170.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3316,7 +3340,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 30.0,
-        "maxValue": 400.0
+        "maxValue": 400.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3324,7 +3351,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 15.0,
-        "maxValue": 150.0
+        "maxValue": 150.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3426,7 +3456,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 27375,
         "minValue": 0.0,
-        "maxValue": 125.0
+        "maxValue": 125.0,
+        "useAge": true,
+        "useGender": false,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3434,7 +3467,10 @@
         "minAgeDays": 27376,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 450.0
+        "maxValue": 450.0,
+        "useAge": true,
+        "useGender": false,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3664,7 +3700,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 1.5,
-        "maxValue": 12.4
+        "maxValue": 12.4,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3672,7 +3711,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 3.5,
-        "maxValue": 12.5
+        "maxValue": 12.5,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3699,7 +3741,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 1.7,
-        "maxValue": 8.6
+        "maxValue": 8.6,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3707,7 +3752,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 2.4,
-        "maxValue": 12.6
+        "maxValue": 12.6,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3734,7 +3782,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.2,
-        "maxValue": 24.0
+        "maxValue": 24.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3742,7 +3793,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 0.2
+        "maxValue": 0.2,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3769,7 +3823,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 300.0,
-        "maxValue": 1000.0
+        "maxValue": 1000.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3777,7 +3834,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 15.0,
-        "maxValue": 70.0
+        "maxValue": 70.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3804,7 +3864,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 9.0,
-        "maxValue": 30.0
+        "maxValue": 30.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3812,7 +3875,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.3,
-        "maxValue": 2.0
+        "maxValue": 2.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3839,7 +3905,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 4.0,
-        "maxValue": 15.2
+        "maxValue": 15.2,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3847,7 +3916,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 4.8,
-        "maxValue": 23.3
+        "maxValue": 23.3,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -3874,7 +3946,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 10.0,
-        "maxValue": 40.0
+        "maxValue": 40.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -3882,7 +3957,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 20.0,
-        "maxValue": 450.0
+        "maxValue": 450.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -4017,7 +4095,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 8.4
+        "maxValue": 8.4,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -4025,7 +4106,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.0,
-        "maxValue": 5.0
+        "maxValue": 5.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -4052,7 +4136,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.5,
-        "maxValue": 2.5
+        "maxValue": 2.5,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -4060,7 +4147,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 0.2,
-        "maxValue": 4.5
+        "maxValue": 4.5,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
@@ -6026,7 +6116,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 90.0,
-        "maxValue": 139.0
+        "maxValue": 139.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       },
       {
         "patientType": "general",
@@ -6034,7 +6127,10 @@
         "minAgeDays": 0,
         "maxAgeDays": 43800,
         "minValue": 80.0,
-        "maxValue": 125.0
+        "maxValue": 125.0,
+        "useAge": false,
+        "useGender": true,
+        "ageUnit": "years"
       }
     ],
     "qualitativeOptions": [],
