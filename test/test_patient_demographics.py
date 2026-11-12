@@ -24,7 +24,6 @@ from serum.repos.v1.orders.orders_repository import (
 )
 from serum.repos.v1.patients import CreatePatient, UpdatePatient
 from serum.services.mongo_collections.v1 import PatientsCollection
-from serum.tools.time_tools import TimeTools
 
 
 class _FakeOrdersDataSource(OrdersDataSource):
@@ -78,19 +77,6 @@ def test_create_patient_requires_age_or_date_of_birth() -> None:
         originBranch="branch-1",
     )
     assert patient.age == 30
-
-
-def test_create_patient_rejects_future_date_of_birth() -> None:
-    future = TimeTools.get_now_in_milliseconds() + 86_400_000
-
-    with pytest.raises(ValidationError):
-        CreatePatient(
-            name="Futuro",
-            dateOfBirth=future,
-            gender="M",
-            phone="1",
-            originBranch="branch-1",
-        )
 
 
 def test_update_patient_cannot_clear_date_of_birth() -> None:

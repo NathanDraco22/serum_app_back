@@ -1,7 +1,5 @@
 from pydantic import BaseModel, field_validator, model_validator
 
-from serum.tools.time_tools import TimeTools
-
 
 class BasePatient(BaseModel):
     name: str
@@ -21,8 +19,6 @@ class CreatePatient(BasePatient):
     def validate_date_of_birth(cls, value: int) -> int:
         if value < 0:
             raise ValueError("La fecha de nacimiento no puede ser negativa")
-        if value > TimeTools.get_now_in_milliseconds():
-            raise ValueError("La fecha de nacimiento no puede ser futura")
         return value
 
     @field_validator("age")
@@ -57,8 +53,6 @@ class UpdatePatient(BaseModel):
     def validate_date_of_birth(cls, value: int | None) -> int:
         if value is None or value <= 0:
             raise ValueError("La fecha de nacimiento no puede vaciarse")
-        if value > TimeTools.get_now_in_milliseconds():
-            raise ValueError("La fecha de nacimiento no puede ser futura")
         return value
 
     @field_validator("age")
