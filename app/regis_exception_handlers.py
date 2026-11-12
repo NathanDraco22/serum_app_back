@@ -21,6 +21,7 @@ from serum.core.exceptions import (
     InvalidAmount,
     CashMovementNotFound,
     OrderIsBlocked,
+    InvalidPatientDemographics,
 )
 
 
@@ -63,7 +64,9 @@ async def handle_cash_register_not_open_exception(request: Request, exc: Excepti
     )
 
 
-async def handle_cash_register_already_closed_exception(request: Request, exc: Exception):
+async def handle_cash_register_already_closed_exception(
+    request: Request, exc: Exception
+):
     res = exc if isinstance(exc, CashRegisterAlreadyClosed) else None
     if res is None:
         return JSONResponse(
@@ -89,7 +92,9 @@ async def handle_concept_required_exception(request: Request, exc: Exception):
     )
 
 
-async def handle_insufficient_method_balance_exception(request: Request, exc: Exception):
+async def handle_insufficient_method_balance_exception(
+    request: Request, exc: Exception
+):
     res = exc if isinstance(exc, InsufficientMethodBalance) else None
     if res is None:
         return JSONResponse(
@@ -219,9 +224,7 @@ async def handle_order_has_payments_exception(request: Request, exc: Exception):
     )
 
 
-async def handle_order_has_clinical_results_exception(
-    request: Request, exc: Exception
-):
+async def handle_order_has_clinical_results_exception(request: Request, exc: Exception):
     res = exc if isinstance(exc, OrderHasClinicalResults) else None
     if res is None:
         return JSONResponse(
@@ -286,6 +289,21 @@ async def handle_order_is_blocked_exception(request: Request, exc: Exception):
     )
 
 
+async def handle_invalid_patient_demographics_exception(
+    request: Request, exc: Exception
+):
+    res = exc if isinstance(exc, InvalidPatientDemographics) else None
+    if res is None:
+        return JSONResponse(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            content={"detail": "INTERNAL_SERVER_ERROR_EXCEPTION"},
+        )
+    return JSONResponse(
+        status_code=status.HTTP_400_BAD_REQUEST,
+        content={"detail": "INVALID_PATIENT_DEMOGRAPHICS"},
+    )
+
+
 _exceptions_handlers = {
     CashRegisterAlreadyOpen: handle_cash_register_already_open_exception,
     CashRegisterNotFound: handle_cash_register_not_found_exception,
@@ -307,6 +325,7 @@ _exceptions_handlers = {
     InvalidAmount: handle_invalid_amount_exception,
     CashMovementNotFound: handle_cash_movement_not_found_exception,
     OrderIsBlocked: handle_order_is_blocked_exception,
+    InvalidPatientDemographics: handle_invalid_patient_demographics_exception,
 }
 
 
