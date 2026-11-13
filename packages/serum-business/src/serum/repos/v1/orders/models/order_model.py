@@ -4,7 +4,14 @@ from pydantic import AliasChoices, BaseModel, Field
 from serum.repos.v1._shared_models import IncludedTest
 from serum.repos.v1.common.models.user_info import UserInfo
 
-OrderStatus = Literal["pending", "completed", "cancelled", "paid", "partiallyPaid"]
+OrderStatus = Literal[
+    "pending",
+    "in_review",
+    "completed",
+    "cancelled",
+    "paid",
+    "partiallyPaid",
+]
 
 
 class PatientInfo(BaseModel):
@@ -63,6 +70,13 @@ class OrderTestResult(IncludedTest):
     showInPrint: bool = True
 
 
+class OrderStatusChange(BaseModel):
+    status: str
+    changedAt: int
+    changedBy: UserInfo | None = None
+    reason: str | None = None
+
+
 class BaseOrder(BaseModel):
     branchId: str
     patientId: str
@@ -111,6 +125,15 @@ class UpdateOrder(BaseModel):
     notes: str | None = Field(
         default=None, validation_alias=AliasChoices("notes", "description")
     )
+    # Campos internos de auditoría clínica. El controlador los descarta del
+    # cuerpo del cliente y los reconstruye a partir del actor autenticado.
+    statusHistory: list[OrderStatusChange] | None = None
+    finalizedAt: int | None = None
+    finalizedBy: UserInfo | None = None
+    reopenedAt: int | None = None
+    reopenedBy: UserInfo | None = None
+    reopenReason: str | None = None
+    revisionCount: int | None = None
 
     @property
     def description(self) -> str | None:
@@ -125,3 +148,10 @@ class OrderInDb(BaseOrder):
     cancelledAt: int | None = None
     cancelledBy: UserInfo | None = None
     cancellationReason: str | None = None
+    statusHistory: list[OrderStatusChange] = []
+    finalizedAt: int | None = None
+    finalizedBy: UserInfo | None = None
+    reopenedAt: int | None = None
+    reopenedBy: UserInfo | None = None
+    reopenReason: str | None = None
+    revisionCount: int = 0

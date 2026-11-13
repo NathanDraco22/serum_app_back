@@ -7,6 +7,7 @@ from serum.core.default_values import (
     create_default_lab_tests,
     update_default_lab_tests,
 )
+from serum.repos.v1._shared_models import ReferenceValue
 from serum.repos.v1.branches import BranchesRepository
 from serum.repos.v1.lab_test_accounts import (
     CreateLabTestAccount,
@@ -14,7 +15,7 @@ from serum.repos.v1.lab_test_accounts import (
     LabTestCommercial,
     UpdateLabTestAccountCommercial,
 )
-from serum.repos.v1.lab_tests import LabTestsRepository
+from serum.repos.v1.lab_tests import LabTestsRepository, UpdateLabTest
 
 
 class UpdateImportRequest(BaseModel):
@@ -28,6 +29,34 @@ class UpdateImportRequest(BaseModel):
         default=True,
         validation_alias=AliasChoices("updateLabTest", "update_lab_test"),
     )
+    preserveReferenceValues: bool = Field(
+        default=True,
+        validation_alias=AliasChoices(
+            "preserveReferenceValues", "preserve_reference_values"
+        ),
+    )
+
+
+class ReferenceValuesMigrationItem(BaseModel):
+    code: str
+    referenceValues: list[ReferenceValue]
+
+
+class ReferenceValuesMigrationRequest(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    tests: list[ReferenceValuesMigrationItem]
+
+
+class ReferenceValuesMigrationResult(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    success: bool = True
+    message: str = "Rangos de referencia migrados exitosamente"
+    totalProcessed: int = 0
+    updatedCount: int = 0
+    notFoundCodes: list[str] = Field(default_factory=list)
+    skippedCodes: list[str] = Field(default_factory=list)
 
 
 class ImportBranchPricesRequest(BaseModel):
@@ -60,9 +89,7 @@ class ImportsController:
         result = await create_default_lab_tests()
         return result
 
-    async def update_catalog(
-        self, request: UpdateImportRequest
-    ) -> UpdateImportResult:
+    async def update_catalog(self, request: UpdateImportRequest) -> UpdateImportResult:
         """Actualiza y sincroniza las pruebas clínicas desde el catálogo maestro estático."""
         if not request.updateLabTest:
             return UpdateImportResult(
@@ -77,7 +104,60 @@ class ImportsController:
             )
 
         return await update_default_lab_tests(
-            override_price=request.overridePrice
+            override_price=request.overridePrice,
+            preserve_reference_values=request.preserveReferenceValues,
+        )
+
+    async def migrate_reference_values(
+        self, request: ReferenceValuesMigrationRequest
+    ) -> ReferenceValuesMigrationResult:
+        """Actualiza únicamente los referenceValues de las pruebas indicadas por code.
+
+        Es una migración controlada: no crea pruebas, no toca precios, nombres,
+        categorías ni otros campos. Las pruebas no encontradas se reportan.
+        """
+        repo = LabTestsRepository.get_instance()
+        tests = await repo.get_all_lab_tests()
+        by_code = {test.code: test for test in tests if test.code}
+
+        updated_count = 0
+        not_found_codes: list[str] = []
+        skipped_codes: list[str] = []
+
+        for item in request.tests:
+            if not item.referenceValues:
+                skipped_codes.append(item.code)
+                continue
+
+            test = by_code.get(item.code)
+            if test is None:
+                not_found_codes.append(item.code)
+                continue
+
+            await repo.update_lab_test_by_id(
+                test.id,
+                UpdateLabTest(referenceValues=item.referenceValues),
+            )
+            updated_count += 1
+
+        success = not not_found_codes and not skipped_codes
+        if success:
+            message = "Rangos de referencia migrados exitosamente"
+        else:
+            message = (
+                "Migración completada con incidencias: "
+                f"{updated_count} actualizadas, "
+                f"{len(not_found_codes)} no encontradas, "
+                f"{len(skipped_codes)} omitidas."
+            )
+
+        return ReferenceValuesMigrationResult(
+            success=success,
+            message=message,
+            totalProcessed=len(request.tests),
+            updatedCount=updated_count,
+            notFoundCodes=not_found_codes,
+            skippedCodes=skipped_codes,
         )
 
     async def import_branch_prices(

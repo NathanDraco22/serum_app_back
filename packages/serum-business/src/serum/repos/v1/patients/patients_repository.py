@@ -1,4 +1,5 @@
 from serum.core.counter_manager import CounterManager
+from serum.core.exceptions import InvalidPatientDemographics
 from serum.tools.time_tools import TimeTools
 from serum.tools.search_tools import generate_prefixes
 
@@ -62,7 +63,22 @@ class PatientsRepository:
     async def update_patient_by_id(
         self, patient_id: str, patient: UpdatePatient
     ) -> PatientInDb | None:
+        existing = await self.patients_ds.get_patient_by_id(patient_id)
+        if existing is None:
+            return None
+
         updated_data = patient.model_dump(exclude_unset=True)
+
+        # Si la actualización toca la demografía, el resultado fusionado debe
+        # seguir teniendo al menos una fuente de edad válida.
+        if "dateOfBirth" in updated_data or "age" in updated_data:
+            merged_dob = updated_data.get(
+                "dateOfBirth", existing.get("dateOfBirth") or 0
+            )
+            merged_age = updated_data.get("age", existing.get("age"))
+            if (merged_dob or 0) <= 0 and merged_age is None:
+                raise InvalidPatientDemographics()
+
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()
 
         if "name" in updated_data and updated_data["name"]:

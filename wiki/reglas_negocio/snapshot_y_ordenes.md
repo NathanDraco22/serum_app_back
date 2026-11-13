@@ -39,19 +39,42 @@ El campo `status` representa el **estado clínico** de la orden:
 
 ```
 [ pending ]
-     ↓  (resultados completos y orden pagada)
-[ completed ]  (Resultados ingresados y verificados)
-     ↓
- [ published ]  (Resultados entregados o disponibles para consulta)
+     ↓  (todos los resultados capturados)
+[ in_review ]  (Resultados listos, esperando finalización explícita)
+     ↓  (POST /orders/{id}/finalize)
+[ completed ]  (Resultados validados y orden finalizada)
+     ↺  (POST /orders/{id}/reopen, con motivo)
+[ in_review ]
 
 [ cancelled ]  (Cancelación auditada)
 ```
 
+Reglas clave:
+
+1. **`in_review` se dispara por resultados, no por pago.** Al guardar resultados, si todos los parámetros de `order.results` tienen valor, la orden pasa a `in_review`; si falta alguno, vuelve a `pending`.
+2. **`completed` solo se alcanza con finalización explícita.** El botón **Finalizar Orden** del listado o `POST /orders/{id}/finalize` valida que todos los resultados estén completos y que la orden no esté bloqueada. La acción requiere `accessLevel >= 3`.
+3. **Reapertura auditada.** `POST /orders/{id}/reopen` exige `accessLevel >= 3` y un motivo obligatorio. La orden vuelve a `in_review` conservando pagos, historial y número de revisiones.
+4. **El PDF clínico está disponible con resultados completos**, sin importar el pago o si la orden está en `in_review` o `completed`.
+5. **El pago nunca cambia el estado clínico.** El motor de pagos solo actualiza `paidAmount`, el recibo y el Kardex. Una orden puede estar `in_review` o `completed` con saldo pendiente, y pagarse después sin degradar su estado.
+
+### Auditoría clínica
+
+`OrderInDb` conserva:
+
+- `statusHistory`: lista de transiciones (`status`, `changedAt`, `changedBy`, `reason`).
+- `finalizedAt` / `finalizedBy`: finalización actual.
+- `reopenedAt` / `reopenedBy` / `reopenReason`: última reapertura.
+- `revisionCount`: número de reaperturas.
+
+El PDF muestra `Estado: En revisión` mientras está en `in_review`, y `Finalizado por: [nombre] — [fecha]` cuando está `completed`.
+
+### Compatibilidad temporal
+
+En este release se mantienen los estados legacy `paid` / `partiallyPaid` en las respuestas HTTP para clientes antiguos. La capa `with_legacy_status` **no debe transformar `in_review`**: ese estado se devuelve tal cual. La eliminación definitiva de `paid` / `partiallyPaid` y de la capa legacy queda para un release posterior.
+
 El estado financiero **no se guarda en `status`**. La fuente de verdad es `paidAmount` contra el total de la orden:
 
 $$\text{isFullyPaid} = \text{totalPrice} \le 0 \lor \text{paidAmount} \ge \text{totalPrice}$$
-
-Para compatibilidad con clientes antiguos, la respuesta HTTP calcula un `status` legacy (`paid` / `partiallyPaid` / `pending`) a partir de `paidAmount`, pero la base de datos conserva el estado clínico. El flujo de pago solo actualiza `paidAmount` y nunca escribe `status`.
 
 ### Cancelación auditada
 

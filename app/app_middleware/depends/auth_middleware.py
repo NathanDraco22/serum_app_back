@@ -1,7 +1,7 @@
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 
-from serum.core.default_values.create_root_user import (
+from serum.core.default_values.root_constants import (
     ROOT_USER_ID,
     ROOT_USERNAME,
 )
@@ -90,6 +90,42 @@ def get_current_user(req: Request) -> UserInDb | None:
 def get_current_api_key(req: Request) -> ApiKeyInDb | None:
     """Helper para obtener el API Key autenticado desde el estado del request."""
     return getattr(req.state, "api_key", None)
+
+
+def is_admin_user(user: UserInDb) -> bool:
+    """Evalúa si un usuario tiene privilegios administrativos.
+
+    Se consideran administradores el usuario root/interno, los usuarios con
+    accessLevel >= 5 y los roles 'Admin' o 'Administrador'.
+    """
+    return (
+        user.isInternal
+        or user.id == ROOT_USER_ID
+        or user.username.lower() in {ROOT_USERNAME.lower(), "root"}
+        or user.accessLevel >= 5
+        or user.role.lower() in {"admin", "administrador"}
+    )
+
+
+async def require_admin_user(req: Request) -> UserInDb:
+    """Valida autenticación y exige privilegios de administrador.
+
+    No permite autenticación por API Key: la administración de usuarios debe
+    realizarse con una sesión JWT de un administrador.
+    """
+    await auth_middleware(req)
+    user: UserInDb | None = getattr(req.state, "user", None)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Se requiere una sesión de usuario administrador",
+        )
+    if not is_admin_user(user):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Solo los administradores pueden gestionar usuarios",
+        )
+    return user
 
 
 async def require_root_user(req: Request) -> UserInDb:

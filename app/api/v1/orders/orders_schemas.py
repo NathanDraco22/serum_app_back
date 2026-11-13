@@ -20,3 +20,7 @@ class OrderApproveRequest(BaseModel):
     supervisorPassword: str | None = None
     approvedBy: UserInfo | None = None
     reason: str = "Aprobado por supervisor"
+
+
+class OrderReopenRequest(BaseModel):
+    reason: str = Field(min_length=1)

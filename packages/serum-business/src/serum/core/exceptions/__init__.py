@@ -19,6 +19,7 @@ from .exceptions import (
     InvalidAmount,
     CashMovementNotFound,
     OrderIsBlocked,
+    InvalidPatientDemographics,
 )
 
 __all__ = [
@@ -42,4 +43,5 @@ __all__ = [
     "InvalidAmount",
     "CashMovementNotFound",
     "OrderIsBlocked",
+    "InvalidPatientDemographics",
 ]

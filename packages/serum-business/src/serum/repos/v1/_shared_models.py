@@ -8,6 +8,9 @@ class ReferenceValue(BaseModel):
     maxAgeDays: int
     minValue: float
     maxValue: float
+    ageUnit: str | None = None
+    useAge: bool = False
+    useGender: bool = False
 
 
 class IncludedTest(BaseModel):

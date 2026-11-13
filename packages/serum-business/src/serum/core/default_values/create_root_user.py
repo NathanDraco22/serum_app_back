@@ -1,12 +1,13 @@
 from serum.core.default_values.create_default_branch import ORIGIN_BRANCH_ID
+from serum.core.default_values.root_constants import (
+    ROOT_PASSWORD_PLAIN,
+    ROOT_USER_ID,
+    ROOT_USERNAME,
+)
 from serum.core.security.password_hasher import SysPasswordHasher
 from serum.repos.v1.users.models.user_model import UserInDb
 from serum.services.mongo_collections.v1.users_collection import UsersCollection
 from serum.tools.time_tools import TimeTools
-
-ROOT_USER_ID = "root"
-ROOT_USERNAME = "Serum"
-ROOT_PASSWORD_PLAIN = "SerumRoot"
 
 
 async def create_root_user() -> UserInDb:

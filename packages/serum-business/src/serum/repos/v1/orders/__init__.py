@@ -6,6 +6,7 @@ from .models.order_model import (
     OrderInDb,
     OrderItem,
     OrderService,
+    OrderStatusChange,
     UpdateOrder,
 )
 from .orders_repository import OrdersRepository
@@ -19,5 +20,6 @@ __all__ = [
     "OrderService",
     "OrderDiscount",
     "OrderApproval",
+    "OrderStatusChange",
     "OrdersRepository",
 ]

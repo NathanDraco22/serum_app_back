@@ -6,7 +6,11 @@ from serum.repos.v1.orders import CreateOrder, OrderInDb, UpdateOrder
 from responses.v1 import ListResponse
 
 from .orders_controller import orders_controller
-from .orders_schemas import OrderApproveRequest, OrderPayRequest
+from .orders_schemas import (
+    OrderApproveRequest,
+    OrderPayRequest,
+    OrderReopenRequest,
+)
 
 orders_router = APIRouter(
     tags=["ordersV1"],
@@ -15,8 +19,8 @@ orders_router = APIRouter(
 
 
 @orders_router.post("")
-async def create_order(body: CreateOrder) -> OrderInDb:
-    return await orders_controller.create_order(body)
+async def create_order(body: CreateOrder, req: Request) -> OrderInDb:
+    return await orders_controller.create_order(body, req)
 
 
 @orders_router.get("")
@@ -60,6 +64,18 @@ async def delete_order_by_id(
     return await orders_controller.delete_order_by_id(
         order_id, req=req, reason=reason
     )
+
+
+@orders_router.post("/{order_id}/finalize")
+async def finalize_order(order_id: str, req: Request) -> OrderInDb:
+    return await orders_controller.finalize_order(order_id, req)
+
+
+@orders_router.post("/{order_id}/reopen")
+async def reopen_order(
+    order_id: str, body: OrderReopenRequest, req: Request
+) -> OrderInDb:
+    return await orders_controller.reopen_order(order_id, body, req)
 
 
 @orders_router.post("/{order_id}/pay")

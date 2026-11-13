@@ -26,6 +26,11 @@ Representa un análisis clínico específico (ej. *Glucosa*, *Colesterol Total*,
   - `boolean` / `qualitative`: Resultado dicotómico o de opciones cerradas (ej. `["Negativo", "Positivo"]`, `["No Reactivo", "Reactivo"]`).
   - `text`: Observación descriptiva o narrativa libre.
 - **Rangos de referencia (`referenceValues`)**: Arreglo de rangos que dependen de la demografía del paciente (`patientType`, `gender`, `minAgeDays`, `maxAgeDays`, `minValue`, `maxValue`).
+  - **Flags de evaluación (`useAge` / `useGender`)**: Cada rango indica explícitamente si debe evaluarse la edad (`useAge`) y/o el género (`useGender`). Ambos son `bool` y por defecto son `false`, porque la mayoría de las pruebas no requieren evaluación demográfica.
+  - `useAge: false` ignora `minAgeDays` / `maxAgeDays`; el rango aplica a cualquier edad.
+  - `useGender: false` ignora `gender`; el rango aplica a ambos géneros.
+  - Si varios rangos coinciden, el resolvedor prefiere el más específico: ambos flags activos > solo edad > solo género > rango general. Como desempate usa la coincidencia exacta de género, el mayor `minAgeDays` y el rango más angosto.
+  - Si ningún rango coincide, no se calculan alertas `H`/`L` y la UI muestra “Sin rango para esta edad/género”.
 
 ### B. Pack o Perfil Comercial (`isPack: true`)
 Representa una oferta o combo comercial que agrupa múltiples pruebas individuales (ej. *Perfil Lipídico*, *Perfil Hepático*, *Checkup General*).
@@ -67,7 +72,8 @@ Las pruebas y packs médicos pertenecen a un catálogo clínico maestro (`lab_te
 Cuando se aplican mejoras, correcciones o adiciones en el catálogo estático maestro (`app/static/lab_tests_master.json`), se cuenta con el endpoint de actualización incremental para sincronizar la base de datos sin destruir colecciones ni borrar tarifas personalizadas:
 
 - **Request `UpdateImportRequest`**:
-  - `overridePrice: bool = False`: Si es `False` (comportamiento predeterminado y recomendado), **preserva intactos los precios existentes** (`salePrice`, `salePrice2`, `costPrice`) configurados por el usuario/laboratorio, actualizando únicamente nombres, categorías, subclasificaciones, opciones cualitativas, valores de referencia demográficos y relaciones hijas de packs. Si es `True`, sobreescribe también los precios con las tarifas del JSON maestro.
+  - `overridePrice: bool = False`: Si es `False` (comportamiento predeterminado y recomendado), **preserva intactos los precios existentes** (`salePrice`, `salePrice2`, `costPrice`) configurados por el usuario/laboratorio, actualizando únicamente nombres, categorías, subclasificaciones, opciones cualitativas y relaciones hijas de packs. Si es `True`, sobreescribe también los precios con las tarifas del JSON maestro.
+  - `preserveReferenceValues: bool = True` (recomendado): Si es `True`, **no se sobrescriben los `referenceValues` de las pruebas existentes**. Se conservan los rangos de edad/género, sus flags `useAge`/`useGender` y los ajustes hechos desde la app. Las pruebas nuevas sí se crean con los valores del maestro. Si es `False`, los `referenceValues` existentes se reemplazan por los del archivo maestro.
   - `updateLabTest: bool = True`: Activa la sincronización del catálogo clínico de pruebas de laboratorio.
 - **Rutas Disponibles**:
   - `POST /api/v1/imports/update-catalog`

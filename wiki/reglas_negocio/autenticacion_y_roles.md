@@ -3,7 +3,7 @@ type: doc
 title: Reglas de Negocio — Autenticación, Tokens JWT y Roles
 description: Flujo de inicio de sesión, estructura de tokens de sesión y refresh, verificación de estado de cuenta y control de acceso.
 tags: [auth, jwt, security, users, roles, sessions]
-timestamp: 2026-09-28T18:30:00Z
+timestamp: 2026-11-12T12:00:00Z
 ---
 
 # 🔐 Autenticación, Tokens y Roles
@@ -76,3 +76,20 @@ Durante el arranque de la aplicación (`app_lifespan.py` ➔ `services_initializ
    - `accessLevel`: `5`
    - `branches`: `["ORIGIN_BRANCH"]`
    - `isActive`: `True`
+
+---
+
+## 5. Administración de Usuarios vía API
+
+- **Lectura:** `GET /api/v1/users` y `GET /api/v1/users/{id}` requieren autenticación válida (JWT de usuario o API Key). Se mantienen disponibles para usuarios autenticados porque otros flujos internos (por ejemplo, la selección de bioanalistas auxiliares) consultan el directorio.
+- **Escritura:** `POST`, `PATCH` y `DELETE` exigen `require_admin_user` (root/interno, `accessLevel >= 5` o rol `Admin`/`Administrador`) con una sesión JWT de usuario. Las API Keys no pueden administrar usuarios.
+- **Edición (`PATCH /users/{id}`):**
+  - No permite modificar al usuario root/interno.
+  - No permite que un administrador se desactive a sí mismo ni se quite su propio rol.
+  - Impide dejar el sistema sin administradores activos.
+  - Valida duplicados de `username`, `email` y `phone` contra los demás usuarios.
+  - Normaliza email/teléfono vacíos a `null` y puede resetear la contraseña si se envía una nueva.
+  - Si se solicita `isActive = false`, rechaza la operación cuando el usuario tiene un turno de caja en estado `OPEN`.
+- **Borrado:** `DELETE` es lógico (`isDeleted = True`) y conserva las protecciones de root, autoeliminación y último administrador. Serum Mobile no expone el borrado; utiliza desactivación.
+- **Respuestas seguras:** los endpoints de usuarios devuelven el campo `password` vacío; el hash almacenado nunca se expone por HTTP.
+- **Sesión móvil:** si un administrador edita su propia cuenta, `AppSessionCubit.refreshCurrentUser()` recarga sus datos y recalcula las sucursales autorizadas; si fue desactivado o degradado, cierra la sesión.
