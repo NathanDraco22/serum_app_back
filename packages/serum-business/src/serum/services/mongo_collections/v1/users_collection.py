@@ -20,12 +20,15 @@ class UsersCollection(BaseMongoCollection):
             upsert=True,
         )
 
-    async def fetch_all_users(self) -> list[dict[str, Any]]:
+    async def fetch_all_users(
+        self, include_internal: bool = False
+    ) -> list[dict[str, Any]]:
         collection = self._collection
-        cursor = collection.find({
-            "isDeleted": {"$ne": True},
-            "isInternal": {"$ne": True},
-        })
+        query: dict[str, Any] = {"isDeleted": {"$ne": True}}
+        if not include_internal:
+            query["isInternal"] = {"$ne": True}
+
+        cursor = collection.find(query)
 
         result = await cursor.to_list(length=None)
         await cursor.close()

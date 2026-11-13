@@ -9,9 +9,11 @@ class UsersDataSource:
         await collection.create_user(user)
         return user
 
-    async def get_all_users(self) -> list[dict[str, Any]]:
+    async def get_all_users(
+        self, include_internal: bool = False
+    ) -> list[dict[str, Any]]:
         collection = UsersCollection.get_instance()
-        return await collection.fetch_all_users()
+        return await collection.fetch_all_users(include_internal=include_internal)
 
     async def get_user_by_id(self, user_id: str) -> dict[str, Any] | None:
         collection = UsersCollection.get_instance()

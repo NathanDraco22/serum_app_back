@@ -1,0 +1,3 @@
+ROOT_USER_ID = "root"
+ROOT_USERNAME = "Serum"
+ROOT_PASSWORD_PLAIN = "SerumRoot"
