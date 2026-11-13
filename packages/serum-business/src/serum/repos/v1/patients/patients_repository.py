@@ -76,7 +76,7 @@ class PatientsRepository:
                 "dateOfBirth", existing.get("dateOfBirth") or 0
             )
             merged_age = updated_data.get("age", existing.get("age"))
-            if (merged_dob or 0) <= 0 and merged_age is None:
+            if (merged_dob or 0) == 0 and merged_age is None:
                 raise InvalidPatientDemographics()
 
         updated_data["updatedAt"] = TimeTools.get_now_in_milliseconds()

@@ -30,7 +30,7 @@ def _has_valid_patient_demographics(
     else:
         date_of_birth = patient_info.dateOfBirth
         age = patient_info.age
-    return date_of_birth > 0 or age is not None
+    return date_of_birth != 0 or age is not None
 
 
 def _build_patient_info(patient_doc: dict) -> PatientInfo:

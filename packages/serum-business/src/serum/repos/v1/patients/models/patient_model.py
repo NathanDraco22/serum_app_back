@@ -1,6 +1,9 @@
 from pydantic import BaseModel, field_validator, model_validator
 
 
+MIN_DATE_OF_BIRTH_MS = -2_208_988_800_000  # 1900-01-01 UTC
+
+
 class BasePatient(BaseModel):
     name: str
     dateOfBirth: int
@@ -17,8 +20,8 @@ class CreatePatient(BasePatient):
     @field_validator("dateOfBirth")
     @classmethod
     def validate_date_of_birth(cls, value: int) -> int:
-        if value < 0:
-            raise ValueError("La fecha de nacimiento no puede ser negativa")
+        if value != 0 and value < MIN_DATE_OF_BIRTH_MS:
+            raise ValueError("La fecha de nacimiento no puede ser anterior al año 1900")
         return value
 
     @field_validator("age")
@@ -30,7 +33,7 @@ class CreatePatient(BasePatient):
 
     @model_validator(mode="after")
     def validate_demographics(self) -> "CreatePatient":
-        if self.dateOfBirth <= 0 and self.age is None:
+        if self.dateOfBirth == 0 and self.age is None:
             raise ValueError(
                 "La fecha de nacimiento o la edad son obligatorias para el paciente"
             )
@@ -51,8 +54,10 @@ class UpdatePatient(BaseModel):
     @field_validator("dateOfBirth")
     @classmethod
     def validate_date_of_birth(cls, value: int | None) -> int:
-        if value is None or value <= 0:
+        if value is None or value == 0:
             raise ValueError("La fecha de nacimiento no puede vaciarse")
+        if value < MIN_DATE_OF_BIRTH_MS:
+            raise ValueError("La fecha de nacimiento no puede ser anterior al año 1900")
         return value
 
     @field_validator("age")

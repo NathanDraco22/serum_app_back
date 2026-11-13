@@ -79,9 +79,40 @@ def test_create_patient_requires_age_or_date_of_birth() -> None:
     assert patient.age == 30
 
 
+def test_create_patient_allows_negative_timestamp_pre_1970() -> None:
+    # 1969-01-01 en epoch ms (~ -31536000000 ms, ej. 57 años)
+    dob_1969 = -31536000000
+    patient = CreatePatient(
+        name="Paciente 57 Años",
+        dateOfBirth=dob_1969,
+        gender="M",
+        phone="1",
+        originBranch="branch-1",
+    )
+    assert patient.dateOfBirth == dob_1969
+
+    # Fechas anteriores a 1900 son rechazadas
+    with pytest.raises(ValidationError):
+        CreatePatient(
+            name="Paciente Pre-1900",
+            dateOfBirth=-2_208_988_800_001,
+            gender="M",
+            phone="1",
+            originBranch="branch-1",
+        )
+
+
 def test_update_patient_cannot_clear_date_of_birth() -> None:
     with pytest.raises(ValidationError):
         UpdatePatient(dateOfBirth=None)
+    with pytest.raises(ValidationError):
+        UpdatePatient(dateOfBirth=0)
+    with pytest.raises(ValidationError):
+        UpdatePatient(dateOfBirth=-2_208_988_800_001)
+
+    # Permitir actualización con fecha pre-1970
+    update = UpdatePatient(dateOfBirth=-31536000000)
+    assert update.dateOfBirth == -31536000000
 
 
 def test_update_patient_accepts_age_only_update() -> None:
@@ -99,7 +130,14 @@ def test_has_valid_patient_demographics() -> None:
         _has_valid_patient_demographics(PatientInfo(name="Con fecha", dateOfBirth=123))
         is True
     )
+    assert (
+        _has_valid_patient_demographics(
+            PatientInfo(name="Con fecha pre-1970", dateOfBirth=-31536000000)
+        )
+        is True
+    )
     assert _has_valid_patient_demographics({"dateOfBirth": 123}) is True
+    assert _has_valid_patient_demographics({"dateOfBirth": -31536000000}) is True
     assert _has_valid_patient_demographics({"dateOfBirth": 0, "age": 30}) is True
 
 
