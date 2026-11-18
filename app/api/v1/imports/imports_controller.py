@@ -1,10 +1,14 @@
-from fastapi import HTTPException, status
+import json
+from typing import Any
+
+from fastapi import HTTPException, UploadFile, status
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 from serum.core.default_values import (
     ImportCatalogResult,
     UpdateImportResult,
     create_default_lab_tests,
+    import_new_lab_tests,
     update_default_lab_tests,
 )
 from serum.repos.v1._shared_models import ReferenceValue
@@ -88,6 +92,40 @@ class ImportsController:
         """Activa o re-ejecuta la importación del catálogo por defecto para el tenant actual."""
         result = await create_default_lab_tests()
         return result
+
+    async def import_new_lab_tests_json(
+        self, tests: list[dict[str, Any]]
+    ) -> ImportCatalogResult:
+        """Importa pruebas y packs nuevos desde una lista JSON sin sobrescribir existentes."""
+        if not tests:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="La lista de pruebas a importar no puede estar vacía.",
+            )
+        return await import_new_lab_tests(tests)
+
+    async def import_new_lab_tests_file(
+        self, file: UploadFile
+    ) -> ImportCatalogResult:
+        """Importa pruebas y packs nuevos desde un archivo .json sin sobrescribir existentes."""
+        raw_bytes = await file.read()
+        try:
+            data = json.loads(raw_bytes.decode("utf-8-sig"))
+        except Exception as e:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"El archivo no contiene un JSON UTF-8 válido: {e}",
+            ) from e
+
+        if not isinstance(data, list) or not all(
+            isinstance(item, dict) for item in data
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="El JSON debe ser un arreglo de objetos de prueba (list[dict]).",
+            )
+
+        return await self.import_new_lab_tests_json(data)
 
     async def update_catalog(self, request: UpdateImportRequest) -> UpdateImportResult:
         """Actualiza y sincroniza las pruebas clínicas desde el catálogo maestro estático."""

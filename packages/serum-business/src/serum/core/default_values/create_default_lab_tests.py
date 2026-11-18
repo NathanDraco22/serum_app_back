@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 from serum.core.default_values.create_default_branch import ORIGIN_BRANCH_ID
 from serum.repos.v1._shared_models import ReferenceValue
@@ -33,6 +33,8 @@ class ImportCatalogResult(BaseModel):
     accountsCreated: int = 0
     alreadyExisting: int = 0
     totalProcessed: int = 0
+    skippedCodes: list[str] = Field(default_factory=list)
+    errors: list[str] = Field(default_factory=list)
 
 
 def _normalize_gender(g: str) -> str:
@@ -123,6 +125,20 @@ def _register_and_build_accounts(
     return accounts
 
 
+async def import_new_lab_tests(
+    catalog_items: list[dict[str, Any]],
+) -> ImportCatalogResult:
+    """Importa únicamente pruebas y packs nuevos desde una lista de diccionarios JSON.
+
+    Nunca sobrescribe ni modifica pruebas o packs existentes (coincidencia por code o name).
+    """
+    return await _import_catalog_items(
+        catalog_items,
+        strict_append_only=True,
+        success_message="Pruebas nuevas importadas exitosamente (sin sobrescribir existentes)",
+    )
+
+
 async def create_default_lab_tests(
     json_path: Path | None = None,
 ) -> ImportCatalogResult:
@@ -148,6 +164,20 @@ async def create_default_lab_tests(
         logger.error(msg)
         return ImportCatalogResult(success=False, message=msg)
 
+    return await _import_catalog_items(
+        catalog_items,
+        strict_append_only=False,
+        success_message="Catálogo por defecto importado exitosamente",
+    )
+
+
+async def _import_catalog_items(
+    catalog_items: list[dict[str, Any]],
+    *,
+    strict_append_only: bool,
+    success_message: str,
+) -> ImportCatalogResult:
+    """Ejecuta la inserción en 2 fases (atómicas -> packs) sobre una lista de registros JSON."""
     lab_tests_repo = LabTestsRepository.get_instance()
     accounts_repo = LabTestAccountsRepository.get_instance()
     branches_repo = BranchesRepository.get_instance()
@@ -175,6 +205,8 @@ async def create_default_lab_tests(
     total_accounts_created = 0
     created_atomics_count = 0
     created_packs_count = 0
+    skipped_codes: list[str] = []
+    errors: list[str] = []
 
     atomic_items = [item for item in catalog_items if not item.get("isPack", False)]
     pack_items = [item for item in catalog_items if item.get("isPack", False)]
@@ -192,33 +224,35 @@ async def create_default_lab_tests(
         ) or (normalized_name in existing_by_name or normalized_name in queued_names)
         if already_exists:
             already_existing_count += 1
-            target_test = (
-                existing_by_code.get(code)
-                if code
-                else existing_by_name.get(normalized_name)
-            )
-            if target_test and any(
-                _normalize_gender(rv.gender) != rv.gender
-                for rv in target_test.referenceValues
-            ):
-                updated_rvs = [
-                    ReferenceValue(
-                        patientType=rv.patientType,
-                        gender=_normalize_gender(rv.gender),
-                        minAgeDays=rv.minAgeDays,
-                        maxAgeDays=rv.maxAgeDays,
-                        minValue=rv.minValue,
-                        maxValue=rv.maxValue,
-                        ageUnit=rv.ageUnit,
-                        useAge=rv.useAge,
-                        useGender=rv.useGender,
-                    )
-                    for rv in target_test.referenceValues
-                ]
-                await lab_tests_repo.update_lab_test_by_id(
-                    target_test.id,
-                    UpdateLabTest(referenceValues=updated_rvs),
+            skipped_codes.append(code or name or "N/A")
+            if not strict_append_only:
+                target_test = (
+                    existing_by_code.get(code)
+                    if code
+                    else existing_by_name.get(normalized_name)
                 )
+                if target_test and any(
+                    _normalize_gender(rv.gender) != rv.gender
+                    for rv in target_test.referenceValues
+                ):
+                    updated_rvs = [
+                        ReferenceValue(
+                            patientType=rv.patientType,
+                            gender=_normalize_gender(rv.gender),
+                            minAgeDays=rv.minAgeDays,
+                            maxAgeDays=rv.maxAgeDays,
+                            minValue=rv.minValue,
+                            maxValue=rv.maxValue,
+                            ageUnit=rv.ageUnit,
+                            useAge=rv.useAge,
+                            useGender=rv.useGender,
+                        )
+                        for rv in target_test.referenceValues
+                    ]
+                    await lab_tests_repo.update_lab_test_by_id(
+                        target_test.id,
+                        UpdateLabTest(referenceValues=updated_rvs),
+                    )
             continue
 
         payload = dict(item)
@@ -239,7 +273,9 @@ async def create_default_lab_tests(
             if create_dto.name:
                 queued_names.add(create_dto.name.strip().lower())
         except Exception as e:
-            logger.error(f"Error al parsear prueba atómica '{name}': {e}")
+            err_msg = f"Error al parsear prueba atómica '{name}': {e}"
+            logger.error(err_msg)
+            errors.append(err_msg)
 
     if atomic_dtos:
         created_atomics = await lab_tests_repo.create_lab_tests_batch(atomic_dtos)
@@ -299,11 +335,15 @@ async def create_default_lab_tests(
                 if create_dto.name:
                     queued_names.add(create_dto.name.strip().lower())
             except Exception as e:
-                logger.error(f"Error al parsear pack por defecto '{name}': {e}")
+                err_msg = f"Error al parsear pack '{name}': {e}"
+                logger.error(err_msg)
+                errors.append(err_msg)
         else:
             already_existing_count += 1
+            skipped_codes.append(code or name or "N/A")
             if (
-                existing_pack is not None
+                not strict_append_only
+                and existing_pack is not None
                 and not existing_pack.childTestIds
                 and child_ids
             ):
@@ -331,11 +371,13 @@ async def create_default_lab_tests(
             total_accounts_created += len(pack_accounts_to_create)
 
     return ImportCatalogResult(
-        success=True,
-        message="Catálogo por defecto importado exitosamente",
+        success=len(errors) == 0,
+        message=success_message,
         atomicCreated=created_atomics_count,
         packsCreated=created_packs_count,
         accountsCreated=total_accounts_created,
         alreadyExisting=already_existing_count,
         totalProcessed=len(catalog_items),
+        skippedCodes=skipped_codes,
+        errors=errors,
     )

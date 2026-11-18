@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Depends
+from typing import Any
+
+from fastapi import APIRouter, Depends, File, UploadFile
 
 from serum.core.default_values import ImportCatalogResult, UpdateImportResult
 
@@ -28,6 +30,22 @@ async def import_default_catalog() -> ImportCatalogResult:
 async def import_lab_tests_alias() -> ImportCatalogResult:
     """Alias para importar el catálogo de pruebas por defecto."""
     return await imports_controller.import_default_catalog()
+
+
+@imports_router.post("/new-lab-tests", response_model=ImportCatalogResult)
+async def import_new_lab_tests_json(
+    tests: list[dict[str, Any]],
+) -> ImportCatalogResult:
+    """Importa únicamente pruebas y packs nuevos desde un arreglo JSON, sin sobrescribir los existentes."""
+    return await imports_controller.import_new_lab_tests_json(tests)
+
+
+@imports_router.post("/new-lab-tests/file", response_model=ImportCatalogResult)
+async def import_new_lab_tests_file(
+    file: UploadFile = File(...),
+) -> ImportCatalogResult:
+    """Importa únicamente pruebas y packs nuevos desde un archivo .json, sin sobrescribir los existentes."""
+    return await imports_controller.import_new_lab_tests_file(file)
 
 
 @imports_router.post("/update-catalog", response_model=UpdateImportResult)
