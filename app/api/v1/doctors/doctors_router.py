@@ -1,11 +1,15 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.doctors import CreateDoctor, DoctorInDb, UpdateDoctor
 from responses.v1 import ListResponse
 
 from .doctors_controller import doctors_controller
 
-doctors_router = APIRouter(tags=["doctorsV1"])
+doctors_router = APIRouter(
+    tags=["doctorsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @doctors_router.post("")

@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends
+
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.common.filter_params import LabTestAccountFilterParams
 from serum.repos.v1.lab_test_accounts import (
     LabTestAccountInDb,
@@ -8,7 +10,10 @@ from responses.v1 import ListResponse
 
 from .lab_test_accounts_controller import lab_test_accounts_controller
 
-lab_test_accounts_router = APIRouter(tags=["lab_test_accountsV1"])
+lab_test_accounts_router = APIRouter(
+    tags=["lab_test_accountsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @lab_test_accounts_router.get("")

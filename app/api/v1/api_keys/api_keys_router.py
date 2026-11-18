@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from pydantic import BaseModel
 
-from app_middleware.depends.auth_middleware import auth_middleware
+from app_middleware.depends import require_admin_user
 from serum.repos.v1.api_keys import (
     ApiKeyInDb,
     CreateApiKey,
@@ -13,7 +13,7 @@ from .api_keys_controller import api_keys_controller
 
 api_keys_router = APIRouter(
     tags=["apiKeysV1"],
-    dependencies=[Depends(auth_middleware)],
+    dependencies=[Depends(require_admin_user)],
 )
 
 

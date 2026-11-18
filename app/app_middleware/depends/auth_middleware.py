@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import Request, status
 from fastapi.exceptions import HTTPException
 
@@ -8,6 +10,9 @@ from serum.core.default_values.root_constants import (
 from serum.core.security import TokenManager
 from serum.repos.v1.api_keys import ApiKeyInDb, ApiKeysRepository
 from serum.repos.v1.users import UserInDb, UsersRepository
+from serum.serum_config import serumCtx
+
+logger = logging.getLogger(__name__)
 
 
 async def auth_middleware(req: Request) -> None:
@@ -53,6 +58,26 @@ async def auth_middleware(req: Request) -> None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Token de sesión inválido o expirado",
+            )
+
+        if payload.get("type") != "session":
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Tipo de token inválido para autenticación de sesión",
+            )
+
+        current_tenant = serumCtx.get().businessNickname
+        token_tenant = payload.get("tenant")
+        if token_tenant:
+            if current_tenant and token_tenant != current_tenant:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="El token no corresponde al tenant actual",
+                )
+        elif current_tenant:
+            logger.warning(
+                "JWT sin claim 'tenant' aceptado temporalmente en modo transición (tenant=%s)",
+                current_tenant,
             )
 
         user_id = payload.get("userId")

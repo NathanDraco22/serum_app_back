@@ -51,37 +51,47 @@ class TokenManager:
 
     @staticmethod
     def create_session_token(
-        user_id: str, username: str, role: str, access_level: int = 3
+        user_id: str,
+        username: str,
+        role: str,
+        access_level: int = 3,
+        tenant: str | None = None,
     ) -> str:
         now = int(time.time())
-        return TokenManager.encode_token(
-            {
-                "exp": now + SESSION_TOKEN_TTL_SEC,
-                "iat": now,
-                "type": "session",
-                "userId": user_id,
-                "username": username,
-                "role": role,
-                "accessLevel": access_level,
-            }
-        )
+        payload: dict[str, Any] = {
+            "exp": now + SESSION_TOKEN_TTL_SEC,
+            "iat": now,
+            "type": "session",
+            "userId": user_id,
+            "username": username,
+            "role": role,
+            "accessLevel": access_level,
+        }
+        if tenant:
+            payload["tenant"] = tenant
+        return TokenManager.encode_token(payload)
 
     @staticmethod
     def create_refresh_token(
-        user_id: str, username: str, role: str, access_level: int = 3
+        user_id: str,
+        username: str,
+        role: str,
+        access_level: int = 3,
+        tenant: str | None = None,
     ) -> str:
         now = int(time.time())
-        return TokenManager.encode_token(
-            {
-                "exp": now + REFRESH_TOKEN_TTL_SEC,
-                "iat": now,
-                "type": "refresh",
-                "userId": user_id,
-                "username": username,
-                "role": role,
-                "accessLevel": access_level,
-            }
-        )
+        payload: dict[str, Any] = {
+            "exp": now + REFRESH_TOKEN_TTL_SEC,
+            "iat": now,
+            "type": "refresh",
+            "userId": user_id,
+            "username": username,
+            "role": role,
+            "accessLevel": access_level,
+        }
+        if tenant:
+            payload["tenant"] = tenant
+        return TokenManager.encode_token(payload)
 
     @staticmethod
     def _find_service_public_key() -> Path | None:

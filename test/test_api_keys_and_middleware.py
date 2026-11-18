@@ -262,9 +262,15 @@ async def test_api_keys_http_endpoints():
         assert list_data["count"] == 1
         assert list_data["data"][0]["id"] == key_id
 
-        # 4. Probar que la API Key recién creada puede autenticar llamadas GET /api/v1/api-keys
-        res_via_key = await client.get(
+        # 4. Una API Key no puede gestionar llaves de API (403), pero sí autenticar endpoints de negocio
+        res_via_key_admin = await client.get(
             "/api/v1/api-keys",
+            headers={"X-API-KEY": raw_key, "X-Servin": "SerumDB"},
+        )
+        assert res_via_key_admin.status_code == 403
+
+        res_via_key = await client.get(
+            "/api/v1/patients",
             headers={"X-API-KEY": raw_key, "X-Servin": "SerumDB"},
         )
         assert res_via_key.status_code == 200
@@ -280,7 +286,7 @@ async def test_api_keys_http_endpoints():
 
         # Con la llave desactivada, la petición vía X-API-KEY debe fallar (401)
         res_via_deactivated = await client.get(
-            "/api/v1/api-keys",
+            "/api/v1/patients",
             headers={"X-API-KEY": raw_key, "X-Servin": "SerumDB"},
         )
         assert res_via_deactivated.status_code == 401

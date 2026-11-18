@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.cash_movements import (
     CashMovementInDb,
     CreateCashMovement,
@@ -10,7 +11,10 @@ from responses.v1 import ListResponse
 
 from .cash_movements_controller import cash_movements_controller
 
-cash_movements_router = APIRouter(tags=["cashMovementsV1"])
+cash_movements_router = APIRouter(
+    tags=["cashMovementsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @cash_movements_router.post("")

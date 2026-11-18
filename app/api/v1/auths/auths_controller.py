@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status
 
 from serum.core.security import SysPasswordHasher, TokenManager
+from serum.serum_config import serumCtx
 from serum.repos.v1.auths import (
     CheckUserRequest,
     CheckUserResponse,
@@ -48,11 +49,20 @@ class AuthController:
                 detail="Invalid credentials",
             )
 
+        if not user.isActive or user.isDeleted:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Usuario inactivo o eliminado",
+            )
+
+        tenant = serumCtx.get().businessNickname or None
+
         session_token = TokenManager.create_session_token(
             user_id=user.id,
             username=user.username,
             role=user.role,
             access_level=user.accessLevel,
+            tenant=tenant,
         )
 
         refresh_token = TokenManager.create_refresh_token(
@@ -60,6 +70,7 @@ class AuthController:
             username=user.username,
             role=user.role,
             access_level=user.accessLevel,
+            tenant=tenant,
         )
 
         user_data = user.model_dump(exclude={"password"})
@@ -92,29 +103,43 @@ class AuthController:
                 detail="Token expired",
             )
 
-        user_id = payload["userId"]
-        username = payload["username"]
-        role = payload["role"]
-
-        existing_user = await self.users_repo.get_user_by_id(user_id)
-        if existing_user is None:
+        current_tenant = serumCtx.get().businessNickname
+        token_tenant = payload.get("tenant")
+        if token_tenant and current_tenant and token_tenant != current_tenant:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User no longer exists",
+                detail="Token does not match current tenant",
             )
 
+        user_id = payload["userId"]
+
+        existing_user = await self.users_repo.get_user_by_id(user_id)
+        if (
+            existing_user is None
+            or not existing_user.isActive
+            or existing_user.isDeleted
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="User no longer exists or is inactive",
+            )
+
+        tenant = current_tenant or None
+
         session_token = TokenManager.create_session_token(
-            user_id=user_id,
-            username=username,
-            role=role,
+            user_id=existing_user.id,
+            username=existing_user.username,
+            role=existing_user.role,
             access_level=existing_user.accessLevel,
+            tenant=tenant,
         )
 
         new_refresh_token = TokenManager.create_refresh_token(
-            user_id=user_id,
-            username=username,
-            role=role,
+            user_id=existing_user.id,
+            username=existing_user.username,
+            role=existing_user.role,
             access_level=existing_user.accessLevel,
+            tenant=tenant,
         )
 
         return RefreshTokenResponse(

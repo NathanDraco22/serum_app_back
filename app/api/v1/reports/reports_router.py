@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 
+from app_middleware.depends import auth_middleware
 from api.v1.reports.reports_controller import reports_controller
 from api.v1.reports.reports_schemas import (
     FinancialReportResponse,
@@ -9,7 +10,10 @@ from api.v1.reports.reports_schemas import (
     TopDoctorsReportResponse,
 )
 
-reports_router = APIRouter(tags=["reportsV1"])
+reports_router = APIRouter(
+    tags=["reportsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @reports_router.get("/financial")

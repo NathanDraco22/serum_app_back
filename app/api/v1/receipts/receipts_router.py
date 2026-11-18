@@ -1,12 +1,16 @@
 from fastapi import APIRouter, Depends
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.common.filter_params import ReceiptFilterParams
 from serum.repos.v1.receipts import ReceiptInDb, UpdateReceipt
 from responses.v1 import ListResponse
 
 from .receipts_controller import receipts_controller
 
-receipts_router = APIRouter(tags=["receiptsV1"])
+receipts_router = APIRouter(
+    tags=["receiptsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @receipts_router.get("")

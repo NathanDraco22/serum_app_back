@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
+
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.cash_registers import (
     CashRegisterInDb,
     CreateCashRegister,
@@ -16,7 +18,10 @@ from .cash_registers_schemas import (
     PaymentRegisterRequest,
 )
 
-cash_registers_router = APIRouter(tags=["cashRegistersV1"])
+cash_registers_router = APIRouter(
+    tags=["cashRegistersV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @cash_registers_router.post("")

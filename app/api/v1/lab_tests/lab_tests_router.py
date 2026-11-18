@@ -1,11 +1,15 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.lab_tests import CreateLabTest, LabTestInDb, UpdateLabTest
 from responses.v1 import ListResponse
 
 from .lab_tests_controller import lab_tests_controller
 
-lab_tests_router = APIRouter(tags=["lab_testsV1"])
+lab_tests_router = APIRouter(
+    tags=["lab_testsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @lab_tests_router.post("")

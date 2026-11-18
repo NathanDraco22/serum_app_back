@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 from httpx import ASGITransport, AsyncClient
 
 from main import app
+from serum.core.default_values.create_root_user import create_root_user
+from serum.core.security import TokenManager
 from serum.services_initializer import init_services
 from serum.repos.v1.app_settings import (
     AppSettingsRepository,
@@ -46,8 +48,19 @@ async def test_app_settings_lifecycle_and_endpoints():
     assert tool_settings.currency == "NIO"
 
     # 5. Probar endpoints REST con AsyncClient
+    root_user = await create_root_user()
+    admin_token = TokenManager.create_session_token(
+        user_id=root_user.id,
+        username=root_user.username,
+        role=root_user.role,
+        access_level=root_user.accessLevel,
+        tenant="SerumDB",
+    )
     transport = ASGITransport(app=app)
-    headers = {"X-Servin": "SerumDB"}
+    headers = {
+        "X-Servin": "SerumDB",
+        "Authorization": f"Bearer {admin_token}",
+    }
     async with AsyncClient(
         transport=transport, base_url="http://test", headers=headers
     ) as ac:

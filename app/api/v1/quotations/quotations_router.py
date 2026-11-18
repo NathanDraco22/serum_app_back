@@ -1,12 +1,16 @@
 from fastapi import APIRouter, Depends
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.common.filter_params import QuotationFilterParams
 from serum.repos.v1.quotations import CreateQuotation, QuotationInDb, UpdateQuotation
 from responses.v1 import ListResponse
 
 from .quotations_controller import quotations_controller
 
-quotations_router = APIRouter(tags=["quotationsV1"])
+quotations_router = APIRouter(
+    tags=["quotationsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @quotations_router.post("")

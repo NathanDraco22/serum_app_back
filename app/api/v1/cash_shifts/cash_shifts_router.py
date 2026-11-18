@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 
+from app_middleware.depends import auth_middleware
 from serum.repos.v1.cash_shifts import (
     CloseCashShift,
     CreateCashShift,
@@ -11,7 +12,10 @@ from responses.v1 import ListResponse
 from .cash_shifts_controller import cash_shifts_controller
 
 
-cash_shifts_router = APIRouter(tags=["cashShiftsV1"])
+cash_shifts_router = APIRouter(
+    tags=["cashShiftsV1"],
+    dependencies=[Depends(auth_middleware)],
+)
 
 
 @cash_shifts_router.post("/open")

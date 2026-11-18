@@ -1,6 +1,10 @@
 from fastapi import APIRouter, Depends
 
-from app_middleware.depends import require_root_user
+from app_middleware.depends import (
+    auth_middleware,
+    require_admin_user,
+    require_root_user,
+)
 from serum.repos.v1.branches import BranchInDb, CreateBranch, UpdateBranch
 from responses.v1 import ListResponse
 
@@ -14,21 +18,21 @@ async def create_branch(body: CreateBranch) -> BranchInDb:
     return await branches_controller.create_branch(body)
 
 
-@branches_router.get("")
+@branches_router.get("", dependencies=[Depends(auth_middleware)])
 async def get_all_branches() -> ListResponse[BranchInDb]:
     return await branches_controller.get_all_branches()
 
 
-@branches_router.get("/{branch_id}")
+@branches_router.get("/{branch_id}", dependencies=[Depends(auth_middleware)])
 async def get_branch_by_id(branch_id: str) -> BranchInDb:
     return await branches_controller.get_branch_by_id(branch_id)
 
 
-@branches_router.patch("/{branch_id}")
+@branches_router.patch("/{branch_id}", dependencies=[Depends(require_admin_user)])
 async def update_branch_by_id(branch_id: str, body: UpdateBranch) -> BranchInDb:
     return await branches_controller.update_branch_by_id(branch_id, body)
 
 
-@branches_router.delete("/{branch_id}")
+@branches_router.delete("/{branch_id}", dependencies=[Depends(require_admin_user)])
 async def delete_branch_by_id(branch_id: str) -> BranchInDb:
     return await branches_controller.delete_branch_by_id(branch_id)

@@ -5,6 +5,7 @@ from fastapi.exceptions import HTTPException
 from serum.core.security import TokenManager
 from serum.repos.v1.api_keys import ApiKeysRepository
 from serum.repos.v1.users import UsersRepository
+from serum.serum_config import serumCtx
 
 
 async def validate_admin_or_super_token(req: Request) -> dict[str, str]:
@@ -63,6 +64,20 @@ async def validate_admin_or_super_token(req: Request) -> dict[str, str]:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Token de sesión inválido o expirado",
+            )
+
+        if payload.get("type") != "session":
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Tipo de token inválido para autenticación de sesión",
+            )
+
+        current_tenant = serumCtx.get().businessNickname
+        token_tenant = payload.get("tenant")
+        if token_tenant and current_tenant and token_tenant != current_tenant:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="El token no corresponde al tenant actual",
             )
 
         user_id = payload.get("userId")
