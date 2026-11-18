@@ -1227,16 +1227,11 @@
     "isPack": false,
     "childTestCodes": [],
     "childTestIds": [],
-    "dataType": "qualitative",
+    "dataType": "text",
     "unitOfMeasure": "x Campos",
     "referenceValues": [],
-    "qualitativeOptions": [
-      "No se observó",
-      "Escasos",
-      "Moderados",
-      "Abundantes"
-    ],
-    "expectedQualitativeValue": "No se observó",
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
     "subclassification": "Sedimento Microscópico",
     "isProfileParameter": true
   },
