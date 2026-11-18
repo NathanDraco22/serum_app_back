@@ -6687,7 +6687,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f76 α-Lactoalbúmina",
@@ -6718,7 +6718,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f77 β-Lactoglobulina",
@@ -6749,7 +6749,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f78 Caseína",
@@ -6780,7 +6780,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f01 Clara de huevo",
@@ -6811,7 +6811,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f75 Yema",
@@ -6842,7 +6842,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f03 Bacalao",
@@ -6873,7 +6873,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f13 Cacahuete",
@@ -6904,7 +6904,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f93 Cacao (chocolate)",
@@ -6935,7 +6935,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f14 Soja",
@@ -6966,7 +6966,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f49 Manzana",
@@ -6997,7 +6997,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f31 Zanahoria",
@@ -7028,7 +7028,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f25 Tomate",
@@ -7059,7 +7059,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "fx10 Harina (mezcla)",
@@ -7090,7 +7090,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Composición: f04 / f05 / f06 / f07 - Trigo, centeno, cebada, avena (harinas que contienen gluten). | Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Composición: f04 / f05 / f06 / f07 - Trigo, centeno, cebada, avena (harinas que contienen gluten).\nEscala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f83 Carne de pollo",
@@ -7121,7 +7121,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "fx29 Mezcla de cítricos",
@@ -7152,7 +7152,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Composición: f208 / f306 / f33 / f302 - Limón, lima, naranja, mandarín. | Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Composición: f208 / f306 / f33 / f302 - Limón, lima, naranja, mandarín.\nEscala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "f09 Arroz",
@@ -7183,7 +7183,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "gx7 Mezcla de 6 hierbas",
@@ -7214,7 +7214,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Composición: g03 / g04 / g05 / g06 / g08 / g13 - Polen de dactylis, Festuca pratensis, Ryegrass, Phleum pratense, Poa de los prados, Holcus lanatus. | Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Composición: g03 / g04 / g05 / g06 / g08 / g13 - Polen de dactylis, Festuca pratensis, Ryegrass, Phleum pratense, Poa de los prados, Holcus lanatus.\nEscala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "g12 Polen de centeno",
@@ -7245,7 +7245,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "e02/e05 Epitelio de perro",
@@ -7276,7 +7276,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "e01 Epitelio de gato",
@@ -7307,7 +7307,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "m02 Cladosporium herbarum",
@@ -7338,7 +7338,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "m06 Alternaria alternata",
@@ -7369,7 +7369,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "m03 Aspergillus fumigatus",
@@ -7400,7 +7400,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "d01 D. pteronyssinus",
@@ -7431,7 +7431,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "d02 D. farinae",
@@ -7462,7 +7462,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "t04 Polen de avellano",
@@ -7493,7 +7493,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "t03 Polen de abedul",
@@ -7524,7 +7524,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "w06 Polen de artemisa",
@@ -7555,7 +7555,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "k20 CCD/Bromelain",
@@ -7586,7 +7586,7 @@
     ],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   },
   {
     "name": "Atópica 30-I (Panel de Alergias)",
@@ -7636,6 +7636,6 @@
     "referenceValues": [],
     "qualitativeOptions": [],
     "expectedQualitativeValue": null,
-    "referenceText": "Escala de Clases IgE (kU/L): Clase 0 (<0.35): No se detectó anticuerpo específico | Clase 1 (0.35 - <0.7): Anticuerpo muy débil | Clase 2 (0.7 - <3.5): Detección débil de anticuerpo | Clase 3 (3.5 - <17.5): Detección clara de anticuerpos | Clase 4 (17.5 - <50): Fuerte detección de anticuerpos | Clase 5 (50 - <100): Detección muy fuerte de anticuerpos | Clase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
+    "referenceText": "Escala de Clases IgE (kU/L):\nClase 0 (<0.35): No se detectó anticuerpo específico\nClase 1 (0.35 - <0.7): Anticuerpo muy débil\nClase 2 (0.7 - <3.5): Detección débil de anticuerpo\nClase 3 (3.5 - <17.5): Detección clara de anticuerpos\nClase 4 (17.5 - <50): Fuerte detección de anticuerpos\nClase 5 (50 - <100): Detección muy fuerte de anticuerpos\nClase 6 (>= 100): Títulos extremadamente altos de anticuerpos."
   }
 ]
