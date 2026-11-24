@@ -84,7 +84,7 @@ $$\text{isFullyPaid} = \text{totalPrice} \le 0 \lor \text{paidAmount} \ge \text{
 - `isDeleted = true`
 - `cancelledAt`, `cancelledBy` y `cancellationReason`
 
-Solo se permite si la orden no tiene pagos, no tiene recibos activos y no tiene resultados clínicos capturados.
+Solo se permite si la orden no tiene pagos (`paidAmount == 0`), no tiene recibos activos y no está ya cancelada (`status != "cancelled"`). Puede cancelarse aunque ya tenga resultados capturados (`pending`, `in_review`, `completed` o `isBlocked`), ya que los resultados viven embebidos en la orden y no afectan colecciones contables ni de caja.
 
 ---
 

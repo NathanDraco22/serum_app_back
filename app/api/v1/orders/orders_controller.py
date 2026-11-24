@@ -3,7 +3,6 @@ from serum.serum_config import serumCtx
 
 from serum.core.exceptions import (
     OrderCannotBeDeleted,
-    OrderHasClinicalResults,
     OrderHasPayments,
     OrderIsBlocked,
 )
@@ -604,15 +603,9 @@ class OrdersController:
         if order.paidAmount > 0 or receipts:
             raise OrderHasPayments()
 
-        has_clinical_results = order.status == "completed" or any(
-            (result.resultValue or "").strip() for result in order.results
-        )
-        if has_clinical_results:
-            raise OrderHasClinicalResults()
-
-        # Una orden bloqueada o pendiente puede cancelarse si no tiene cobros
-        # ni resultados clínicos.
-        if order.status != "pending" and not order.isBlocked:
+        # Una orden puede cancelarse siempre que no tenga pagos ni recibos activos
+        # y no haya sido cancelada/eliminada previamente.
+        if order.status == "cancelled" or order.isDeleted:
             raise OrderCannotBeDeleted()
 
         actor, _ = self._resolve_actor(req)

@@ -184,10 +184,24 @@ async def test_lab_test_accounts_http_router():
     )
 
     try:
+        from serum.core.default_values.create_root_user import create_root_user
+        from serum.core.security import TokenManager
+
+        root_user = await create_root_user()
+        token = TokenManager.create_session_token(
+            user_id=root_user.id,
+            username=root_user.username,
+            role=root_user.role,
+            access_level=root_user.accessLevel,
+            tenant="SerumDB",
+        )
         async with httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app),
             base_url="http://test",
-            headers={"X-Servin": "SerumDB"},
+            headers={
+                "X-Servin": "SerumDB",
+                "Authorization": f"Bearer {token}",
+            },
         ) as client:
             # 1. GET /api/v1/lab-test-accounts (filtro branchId)
             res_all = await client.get(
