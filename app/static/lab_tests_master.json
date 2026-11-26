@@ -7927,5 +7927,207 @@
     ],
     "expectedQualitativeValue": "Negativo",
     "referenceText": "Negativo"
+  },
+  {
+    "name": "Glucosa Basal (Ayunas)",
+    "code": "CURVA2H-AYUNAS",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": true,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 70.0,
+        "maxValue": 99.0,
+        "useAge": false,
+        "useGender": false
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "< 100 mg/dL"
+  },
+  {
+    "name": "Glucosa 60 Minutos",
+    "code": "CURVA2H-60M",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": true,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 180.0,
+        "useAge": false,
+        "useGender": false
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "< 180 mg/dL"
+  },
+  {
+    "name": "Glucosa 120 Minutos",
+    "code": "CURVA2H-120M",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": true,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "numeric",
+    "unitOfMeasure": "mg/dL",
+    "referenceValues": [
+      {
+        "patientType": "general",
+        "gender": "both",
+        "minAgeDays": 0,
+        "maxAgeDays": 43800,
+        "minValue": 0.0,
+        "maxValue": 140.0,
+        "useAge": false,
+        "useGender": false
+      }
+    ],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "< 140 mg/dL"
+  },
+  {
+    "name": "Curva de Glucosa 2 Horas (3 Puntos)",
+    "code": "CURVA-GLU-2H3P",
+    "commercialCategory": "Química Sanguínea",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": false,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "CURVA2H-AYUNAS",
+      "CURVA2H-60M",
+      "CURVA2H-120M"
+    ],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Basal (Ayunas): < 100 mg/dL\n60 Minutos: < 180 mg/dL\n120 Minutos: < 140 mg/dL"
+  },
+  {
+    "name": "Glucosuria Basal (Ayunas)",
+    "code": "GLUCOSURIA-AYUNAS",
+    "commercialCategory": "Uroanálisis",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": true,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo"
+  },
+  {
+    "name": "Glucosuria 60 Minutos",
+    "code": "GLUCOSURIA-60M",
+    "commercialCategory": "Uroanálisis",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": true,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo"
+  },
+  {
+    "name": "Glucosuria 120 Minutos",
+    "code": "GLUCOSURIA-120M",
+    "commercialCategory": "Uroanálisis",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": true,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": false,
+    "childTestCodes": [],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [
+      "Negativo",
+      "Positivo"
+    ],
+    "expectedQualitativeValue": "Negativo",
+    "referenceText": "Negativo"
+  },
+  {
+    "name": "Glucosuria 2 Horas (3 Puntos)",
+    "code": "CURVA-GLUCOSURIA-2H3P",
+    "commercialCategory": "Uroanálisis",
+    "subclassification": "Carbohidratos / Glucosa",
+    "isProfileParameter": false,
+    "salePrice": 0,
+    "salePrice2": 0,
+    "currency": "USD",
+    "isPack": true,
+    "childTestCodes": [
+      "GLUCOSURIA-AYUNAS",
+      "GLUCOSURIA-60M",
+      "GLUCOSURIA-120M"
+    ],
+    "childTestIds": [],
+    "dataType": "qualitative",
+    "unitOfMeasure": "",
+    "referenceValues": [],
+    "qualitativeOptions": [],
+    "expectedQualitativeValue": null,
+    "referenceText": "Basal (Ayunas): Negativo\n60 Minutos: Negativo\n120 Minutos: Negativo"
   }
 ]
