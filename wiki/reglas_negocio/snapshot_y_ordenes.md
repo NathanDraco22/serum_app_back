@@ -82,9 +82,15 @@ $$\text{isFullyPaid} = \text{totalPrice} \le 0 \lor \text{paidAmount} \ge \text{
 
 - `status = "cancelled"`
 - `isDeleted = true`
+- `paidAmount = 0` (si tenía pagos, se revierten atómicamente)
 - `cancelledAt`, `cancelledBy` y `cancellationReason`
 
-Solo se permite si la orden no tiene pagos (`paidAmount == 0`), no tiene recibos activos y no está ya cancelada (`status != "cancelled"`). Puede cancelarse aunque ya tenga resultados capturados (`pending`, `in_review`, `completed` o `isBlocked`), ya que los resultados viven embebidos en la orden y no afectan colecciones contables ni de caja.
+Reglas de cancelación:
+1. **Órdenes sin pagos (`paidAmount == 0` y sin recibos activos)**: pueden cancelarse directamente con motivo opcional, incluso si ya tienen resultados capturados (`pending`, `in_review`, `completed` o `isBlocked`).
+2. **Órdenes con pagos o recibos activos**: requieren `reason` obligatorio (HTTP 422 si falta) y se procesan mediante una transacción ACID en `process_cancel_order`:
+   - Todos los turnos de caja (`CashShift`) asociados a los recibos deben seguir en estado `"OPEN"` (si alguno cerró, se rechaza con `CASH_SHIFT_NOT_OPEN` para no alterar arqueos cerrados).
+   - El turno debe tener saldo suficiente en el método de pago original (`InsufficientMethodBalance` si no alcanza).
+   - Se revierte el saldo en cada turno por método de pago, se anulan lógicamente los recibos (`isDeleted = true`) y se registran contra-asientos inmutables en el Kardex (`flowType = "out"`, `subType = "payment_reversal"`).
 
 ---
 

@@ -53,6 +53,7 @@ El módulo financiero garantiza la trazabilidad absoluta del flujo de dinero y l
 | **`income`** | `"in"` | Aumenta | Entradas extraordinarias (ej. fondo adicional). Requiere `concept`. |
 | **`withdrawal`** | `"out"` | Disminuye | Salidas de dinero (ej. gastos menores autorizados). Requiere `concept`. |
 | **`payment`** | `"in"` | Aumenta | Cobro asociado a una orden médica (`referenceId = order_id`). El pago solo actualiza `paidAmount`; el estado clínico de la orden no se modifica. |
+| **`payment_reversal`** | `"out"` | Disminuye | Contra-asiento automático por anulación de una orden con pagos (`referenceId = order_id`). Revierte el saldo del turno abierto, anula los recibos y descuenta del total cobrado en reportes. |
 
 ---
 

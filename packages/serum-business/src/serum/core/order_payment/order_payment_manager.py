@@ -2,10 +2,12 @@ import asyncio
 
 from pymongo.errors import OperationFailure
 
+from serum.repos.v1.common.models.user_info import UserInfo
 from serum.repos.v1.orders import OrderInDb, OrdersRepository
 from serum.core.exceptions import OrderNotFound, OrderAlreadyPaid, OrderIsBlocked
 
 from .order_payment import OrderPayIntent
+from .process_cancel_order import process_cancel_order
 from .process_order_payment import process_order_payment
 
 
@@ -28,6 +30,28 @@ class OrderPaymentManager:
         for _ in range(max_retries):
             try:
                 return await process_order_payment(pay_intent=pay_intent)
+            except OperationFailure as e:
+                if e.code == 112:
+                    await asyncio.sleep(0.3)
+                else:
+                    raise
+
+        raise RuntimeError("Server is too busy, try again later")
+
+    async def cancel_order_with_reversal(
+        self,
+        order_id: str,
+        reason: str,
+        cancelled_by: UserInfo | None = None,
+    ) -> OrderInDb:
+        max_retries = 3
+        for _ in range(max_retries):
+            try:
+                return await process_cancel_order(
+                    order_id=order_id,
+                    reason=reason,
+                    cancelled_by=cancelled_by,
+                )
             except OperationFailure as e:
                 if e.code == 112:
                     await asyncio.sleep(0.3)

@@ -88,12 +88,16 @@ class OrdersCollection(BaseMongoCollection):
         return result
 
     async def cancel_order_by_id(
-        self, order_id: str, cancellation_data: dict[str, Any]
+        self,
+        order_id: str,
+        cancellation_data: dict[str, Any],
+        session: Any = None,
     ) -> dict[str, Any] | None:
         collection = self._collection
         result = await collection.find_one_and_update(
             {"id": order_id, "isDeleted": {"$ne": True}},
             {"$set": cancellation_data},
+            session=session,
             return_document=ReturnDocument.AFTER,
         )
         return result

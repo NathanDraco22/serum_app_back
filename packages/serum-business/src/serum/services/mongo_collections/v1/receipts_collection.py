@@ -13,7 +13,7 @@ class ReceiptsCollection(BaseMongoCollection):
         await collection.insert_one(receipt, session=session)
 
     async def fetch_all_receipts(
-        self, filters: dict | None = None
+        self, filters: dict | None = None, session: Any = None
     ) -> list[dict[str, Any]]:
         collection = self._collection
         query: dict[str, Any] = {"isDeleted": {"$ne": True}}
@@ -40,7 +40,7 @@ class ReceiptsCollection(BaseMongoCollection):
                 if value is not None:
                     query[key] = value
 
-        cursor = collection.find(query).sort("createdAt", -1)
+        cursor = collection.find(query, session=session).sort("createdAt", -1)
 
         if offset > 0:
             cursor = cursor.skip(offset)
@@ -74,11 +74,20 @@ class ReceiptsCollection(BaseMongoCollection):
 
         return result
 
-    async def delete_receipt_by_id(self, receipt_id: str) -> dict[str, Any] | None:
+    async def delete_receipt_by_id(
+        self,
+        receipt_id: str,
+        session: Any = None,
+        now: int | None = None,
+    ) -> dict[str, Any] | None:
         collection = self._collection
+        update_fields: dict[str, Any] = {"isDeleted": True}
+        if now is not None:
+            update_fields["updatedAt"] = now
         result = await collection.find_one_and_update(
             {"id": receipt_id, "isDeleted": {"$ne": True}},
-            {"$set": {"isDeleted": True}},
+            {"$set": update_fields},
+            session=session,
             return_document=ReturnDocument.AFTER,
         )
         return result

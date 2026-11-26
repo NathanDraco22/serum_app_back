@@ -53,8 +53,10 @@ class ReportsPipelines:
         match_stage: dict[str, Any] = {
             "isDeleted": {"$ne": True},
             "createdAt": {"$gte": start_date, "$lte": end_date},
-            "flowType": "in",
-            "subType": "payment",
+            "$or": [
+                {"flowType": "in", "subType": "payment"},
+                {"flowType": "out", "subType": "payment_reversal"},
+            ],
         }
         if branch_id:
             match_stage["branchId"] = branch_id
@@ -67,8 +69,24 @@ class ReportsPipelines:
                         "branchId": "$branchId",
                         "paymentMethod": "$paymentMethod",
                     },
-                    "totalAmount": {"$sum": "$amount"},
-                    "transactionsCount": {"$sum": 1},
+                    "totalAmount": {
+                        "$sum": {
+                            "$cond": [
+                                {"$eq": ["$flowType", "out"]},
+                                {"$multiply": ["$amount", -1]},
+                                "$amount",
+                            ]
+                        }
+                    },
+                    "transactionsCount": {
+                        "$sum": {
+                            "$cond": [
+                                {"$eq": ["$flowType", "out"]},
+                                -1,
+                                1,
+                            ]
+                        }
+                    },
                 }
             },
         ]

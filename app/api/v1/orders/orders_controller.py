@@ -3,7 +3,6 @@ from serum.serum_config import serumCtx
 
 from serum.core.exceptions import (
     OrderCannotBeDeleted,
-    OrderHasPayments,
     OrderIsBlocked,
 )
 from serum.core.order_payment.order_payment import OrderPayIntent
@@ -597,18 +596,30 @@ class OrdersController:
                 detail="Order not found",
             )
 
-        receipts = await self.receipts_repo.get_all_receipts(
-            ReceiptFilterParams(orderId=order_id)
-        )
-        if order.paidAmount > 0 or receipts:
-            raise OrderHasPayments()
-
-        # Una orden puede cancelarse siempre que no tenga pagos ni recibos activos
-        # y no haya sido cancelada/eliminada previamente.
         if order.status == "cancelled" or order.isDeleted:
             raise OrderCannotBeDeleted()
 
         actor, _ = self._resolve_actor(req)
+        receipts = await self.receipts_repo.get_all_receipts(
+            ReceiptFilterParams(orderId=order_id)
+        )
+        if order.paidAmount > 0 or receipts:
+            clean_reason = (reason or "").strip()
+            if not clean_reason:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=(
+                        "El motivo de cancelación es obligatorio para anular "
+                        "una orden con pagos registrados"
+                    ),
+                )
+            cancelled_order = await self.order_payment_manager.cancel_order_with_reversal(
+                order_id=order_id,
+                reason=clean_reason,
+                cancelled_by=actor,
+            )
+            return with_legacy_status(cancelled_order)
+
         cancellation_data = {
             "statusHistory": self._append_status_history(
                 order,
